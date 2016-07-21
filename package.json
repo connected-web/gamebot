@@ -1,0 +1,24 @@
+{
+  "name": "gamebot",
+  "version": "1.0.0",
+  "description": "Gamebot for slack",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "slack",
+    "bot",
+    "board",
+    "games"
+  ],
+  "author": "John Beech",
+  "license": "ISC",
+  "dependencies": {
+    "slackbots": "^0.5.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
+}
