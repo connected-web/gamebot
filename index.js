@@ -28,6 +28,8 @@ bot.on('start', function() {
         howlCount++;
       }
     }
+    const users = bot.getUsers();
+    console.log('Users', users);
   });
 });
 
