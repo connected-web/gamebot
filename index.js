@@ -29,7 +29,7 @@ bot.on('start', function() {
       }
     }
     const users = bot.getUsers();
-    console.log('Users', users);
+    console.log('Users', JSON.stringify(users, null, 2));
   });
 });
 
