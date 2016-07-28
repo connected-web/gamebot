@@ -13,6 +13,8 @@ const options = {
   }
 };
 
-api.load()
-  .then(api.connect(options))
-  .catch(api.handleError);
+const gamebot = api(options);
+
+gamebot.load()
+  .then(gamebot.connect)
+  .catch(gamebot.handleError);
