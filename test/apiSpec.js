@@ -20,8 +20,28 @@ describe('Gamebot API', function() {
     api = gamebot(sampleOptions);
   });
 
-  it('should track an array of matchers', function() {
+  it('should track an array of matchers', () => {
     expect(api.matchers).to.deep.equal([]);
+  });
+
+  it('should record options on the api', () => {
+    expect(api.options).to.deep.equal(sampleOptions);
+  });
+
+  xit('should provide a load method for loading modules', () => {
+
+  });
+
+  xit('should provide a connect method for connecting to slack', () => {
+
+  });
+
+  xit('should provide a respond method for responding to messages', () => {
+
+  });
+
+  xit('should provide an error handler', function() {
+
   });
 
 /*
