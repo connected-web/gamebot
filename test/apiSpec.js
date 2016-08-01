@@ -1,20 +1,21 @@
 const expect = require('chai').expect;
-
 const gamebot = require('../lib/api');
-const sampleOptions = {
-  slackbot: {
-    token: 'some slack api token',
-    name: 'Bot Name',
-    id: '@thebotid',
-  },
-  message: {
-    params: {
-      icon_url: 'https://some/icon/url'
-    }
-  }
-};
 
 describe('Gamebot API', function() {
+
+  var api;
+  const sampleOptions = {
+    slackbot: {
+      token: 'some slack api token',
+      name: 'Bot Name',
+      id: '@thebotid',
+    },
+    message: {
+      params: {
+        icon_url: 'https://some/icon/url'
+      }
+    }
+  };
 
   beforeEach(() => {
     api = gamebot(sampleOptions);
@@ -48,13 +49,13 @@ describe('Gamebot API', function() {
     expect(typeof api.handleError).to.equal('function');
   });
 
-/*
-  api.bot = null;
-  api.matchers = [];
-  api.options = options;
-  api.load = load(api);
-  api.connect = connect(api);
-  api.respond = respond(api);
-  api.handleError = handleError(api);
-  */
+  /*
+    api.bot = null;
+    api.matchers = [];
+    api.options = options;
+    api.load = load(api);
+    api.connect = connect(api);
+    api.respond = respond(api);
+    api.handleError = handleError(api);
+    */
 });
