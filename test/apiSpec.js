@@ -28,20 +28,24 @@ describe('Gamebot API', function() {
     expect(api.options).to.deep.equal(sampleOptions);
   });
 
-  xit('should provide a load method for loading modules', () => {
-
+  it('should provide a load method for loading modules', () => {
+    expect(api.load.length).to.equal(0);
+    expect(typeof api.load).to.equal('function');
   });
 
-  xit('should provide a connect method for connecting to slack', () => {
-
+  it('should provide a connect method for connecting to slack', () => {
+    expect(api.connect.length).to.equal(0);
+    expect(typeof api.connect).to.equal('function');
   });
 
-  xit('should provide a respond method for responding to messages', () => {
-
+  it('should provide a respond method for responding to messages', () => {
+    expect(api.respond.length).to.equal(3);
+    expect(typeof api.respond).to.equal('function');
   });
 
-  xit('should provide an error handler', function() {
-
+  it('should provide an error handler', function() {
+    expect(api.handleError.length).to.equal(1);
+    expect(typeof api.handleError).to.equal('function');
   });
 
 /*
