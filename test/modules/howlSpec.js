@@ -12,6 +12,12 @@ describe('Howl module', function() {
         seed: 1
       }
     });
+
+    gamebot.getUserById = (id) => {
+      return {
+        name: 'Howl Spec'
+      };
+    }
     module = howl(gamebot);
   });
 
