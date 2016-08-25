@@ -20,4 +20,10 @@ Gamebot is currently hosted on a private openstack instance, if you've been give
 
 Copy the private key to `ssh/cloud.key`, then run `./redeploy.sh` to prompt the server to update.
 
-If the
+
+## Website
+
+Gamebot has its own website monitoring system as well.
+
+To start the website for develoment, run:
+- `npm run website`

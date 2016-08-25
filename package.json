@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha --recursive"
+    "test": "mocha --recursive",
+    "website": "node website.js"
   },
   "keywords": [
     "slack",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "product-monitor": "^2.2.4"
   }
 }

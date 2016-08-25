@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>{{serverConfig.productInformation.title}}</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- All the web compoent neat stuff -->
+    <script src="/external/jquery.min.js"></script>
+    <script src="/external/handlebars.js"></script>
+    <script src="/external/web-component.js"></script>
+
+    <!-- All the boostrap theming -->
+    <link rel="stylesheet" href="/external/bootstrap.min.css">
+    <script src="/external/bootstrap.min.js"></script>
+
+    <!-- Markdown support -->
+    <script src="/external/marked.min.js"></script>
+
+    <!-- Code highlighting support -->
+    <link rel="stylesheet" href="/external/github.min.css">
+    <script src="/external/highlight.min.js"></script>
+
+    <!-- Web Components -->
+    {{{componentIncludes}}}
+
+    <!-- D3 and C3 Graphing -->
+    <script src="/external/d3.min.js"></script>
+    <link rel="stylesheet" href="/external/c3.min.css">
+    <script src="/external/c3.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/external/html5shiv.min.js"></script>
+    <script src="/external/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body role="document">
+
+    <navigation></navigation>
+
+    <div id="jumbotron"></div>
+
+    <div class="container theme-showcase" role="main">
+        <!-- Start of Page Fragment -->
+
+        {{{pageFragment}}}
+
+        <!-- End of Page Fragment -->
+
+        {{{editPageLink}}}
+    </div>
+
+    <span class="component templates">
+        {{{componentTemplates}}}
+    </span>
+
+</body>
+
+</html>
