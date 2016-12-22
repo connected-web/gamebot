@@ -16,14 +16,14 @@ endpoint.render = function (req, res) {
   try {
     if (!userIndex) {
       var users = JSON.parse(fs.readFileSync(__dirname + '/../../state/user-list.json', 'utf8'));
+      userIndex = {};
       users.members.forEach((user) => {
         userIndex[user.name] = user;
       });
     }
     data = userIndex[req.params.name] || {
       error: true,
-      message: `User ${req.params.name} not found`,
-      userIndex
+      message: `User ${req.params.name} not found`
     };
   } catch (ex) {
     data.error = true;
