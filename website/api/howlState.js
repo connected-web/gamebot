@@ -13,7 +13,7 @@ endpoint.configure = function (config) {
 endpoint.render = function (req, res) {
   var data = {};
   try {
-    data = fs.readFileSync(__dirname + '/../../state/howl-state.json', 'utf8');
+    data = JSON.parse(fs.readFileSync(__dirname + '/../../state/howl-state.json', 'utf8'));
   } catch (ex) {
     data.error = true;
     data.message = 'Unable to read data file: ' + ex;
