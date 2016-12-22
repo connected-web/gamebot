@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run gamebot && npm run website",
-    "gamebot": "pm2 start index.js --name 'Gamebot'",
+    "gamebot": "pm2 start index.js --name 'Gamebot' --watch",
     "test": "mocha --recursive",
-    "website": "pm2 start website.js --name 'Gamebot Website'",
+    "website": "pm2 start website.js --name 'Gamebot Website' --watch",
     "stop": "pm2 delete 'Gamebot' 'Gamebot Website'"
   },
   "keywords": [
