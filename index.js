@@ -1,5 +1,5 @@
 const api = require('./lib/api');
-const tokens = require('tokens.json');
+const tokens = require('./tokens.json');
 
 const options = {
   slackbot: {
