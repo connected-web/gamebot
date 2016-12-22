@@ -5,7 +5,6 @@ ls
 git pull &&
 npm i &&
 pm2 kill &&
-pm2 start index.js --name "Gamebot" &&
-pm2 start website.js --name "Gamebot Website"
+npm start
 
 ENDSSH

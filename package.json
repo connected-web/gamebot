@@ -4,9 +4,11 @@
   "description": "Gamebot for slack",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "npm run gamebot && npm run website",
+    "gamebot": "pm2 start index.js --name 'Gamebot'",
     "test": "mocha --recursive",
-    "website": "node website.js"
+    "website": "pm2 start website.js --name 'Gamebot Website'",
+    "stop": "pm2 delete 'Gamebot' 'Gamebot Website'"
   },
   "keywords": [
     "slack",
