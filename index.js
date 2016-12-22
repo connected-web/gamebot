@@ -1,8 +1,9 @@
 const api = require('./lib/api');
+const tokens = require('tokens.json');
 
 const options = {
   slackbot: {
-    token: process.env.GAMEBOT_TOKEN, // Add a bot
+    token: tokens.GAMEBOT_TOKEN, // Add a bot
     name: 'Mr Wolf',
     id: '@gamebot',
   },

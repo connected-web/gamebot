@@ -3,3 +3,4 @@ ssh/*.pub
 ssh/*.key
 *.log
 state/*.json
+tokens.json
