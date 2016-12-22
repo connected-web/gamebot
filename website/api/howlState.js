@@ -1,13 +1,13 @@
-var endpoint = function () {}
+const fs = require('fs');
 
-var server = false;
+var endpoint = function () {}
 
 endpoint.route = '/api/howl/state';
 endpoint.cacheDuration = '1 second';
 endpoint.description = 'The current state of the howl...'
 
 endpoint.configure = function (config) {
-  server = config.server;
+
 }
 
 endpoint.render = function (req, res) {
