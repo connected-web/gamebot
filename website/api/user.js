@@ -20,7 +20,10 @@ endpoint.render = function (req, res) {
         userIndex[user.name] = user;
       });
     }
-    data = userIndex[req.params.name];
+    data = userIndex[req.params.name] || {
+      error: true,
+      message: `User ${req.params.name} not found`
+    };
   } catch (ex) {
     data.error = true;
     data.message = 'Unable to read data file: ' + ex;
