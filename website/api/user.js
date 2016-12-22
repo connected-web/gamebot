@@ -22,7 +22,8 @@ endpoint.render = function (req, res) {
     }
     data = userIndex[req.params.name] || {
       error: true,
-      message: `User ${req.params.name} not found`
+      message: `User ${req.params.name} not found`,
+      userIndex
     };
   } catch (ex) {
     data.error = true;
