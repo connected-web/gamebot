@@ -4,6 +4,6 @@ cd gamebot
 ls
 git pull &&
 npm i &&
-pm2 restart 0
+pm2 restart all
 
 ENDSSH
