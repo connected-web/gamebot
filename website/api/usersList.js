@@ -14,7 +14,7 @@ endpoint.render = function (req, res) {
   var data = {};
   try {
     var users = JSON.parse(fs.readFileSync(__dirname + '/../../state/user-list.json', 'utf8'));
-    data = users.map((user) => {
+    data = users.members.map((user) => {
       return name;
     });
   } catch (ex) {
