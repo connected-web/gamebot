@@ -1,6 +1,6 @@
 var monitor = require('product-monitor');
 var server = monitor({
-  "serverPort": 8080,
+  "serverPort": 9000,
   "productInformation": {
     "title": "Gamebot Monitor",
   },
