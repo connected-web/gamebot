@@ -13,10 +13,8 @@ describe('Howl module', function() {
       }
     });
 
-    gamebot.getUserById = (id) => {
-      return {
-        name: 'Howl Spec'
-      };
+    gamebot.getUserName = (id) => {
+      return 'Howl Spec';
     }
     module = howl(gamebot);
   });
