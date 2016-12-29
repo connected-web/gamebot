@@ -87,4 +87,23 @@ describe('Resistance module', function () {
     // Join a second time
     gamebot.simulateMessage('join the resistance', 'u2');
   });
+
+  it('should respond to players who want to leave', (done) => {
+    // Add users
+    gamebot.simulateMessage('join the resistance', 'u1');
+    gamebot.simulateMessage('join the resistance', 'u2');
+    gamebot.simulateMessage('join the resistance', 'u3');
+    // Then start listening
+    gamebot.respond = (target, response, params) => {
+      expect(target.channel).to.equal('private');
+      expect(response).to.equal(`Goodbye comrade Henrietta, until next time.`);
+      gamebot.respond = (channel, response, params) => {
+        expect(channel).to.equal('resistance');
+        expect(response).to.equal('Henrietta has left the resistance. There are now 2 players.');
+        done();
+      };
+    };
+    // Remove user
+    gamebot.simulateMessage('leave the resistance', 'u2', 'private');
+  });
 });
