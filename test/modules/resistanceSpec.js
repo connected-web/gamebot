@@ -107,7 +107,7 @@ describe('Resistance module', function () {
     gamebot.simulateMessage('leave the resistance', 'u2', 'private');
   });
 
-  it('should remind players that they no role assigned', (done) => {
+  it('should be able to remind players that they have no role assigned', (done) => {
     // Add users
     gamebot.simulateMessage('join the resistance', 'u1');
     // Then start listening
@@ -120,7 +120,7 @@ describe('Resistance module', function () {
     gamebot.simulateMessage(`What's my role?`, 'u1');
   });
 
-  it('should remind players that are not even playing', (done) => {
+  it('should be able to remind players that are not even playing', (done) => {
     // Then start listening
     gamebot.respond = (target, response, params) => {
       expect(target).to.equal('u1');
