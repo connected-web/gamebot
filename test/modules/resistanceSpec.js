@@ -95,7 +95,7 @@ describe('Resistance module', function () {
     gamebot.simulateMessage('join the resistance', 'u3');
     // Then start listening
     gamebot.respond = (target, response, params) => {
-      expect(target.channel).to.equal('private');
+      expect(target.channel).to.equal('sameChannel');
       expect(response).to.equal(`Goodbye comrade Henrietta, until next time.`);
       gamebot.respond = (channel, response, params) => {
         expect(channel).to.equal('resistance');
@@ -104,7 +104,7 @@ describe('Resistance module', function () {
       };
     };
     // Remove user
-    gamebot.simulateMessage('leave the resistance', 'u2', 'private');
+    gamebot.simulateMessage('leave the resistance', 'u2', 'sameChannel');
   });
 
   it('should be able to remind players that they have no role assigned', (done) => {
@@ -129,5 +129,27 @@ describe('Resistance module', function () {
     };
     // Remove user
     gamebot.simulateMessage(`What's my role?`, 'u1');
+  });
+
+  it('should be able to describe a given role', (done) => {
+    // Then start listening
+    gamebot.respond = (target, response, params) => {
+      expect(target.channel).to.equal('sameChannel');
+      expect(response).to.equal(['>Hidden Spy Reverser : Team :bad_guy:.', '>May only play :success: or :reverse:; hidden to the Commander. Attempt to fail three missions for your team.'].join(NL));
+      done();
+    };
+    // Remove user
+    gamebot.simulateMessage(`describe resistance role hidden spy reverser`, 'u1', 'sameChannel');
+  });
+
+  it('should list available roles if a given role is not found', (done) => {
+    // Then start listening
+    gamebot.respond = (target, response, params) => {
+      expect(target.channel).to.equal('sameChannel');
+      expect(response).to.equal(`Did not match role 'Hidden Backstabber Captain'. Available types: Spy Reverser, False Commander, Assassin, Hidden Spy Reverser, Deep Cover, Blind Spy, Rogue Spy, Generic Spy, Rouge, Generic Resistance, Resistance Commander, Body Guard, Resistance Reverser`);
+      done();
+    };
+    // Remove user
+    gamebot.simulateMessage(`describe resistance role Hidden Backstabber Captain`, 'u1', 'sameChannel');
   });
 });
