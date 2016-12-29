@@ -135,6 +135,29 @@ describe('Resistance module', function () {
     });
   });
 
+  describe('List Players', () => {
+    it('should be able respond with an empty list of players', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(target.channel).to.equal('sameChannel');
+        expect(response).to.equal(`No one is currently registered to play resistance.`);
+        done();
+      };
+      gamebot.simulateMessage(`Who's playing resistance?`, 'u1', 'sameChannel');
+    });
+
+    it('should be able respond with the current list of players', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.respond = (target, response, params) => {
+        expect(target.channel).to.equal('sameChannel');
+        expect(response).to.equal(`The current list of players is: John, Henrietta, Claus`);
+        done();
+      };
+      gamebot.simulateMessage(`Who's playing resistance?`, 'u1', 'sameChannel');
+    });
+  });
+
   describe('Role Assignment', () => {
     it('should be able to remind players that they have no role assigned', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
