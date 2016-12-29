@@ -11,7 +11,6 @@ describe('Resistance module', function () {
   var module, gamebot;
 
   beforeEach((done) => {
-
     gamebot = api({
       slackbot: {
         id: '@bot'
@@ -20,6 +19,7 @@ describe('Resistance module', function () {
 
     gamebot.getUserName = (id) => {
       return {
+        'u0': 'Test Bot',
         'u1': 'John',
         'u2': 'Henrietta',
         'u3': 'Claus'
@@ -36,9 +36,22 @@ describe('Resistance module', function () {
     };
 
     module = resistance(gamebot, SAVE_TO_DISK).then(done);
+
+    gamebot.respond = () => {};
+    gamebot.simulateMessage('stop resistance', 'u0');
   });
 
-  it('should respond to players wanting to join', (done) => {
+  it('should repsond to players wanting to stop the current game', (done) => {
+    gamebot.respond = (channel, response, params) => {
+      expect(channel).to.equal('resistance');
+      expect(response).to.equal('Test Bot has stopped the game; all players have been executed.');
+      done();
+    };
+    gamebot.simulateMessage('stop resistance', 'u0');
+  });
+
+  it('should respond to players wanting to join using "join resistance"', (done) => {
+    // Listen for specific responses
     gamebot.respond = (channel, response, params) => {
       expect(response).to.equal([`Welcome to the Resistance John.`, `Your assigned code is u1.`, 'Please await further instructions from command.'].join(NL));
       gamebot.respond = (channel, response, params) => {
@@ -46,6 +59,32 @@ describe('Resistance module', function () {
         done();
       }
     };
+    // Add the user
     gamebot.simulateMessage('join the resistance', 'u1');
+  });
+
+  it('should respond to players wanting to join using "join the resistance"', (done) => {
+    // Listen for specific responses
+    gamebot.respond = (channel, response, params) => {
+      expect(response).to.equal([`Welcome to the Resistance Claus.`, `Your assigned code is u3.`, 'Please await further instructions from command.'].join(NL));
+      gamebot.respond = (channel, response, params) => {
+        expect(response).to.equal(`Claus has joined the resistance. There are now 1 players.`);
+        done();
+      }
+    };
+    // Add the user
+    gamebot.simulateMessage('join the resistance', 'u3');
+  });
+
+  it('should respond to players who have already joined', (done) => {
+    // Add the user
+    gamebot.simulateMessage('join the resistance', 'u2');
+    // Then start listening
+    gamebot.respond = (channel, response, params) => {
+      expect(response).to.equal(`Friend Henrietta, you are already part of the Resistance. Your assigned code is u2.`);
+      done();
+    };
+    // Join a second time
+    gamebot.simulateMessage('join the resistance', 'u2');
   });
 });
