@@ -254,7 +254,67 @@ describe('Resistance module', function () {
           expect(target).to.equal('u4');
           expect(response).to.include('Congratulations Triela (Citizen u4) you have been assigned the role of :good_guy: Body Guard fighting for the Resistance. May only');
         },
-        () => {
+        (target, response, params) => {
+          expect(target).to.equal('u4');
+          expect(response).to.include('TODO: Send body guard the identies of any commanders (sorry)');
+          done();
+        }
+      ];
+
+      gamebot.respond = (target, response, params) => {
+        var expectation = expectedResponses.shift();
+        (expectation) ? expectation(target, response, params): done(response);
+      }
+
+      gamebot.simulateMessage('start resistance', 'u0');
+    });
+
+    it('should assign roles at the start of a game based on a new seed', (done) => {
+      module.chooseSeeds(6, 23);
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.simulateMessage('join the resistance', 'u4');
+      gamebot.simulateMessage('join the resistance', 'u5');
+      gamebot.simulateMessage('join the resistance', 'u6');
+
+      const expectedResponses = [
+        (target, response, params) => {
+          expect(response).to.equal(`Test Bot has started the game; all players will shortly receive their roles.`);
+          expect(target).to.equal('resistance');
+        },
+        (target, response, params) => {
+          expect(response).to.include('Congratulations Angelica (Citizen u6) you have been assigned the role of :bad_guy: False Commander fighting for the Spies. May only ');
+        },
+        (target, response, params) => {
+          expect(response).to.include('TODO: Send list of known spies to spy (sorry)');
+        },
+        (target, response, params) => {
+          expect(response).to.include('Congratulations Rico (Citizen u5) you have been assigned the role of :bad_guy: Spy Reverser fighting for the Spies. May only');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u5');
+          expect(response).to.include('TODO: Send list of known spies to spy (sorry)');
+        },
+        (target, response, params) => {
+          expect(response).to.include('Congratulations Henrietta (Citizen u2) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u2');
+          expect(response).to.include('TODO: Send list of spies known to commander (sorry)');
+        },
+        (target, response, params) => {
+          expect(response).to.include('Congratulations Triela (Citizen u4) you have been assigned the role of :good_guy: Body Guard fighting for the Resistance. May only');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u4');
+          expect(response).to.include('TODO: Send body guard the identies of any commanders (sorry)');
+        },
+        (target, response, params) => {
+          expect(response).to.include('Congratulations Claus (Citizen u3) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance. May only');
+        },
+        (target, response, params) => {
+          expect(response).to.include('Congratulations John (Citizen u1) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only');
           done();
         }
       ];
