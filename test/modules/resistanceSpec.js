@@ -43,13 +43,36 @@ describe('Resistance module', function () {
 
 
   describe('Stop and Reset', () => {
-    it('should repsond to players wanting to stop the current game', (done) => {
+    it('should respond to players wanting to stop the current game', (done) => {
       gamebot.respond = (channel, response, params) => {
         expect(channel).to.equal('resistance');
         expect(response).to.equal('Test Bot has stopped the game; all players have been executed.');
         done();
       };
       gamebot.simulateMessage('stop resistance', 'u0');
+    });
+
+    it('should allow players to reset the game without losing players', (done) => {
+      // Add users
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.respond = (channel, response, params) => {
+        expect(channel).to.equal('resistance');
+        expect(response).to.equal('Test Bot has reset the game. Current players are John, Henrietta, and Claus.');
+        done();
+      };
+      gamebot.simulateMessage('reset resistance', 'u0');
+    });
+
+    it('should allow players to reset the game without any players', (done) => {
+      // Add users
+      gamebot.respond = (channel, response, params) => {
+        expect(channel).to.equal('resistance');
+        expect(response).to.equal('Test Bot has reset the game. No players have registered to play.');
+        done();
+      };
+      gamebot.simulateMessage('reset resistance', 'u0');
     });
   });
 
