@@ -458,6 +458,61 @@ describe('Resistance module', function () {
     });
   });
 
+  describe('Voting on Picks', (done) => {
+    it('should allow players to vote on a valid pick', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.simulateMessage('join the resistance', 'u4');
+      gamebot.simulateMessage('join the resistance', 'u5');
+      gamebot.simulateMessage('join the resistance', 'u6');
+      gamebot.simulateMessage(`resistance pick Claus, John, Rico, Henrietta`, 'u0');
+
+      // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
+      var expectedResponses = [
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`John has voted, 5 players remaining.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Henrietta has voted, 4 players remaining.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Claus has voted, 3 players remaining.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Triela has voted, 2 players remaining.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Rico has voted, 1 players remaining.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Angelica has voted, no players remaining.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 2 rejects (John, Angelica)`);
+          done();
+        }
+      ];
+      gamebot.respond = (target, response, params) => {
+        var expectation = expectedResponses.shift();
+        (expectation) ? expectation(target, response, params): done(response);
+      }
+      gamebot.simulateMessage(`resistance vote reject`, 'u1');
+      gamebot.simulateMessage(`resistance vote accept`, 'u2');
+      gamebot.simulateMessage(`resistance vote accept`, 'u3');
+      gamebot.simulateMessage(`resistance vote accept`, 'u4');
+      gamebot.simulateMessage(`resistance vote accept`, 'u5');
+      gamebot.simulateMessage(`resistance vote reject`, 'u6');
+    });
+  });
+
   describe('Help', () => {
     it('should allow a user to request help on resistance', (done) => {
       gamebot.respond = (target, response, params) => {
