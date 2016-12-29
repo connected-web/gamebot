@@ -22,7 +22,10 @@ describe('Resistance module', function () {
         'u0': 'Test Bot',
         'u1': 'John',
         'u2': 'Henrietta',
-        'u3': 'Claus'
+        'u3': 'Claus',
+        'u4': 'Triela',
+        'u5': 'Rico',
+        'u6': 'Angelica'
       }[id] || id;
     };
 
@@ -35,12 +38,15 @@ describe('Resistance module', function () {
       }, LOG_ENABLED);
     };
 
-    module = resistance(gamebot, SAVE_TO_DISK).then(done);
+    resistance(gamebot, SAVE_TO_DISK)
+      .then((result) => {
+        module = result;
+      })
+      .then(done);
 
     gamebot.respond = () => {};
     gamebot.simulateMessage('stop resistance', 'u0');
   });
-
 
   describe('Stop and Reset', () => {
     it('should respond to players wanting to stop the current game', (done) => {
@@ -158,7 +164,7 @@ describe('Resistance module', function () {
     });
   });
 
-  describe('Role Assignment', () => {
+  describe('Role Information', () => {
     it('should be able to remind players that they have no role assigned', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
       gamebot.respond = (target, response, params) => {
@@ -194,6 +200,71 @@ describe('Resistance module', function () {
         done();
       };
       gamebot.simulateMessage(`describe resistance role Hidden Backstabber Captain`, 'u1', 'sameChannel');
+    });
+  });
+
+  describe('Role Assignment', () => {
+    it('should assign roles at the start of a game', (done) => {
+      module.chooseSeeds(10, 20);
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.simulateMessage('join the resistance', 'u4');
+      gamebot.simulateMessage('join the resistance', 'u5');
+      gamebot.simulateMessage('join the resistance', 'u6');
+
+      const expectedResponses = [
+        (target, response, params) => {
+          expect(response).to.equal(`Test Bot has started the game; all players will shortly receive their roles.`);
+          expect(target).to.equal('resistance');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u3');
+          expect(response).to.include('Congratulations Claus (Citizen u3) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance. May only');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u2');
+          expect(response).to.include('Congratulations Henrietta (Citizen u2) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u5');
+          expect(response).to.include('Congratulations Rico (Citizen u5) you have been assigned the role of :bad_guy: False Commander fighting for the Spies. May only');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u5');
+          expect(response).to.include('TODO: Send list of known spies to spy (sorry)');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u6');
+          expect(response).to.include('Congratulations Angelica (Citizen u6) you have been assigned the role of :bad_guy: Spy Reverser fighting for the Spies. May only');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u6');
+          expect(response).to.include('TODO: Send list of known spies to spy (sorry)');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u1');
+          expect(response).to.include('Congratulations John (Citizen u1) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u1');
+          expect(response).to.include('TODO: Send list of spies known to commander (sorry)');
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u4');
+          expect(response).to.include('Congratulations Triela (Citizen u4) you have been assigned the role of :good_guy: Body Guard fighting for the Resistance. May only');
+        },
+        () => {
+          done();
+        }
+      ];
+
+      gamebot.respond = (target, response, params) => {
+        var expectation = expectedResponses.shift();
+        (expectation) ? expectation(target, response, params): done(response);
+      }
+
+      gamebot.simulateMessage('start resistance', 'u0');
     });
   });
 
