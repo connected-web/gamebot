@@ -511,6 +511,24 @@ describe('Resistance module', function () {
       gamebot.simulateMessage(`resistance vote accept`, 'u5');
       gamebot.simulateMessage(`resistance vote reject`, 'u6');
     });
+
+    it('should prevent players to voting before a pick has been made', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.simulateMessage('join the resistance', 'u4');
+      gamebot.simulateMessage('join the resistance', 'u5');
+      gamebot.simulateMessage('join the resistance', 'u6');
+
+      gamebot.respond = (target, response, params) => {
+        console.log(response);
+        expect(target).to.equal('u3');
+        expect(response).to.include(`Unable to accept your vote, no valid pick has been made yet.`);
+        done();
+      };
+      gamebot.simulateMessage(`resistance vote accept`, 'u3');
+
+    });
   });
 
   describe('Help', () => {
