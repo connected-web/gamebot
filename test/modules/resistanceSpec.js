@@ -106,4 +106,28 @@ describe('Resistance module', function () {
     // Remove user
     gamebot.simulateMessage('leave the resistance', 'u2', 'private');
   });
+
+  it('should remind players that they no role assigned', (done) => {
+    // Add users
+    gamebot.simulateMessage('join the resistance', 'u1');
+    // Then start listening
+    gamebot.respond = (target, response, params) => {
+      expect(target).to.equal('u1');
+      expect(response).to.equal(`John, your role is... unassigned :good_guy: :bad_guy:.`);
+      done();
+    };
+    // Remove user
+    gamebot.simulateMessage(`What's my role?`, 'u1');
+  });
+
+  it('should remind players that are not even playing', (done) => {
+    // Then start listening
+    gamebot.respond = (target, response, params) => {
+      expect(target).to.equal('u1');
+      expect(response).to.equal(`John, you are not part of the resistance. Contact command if you want to join.`);
+      done();
+    };
+    // Remove user
+    gamebot.simulateMessage(`What's my role?`, 'u1');
+  });
 });
