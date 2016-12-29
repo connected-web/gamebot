@@ -388,12 +388,46 @@ describe('Resistance module', function () {
       gamebot.simulateMessage('join the resistance', 'u2');
       gamebot.simulateMessage('join the resistance', 'u5');
       gamebot.simulateMessage('join the resistance', 'u6');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.simulateMessage('join the resistance', 'u4');
+
+      var expectedResponses = [
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Test Bot has picked Henrietta, Rico, and Angelica to go on the next mission.`);
+          expect(module.state.picks).to.deep.equal(['u2', 'u5', 'u6']);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u2');
+          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u5');
+          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u6');
+          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u3');
+          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u4');
+          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+          done();
+        }
+      ];
       gamebot.respond = (target, response, params) => {
-        expect(target).to.equal('resistance');
-        expect(response).to.include(`Test Bot has picked Henrietta, Rico, and Angelica to go on the next mission.`);
-        expect(module.state.picks).to.deep.equal(['u2', 'u5', 'u6']);
-        done();
-      };
+        var expectation = expectedResponses.shift();
+        (expectation) ? expectation(target, response, params): done(response);
+      }
       gamebot.simulateMessage(`resistance pick Henrietta, Rico, Angelica`, 'u0');
     });
 
