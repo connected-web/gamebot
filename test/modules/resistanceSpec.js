@@ -138,7 +138,7 @@ describe('Resistance module', function () {
   it('should list available roles if a given role is not found', (done) => {
     gamebot.respond = (target, response, params) => {
       expect(target.channel).to.equal('sameChannel');
-      expect(response).to.equal(`Did not match role 'Hidden Backstabber Captain'. Available types: Spy Reverser, False Commander, Assassin, Hidden Spy Reverser, Deep Cover, Blind Spy, Rogue Spy, Generic Spy, Rouge, Generic Resistance, Resistance Commander, Body Guard, Resistance Reverser`);
+      expect(response).to.include(`Did not match role 'Hidden Backstabber Captain'. Available types: Spy Reverser, False Commander`);
       done();
     };
     gamebot.simulateMessage(`describe resistance role Hidden Backstabber Captain`, 'u1', 'sameChannel');
