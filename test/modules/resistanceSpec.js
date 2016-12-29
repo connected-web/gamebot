@@ -3,12 +3,15 @@ const api = require('../../lib/api');
 const handleMessage = require('../../lib/handleMessage');
 const resistance = require('../../lib/modules/resistance');
 const NL = '\n';
+const LOG_ENABLED = false;
+const SAVE_TO_DISK = false;
 
 describe('Resistance module', function () {
 
   var module, gamebot;
 
   beforeEach((done) => {
+
     gamebot = api({
       slackbot: {
         id: '@bot'
@@ -29,10 +32,10 @@ describe('Resistance module', function () {
         text: message,
         user: userId,
         channel: channelId
-      });
+      }, LOG_ENABLED);
     };
 
-    module = resistance(gamebot, true).then(done);
+    module = resistance(gamebot, SAVE_TO_DISK).then(done);
   });
 
   it('should respond to players wanting to join', (done) => {
