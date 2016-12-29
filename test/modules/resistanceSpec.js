@@ -295,9 +295,9 @@ describe('Resistance module', function () {
           expect(response).to.include('Congratulations Angelica (Citizen u6) you have been assigned the role of :bad_guy: False Commander fighting for the Spies. May only ');
         },
         (target, response, params) => {
-        expect(response).to.include('The following players are known to you as spies:');
-        expect(response).to.include('>:bad_guy: Angelica');
-        expect(response).to.include('>:bad_guy: Rico');
+          expect(response).to.include('The following players are known to you as spies:');
+          expect(response).to.include('>:bad_guy: Angelica');
+          expect(response).to.include('>:bad_guy: Rico');
         },
         (target, response, params) => {
           expect(response).to.include('Congratulations Rico (Citizen u5) you have been assigned the role of :bad_guy: Spy Reverser fighting for the Spies. May only');
@@ -368,6 +368,17 @@ describe('Resistance module', function () {
         gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', 'sameChannel');
       });
     });
+  });
+
+  describe('Picks', () => {
+    it('should allow a user to pick players', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(target).to.equal('resistance');
+        expect(response).to.include(`Test Bot has picked Henrietta, Rico, and Angelica to go on the next mission.`);
+        done();
+      };
+      gamebot.simulateMessage(`resistance pick Henrietta, Rico, Angelica`, 'u0');
+    })
   });
 
   describe('Help', () => {
