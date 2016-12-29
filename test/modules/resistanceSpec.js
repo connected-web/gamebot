@@ -232,7 +232,9 @@ describe('Resistance module', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('u5');
-          expect(response).to.include('TODO: Send list of known spies to spy (sorry)');
+          expect(response).to.include('The following players are known to you as spies:');
+          expect(response).to.include('>:bad_guy: Rico');
+          expect(response).to.include('>:bad_guy: Angelica');
         },
         (target, response, params) => {
           expect(target).to.equal('u6');
@@ -240,7 +242,9 @@ describe('Resistance module', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('u6');
-          expect(response).to.include('TODO: Send list of known spies to spy (sorry)');
+          expect(response).to.include('The following players are known to you as spies:');
+          expect(response).to.include('>:bad_guy: Rico');
+          expect(response).to.include('>:bad_guy: Angelica');
         },
         (target, response, params) => {
           expect(target).to.equal('u1');
@@ -248,7 +252,9 @@ describe('Resistance module', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('u1');
-          expect(response).to.include('TODO: Send list of spies known to commander (sorry)');
+          expect(response).to.include('The following players are known to you as spies:');
+          expect(response).to.include('>:bad_guy: Rico');
+          expect(response).to.include('>:bad_guy: Angelica');
         },
         (target, response, params) => {
           expect(target).to.equal('u4');
@@ -256,7 +262,9 @@ describe('Resistance module', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('u4');
-          expect(response).to.include('TODO: Send body guard the identies of any commanders (sorry)');
+          expect(response).to.include('The following players are known to you as commanders:');
+          expect(response).to.include('>:bad_guy: ? :good_guy: John');
+          expect(response).to.include('>:bad_guy: ? :good_guy: Rico');
           done();
         }
       ];
@@ -287,28 +295,36 @@ describe('Resistance module', function () {
           expect(response).to.include('Congratulations Angelica (Citizen u6) you have been assigned the role of :bad_guy: False Commander fighting for the Spies. May only ');
         },
         (target, response, params) => {
-          expect(response).to.include('TODO: Send list of known spies to spy (sorry)');
+        expect(response).to.include('The following players are known to you as spies:');
+        expect(response).to.include('>:bad_guy: Angelica');
+        expect(response).to.include('>:bad_guy: Rico');
         },
         (target, response, params) => {
           expect(response).to.include('Congratulations Rico (Citizen u5) you have been assigned the role of :bad_guy: Spy Reverser fighting for the Spies. May only');
         },
         (target, response, params) => {
           expect(target).to.equal('u5');
-          expect(response).to.include('TODO: Send list of known spies to spy (sorry)');
+          expect(response).to.include('The following players are known to you as spies:');
+          expect(response).to.include('>:bad_guy: Angelica');
+          expect(response).to.include('>:bad_guy: Rico');
         },
         (target, response, params) => {
           expect(response).to.include('Congratulations Henrietta (Citizen u2) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only');
         },
         (target, response, params) => {
           expect(target).to.equal('u2');
-          expect(response).to.include('TODO: Send list of spies known to commander (sorry)');
+          expect(response).to.include('The following players are known to you as spies:');
+          expect(response).to.include('>:bad_guy: Angelica');
+          expect(response).to.include('>:bad_guy: Rico');
         },
         (target, response, params) => {
           expect(response).to.include('Congratulations Triela (Citizen u4) you have been assigned the role of :good_guy: Body Guard fighting for the Resistance. May only');
         },
         (target, response, params) => {
           expect(target).to.equal('u4');
-          expect(response).to.include('TODO: Send body guard the identies of any commanders (sorry)');
+          expect(response).to.include('The following players are known to you as commanders:');
+          expect(response).to.include('>:bad_guy: ? :good_guy: Henrietta');
+          expect(response).to.include('>:bad_guy: ? :good_guy: Angelica');
         },
         (target, response, params) => {
           expect(response).to.include('Congratulations Claus (Citizen u3) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance. May only');
