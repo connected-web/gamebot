@@ -199,4 +199,16 @@ describe('Resistance module', function () {
       });
     });
   });
+
+  describe('Help', () => {
+    it('should allow a user to request help on resistance', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(target).to.equal('u1');
+        const botname = '@bot';
+        expect(response).to.include(`You can use these commands wherever ${botname} is present; for sensitive commands please send them directly to ${botname} in private chat.`);
+        done();
+      };
+      gamebot.simulateMessage(`How do I play resistance?`, 'u1');
+    });
+  });
 });
