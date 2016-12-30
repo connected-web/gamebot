@@ -1,64 +1,17 @@
 const expect = require('chai').expect;
-const api = require('../../lib/api');
-const handleMessage = require('../../lib/handleMessage');
 const resistance = require('../../lib/modules/resistance');
+const mockGamebot = require('../lib/mockGamebot');
 const NL = '\n';
-const LOG_ENABLED = false;
 const SAVE_TO_DISK = false;
 
 describe('Resistance module', function () {
 
   var module, gamebot;
 
-  var userIDIndex = {
-    'u0': 'Test Bot',
-    'u1': 'John',
-    'u2': 'Henrietta',
-    'u3': 'Claus',
-    'u4': 'Triela',
-    'u5': 'Rico',
-    'u6': 'Angelica'
-  };
-  var userNameIndex = {};
-  Object.keys(userIDIndex).forEach((userId) => {
-    userNameIndex[userIDIndex[userId].toLowerCase()] = userId;
-  });
-
-  beforeEach((done) => {
-    gamebot = api({
-      slackbot: {
-        id: '@bot'
-      }
-    });
-
-    gamebot.getUserName = (id) => {
-      return userIDIndex[id] || id;
-    };
-
-    gamebot.findUserByName = (name) => {
-      return {
-        name,
-        id: userNameIndex[(name + '').toLowerCase()]
-      };
-    }
-
-    gamebot.simulateMessage = (message, userId, channelId) => {
-      handleMessage(gamebot, {
-        type: 'message',
-        text: message,
-        user: userId,
-        channel: channelId
-      }, LOG_ENABLED);
-    };
-
-    resistance(gamebot, SAVE_TO_DISK)
-      .then((result) => {
-        module = result;
-      })
-      .then(done);
-
-    gamebot.respond = () => {};
-    gamebot.simulateMessage('stop resistance', 'u0');
+  beforeEach(() => {
+    gamebot = mockGamebot();
+    module = resistance(gamebot, SAVE_TO_DISK);
+    module.reset();
   });
 
   describe('Stop and Reset', () => {
@@ -521,7 +474,6 @@ describe('Resistance module', function () {
       gamebot.simulateMessage('join the resistance', 'u6');
 
       gamebot.respond = (target, response, params) => {
-        console.log(response);
         expect(target).to.equal('u3');
         expect(response).to.include(`Unable to accept your vote, no valid pick has been made yet.`);
         done();
