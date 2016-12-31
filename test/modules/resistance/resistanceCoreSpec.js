@@ -304,12 +304,34 @@ describe('Resistance module (core)', function () {
       gamebot.simulateMessage(`play resistance reverse`, 'u1');
     });
 
-    xit('should accept votes from players on mission', (done) => {
+    it('should reject actions for players who have already played', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
       gamebot.respond = (target, response, params) => {
         expect(target).to.equal('u1');
-        expect(response).to.include(`Thank you John, your mission action has been accepted.`);
+        expect(response).to.include(`Unable to accept your mission action; your mission action has already completed.`);
         done();
+      };
+      module.state.picks = ['u1'];
+      module.state.plays = {
+        u1: 'success'
+      };
+      module.state.approved = true;
+      gamebot.simulateMessage(`play resistance success`, 'u1');
+    });
+
+    it('should accept actions from players on mission', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.respond = (target, response, params) => {
+        expect(target).to.equal('u1');
+        expect(response).to.include(`Thank you John, your mission action has been completed.`);
+        gamebot.respond = (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include('John has completed their mission action.');
+          expect(module.state.plays).to.deep.equal({
+            'u1': 'success'
+          });
+          done();
+        };
       };
       module.state.picks = ['u1'];
       module.state.approved = true;
