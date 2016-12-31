@@ -182,6 +182,26 @@ describe('Resistance module (6 player)', function () {
         (target, response, params) => {
           expect(target).to.equal('resistance');
           expect(response).to.include(`Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 2 rejects (John, Angelica)`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u3');
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u1');
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u5');
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u2');
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Players Claus, Henrietta, John, and Rico have been assigned to the current mission; awaiting their responses.`);
           done();
         }
       ];
@@ -204,6 +224,51 @@ describe('Resistance module (6 player)', function () {
         done();
       };
       gamebot.simulateMessage(`resistance vote accept`, 'u3');
+    });
+  });
+
+  describe('Notifications to players on a mission', () => {
+    it('should allow players to vote on a valid pick', (done) => {
+      gamebot.simulateMessage(`resistance pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`resistance vote reject`, 'u1');
+      gamebot.simulateMessage(`resistance vote accept`, 'u2');
+      gamebot.simulateMessage(`resistance vote accept`, 'u3');
+      gamebot.simulateMessage(`resistance vote accept`, 'u4');
+      gamebot.simulateMessage(`resistance vote accept`, 'u5');
+
+      // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
+      var expectedResponses = [
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Angelica has voted, no players remaining.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 2 rejects (John, Angelica)`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u3');
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u1');
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u5');
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Players Claus, John, and Rico have been assigned to the current mission; awaiting their responses.`);
+          done();
+        }
+      ];
+      gamebot.respond = (target, response, params) => {
+        var expectation = expectedResponses.shift();
+        (expectation) ? expectation(target, response, params): done(response);
+      }
+      gamebot.simulateMessage(`resistance vote reject`, 'u6');
     });
   });
 
