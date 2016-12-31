@@ -281,7 +281,7 @@ describe('Resistance module (core)', function () {
       gamebot.simulateMessage(`play resistance success`, 'u1');
     });
 
-    xit('should prevent players playing cards without an approved pick', (done) => {
+    it('should prevent players playing cards without an approved pick', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
       gamebot.respond = (target, response, params) => {
         expect(target).to.equal('u1');
