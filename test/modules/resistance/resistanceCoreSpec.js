@@ -292,7 +292,7 @@ describe('Resistance module (core)', function () {
       gamebot.simulateMessage(`play resistance fail`, 'u1');
     });
 
-    xit('should prevent non-mission players from playing cards', (done) => {
+    it('should prevent non-mission players from playing cards', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
       gamebot.respond = (target, response, params) => {
         expect(target).to.equal('u1');
