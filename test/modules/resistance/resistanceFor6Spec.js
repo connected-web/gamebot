@@ -11,17 +11,18 @@ describe('Resistance module (6 player)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
+
+    gamebot.simulateMessage('join the resistance', 'u1');
+    gamebot.simulateMessage('join the resistance', 'u2');
+    gamebot.simulateMessage('join the resistance', 'u3');
+    gamebot.simulateMessage('join the resistance', 'u4');
+    gamebot.simulateMessage('join the resistance', 'u5');
+    gamebot.simulateMessage('join the resistance', 'u6');
   });
 
   describe('Role Assignment', () => {
     it('should assign roles at the start of a game', (done) => {
       module.chooseSeeds(10, 20);
-      gamebot.simulateMessage('join the resistance', 'u1');
-      gamebot.simulateMessage('join the resistance', 'u2');
-      gamebot.simulateMessage('join the resistance', 'u3');
-      gamebot.simulateMessage('join the resistance', 'u4');
-      gamebot.simulateMessage('join the resistance', 'u5');
-      gamebot.simulateMessage('join the resistance', 'u6');
 
       const expectedResponses = [
         (target, response, params) => {
@@ -89,12 +90,6 @@ describe('Resistance module (6 player)', function () {
 
     it('should assign roles at the start of a game based on a new seed', (done) => {
       module.chooseSeeds(6, 23);
-      gamebot.simulateMessage('join the resistance', 'u1');
-      gamebot.simulateMessage('join the resistance', 'u2');
-      gamebot.simulateMessage('join the resistance', 'u3');
-      gamebot.simulateMessage('join the resistance', 'u4');
-      gamebot.simulateMessage('join the resistance', 'u5');
-      gamebot.simulateMessage('join the resistance', 'u6');
 
       const expectedResponses = [
         (target, response, params) => {
@@ -154,89 +149,8 @@ describe('Resistance module (6 player)', function () {
     });
   });
 
-  describe('Picks', () => {
-    it('should allow a user to pick players', (done) => {
-      gamebot.simulateMessage('join the resistance', 'u2');
-      gamebot.simulateMessage('join the resistance', 'u5');
-      gamebot.simulateMessage('join the resistance', 'u6');
-      gamebot.simulateMessage('join the resistance', 'u3');
-      gamebot.simulateMessage('join the resistance', 'u4');
-
-      var expectedResponses = [
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`Test Bot has picked Henrietta, Rico, and Angelica to go on the next mission.`);
-          expect(module.state.picks).to.deep.equal(['u2', 'u5', 'u6']);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('u2');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('u5');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('u6');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('u3');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('u4');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
-          done();
-        }
-      ];
-      gamebot.respond = (target, response, params) => {
-        var expectation = expectedResponses.shift();
-        (expectation) ? expectation(target, response, params): done(response);
-      }
-      gamebot.simulateMessage(`resistance pick Henrietta, Rico, Angelica`, 'u0');
-    });
-
-    it('should prevent picking players who have not joined the game', (done) => {
-      gamebot.simulateMessage('join the resistance', 'u2');
-      gamebot.simulateMessage('join the resistance', 'u5');
-      gamebot.simulateMessage('join the resistance', 'u6');
-      gamebot.respond = (target, response, params) => {
-        expect(target).to.equal('resistance');
-        expect(response).to.include(`Some of the picks were not recognised as players; John.`);
-        expect(module.state.picks).to.deep.equal([]);
-        done();
-      };
-      gamebot.simulateMessage(`resistance pick Rico, John, Henrietta`, 'u0');
-    });
-
-    it('should prevent picking players who have urecognised names', (done) => {
-      gamebot.simulateMessage('join the resistance', 'u1');
-      gamebot.simulateMessage('join the resistance', 'u2');
-      gamebot.simulateMessage('join the resistance', 'u3');
-      gamebot.respond = (target, response, params) => {
-        expect(target).to.equal('resistance');
-        expect(response).to.include(`Some of the picks were not recognised as players; James.`);
-        expect(module.state.picks).to.deep.equal([]);
-        done();
-      };
-      gamebot.simulateMessage(`resistance pick Claus, John, James, Henrietta`, 'u0');
-    });
-  });
-
   describe('Voting on Picks', (done) => {
     it('should allow players to vote on a valid pick', (done) => {
-      gamebot.simulateMessage('join the resistance', 'u1');
-      gamebot.simulateMessage('join the resistance', 'u2');
-      gamebot.simulateMessage('join the resistance', 'u3');
-      gamebot.simulateMessage('join the resistance', 'u4');
-      gamebot.simulateMessage('join the resistance', 'u5');
-      gamebot.simulateMessage('join the resistance', 'u6');
       gamebot.simulateMessage(`resistance pick Claus, John, Rico, Henrietta`, 'u0');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
@@ -284,20 +198,12 @@ describe('Resistance module (6 player)', function () {
     });
 
     it('should prevent players to voting before a pick has been made', (done) => {
-      gamebot.simulateMessage('join the resistance', 'u1');
-      gamebot.simulateMessage('join the resistance', 'u2');
-      gamebot.simulateMessage('join the resistance', 'u3');
-      gamebot.simulateMessage('join the resistance', 'u4');
-      gamebot.simulateMessage('join the resistance', 'u5');
-      gamebot.simulateMessage('join the resistance', 'u6');
-
       gamebot.respond = (target, response, params) => {
         expect(target).to.equal('u3');
         expect(response).to.include(`Unable to accept your vote, no valid pick has been made yet.`);
         done();
       };
       gamebot.simulateMessage(`resistance vote accept`, 'u3');
-
     });
   });
 });
