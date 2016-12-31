@@ -245,10 +245,10 @@ describe('Resistance module (6 player)', function () {
         var expectation = expectedResponses.shift();
         (expectation) ? expectation(target, response, params): done(response);
       };
-      gamebot.simulateMessage(`resistance play success`, 'u3');
-      gamebot.simulateMessage(`resistance vote fail`, 'u1');
-      gamebot.simulateMessage(`resistance vote reverse`, 'u5');
-      gamebot.simulateMessage(`resistance vote success`, 'u2');
+      gamebot.simulateMessage(`play resistance success`, 'u3');
+      gamebot.simulateMessage(`play resistance fail`, 'u1');
+      gamebot.simulateMessage(`play resistance reverse`, 'u5');
+      gamebot.simulateMessage(`play resistance success`, 'u2');
     });
   });
 });

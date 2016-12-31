@@ -271,14 +271,14 @@ describe('Resistance module (core)', function () {
   });
 
   describe('Playing cards onto a mission', () => {
-    xit('should prevent non-players from playing cards', (done) => {
+    it('should prevent non-players from playing cards', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(target).to.equal('u1');
         expect(response).to.include(`Unable to accept your mission action; you are not part of the current game.`);
         expect(module.state.approved).to.equal(false);
         done();
       };
-      gamebot.simulateMessage(`resistance play success`, 'u1');
+      gamebot.simulateMessage(`play resistance success`, 'u1');
     });
 
     xit('should prevent players playing cards without an approved pick', (done) => {
@@ -289,7 +289,7 @@ describe('Resistance module (core)', function () {
         done();
       };
       expect(module.state.approved).to.equal(false);
-      gamebot.simulateMessage(`resistance play fail`, 'u1');
+      gamebot.simulateMessage(`play resistance fail`, 'u1');
     });
 
     xit('should prevent non-mission players from playing cards', (done) => {
@@ -301,7 +301,7 @@ describe('Resistance module (core)', function () {
       };
       module.state.picks = ['u0'];
       module.state.approved = true;
-      gamebot.simulateMessage(`resistance play reverse`, 'u1');
+      gamebot.simulateMessage(`play resistance reverse`, 'u1');
     });
 
     xit('should accept votes from players on mission', (done) => {
@@ -313,7 +313,7 @@ describe('Resistance module (core)', function () {
       };
       module.state.picks = ['u1'];
       module.state.approved = true;
-      gamebot.simulateMessage(`resistance play success`, 'u1');
+      gamebot.simulateMessage(`play resistance success`, 'u1');
     });
   });
 
