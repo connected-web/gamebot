@@ -256,7 +256,7 @@ describe('Resistance module (core)', function () {
       gamebot.simulateMessage(`resistance pick Rico, John, Henrietta`, 'u0');
     });
 
-    it('should prevent picking players who have urecognised names', (done) => {
+    it('should prevent picking players who have unrecognised names', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
       gamebot.simulateMessage('join the resistance', 'u2');
       gamebot.simulateMessage('join the resistance', 'u3');
