@@ -333,7 +333,7 @@ describe('Resistance module (core)', function () {
           done();
         };
       };
-      module.state.picks = ['u1'];
+      module.state.picks = ['u1', 'u2'];
       module.state.approved = true;
       gamebot.simulateMessage(`play resistance success`, 'u1');
     });
