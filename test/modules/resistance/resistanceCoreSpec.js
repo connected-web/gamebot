@@ -30,7 +30,7 @@ describe('Resistance module (core)', function () {
       gamebot.simulateMessage('join the resistance', 'u3');
       gamebot.respond = (channel, response, params) => {
         expect(channel).to.equal('resistance');
-        expect(response).to.equal('Test Bot has reset the game. Current players are John, Henrietta, and Claus.');
+        expect(response).to.equal('Test Bot has reset the game. Current players are Claus, Henrietta, and John.');
         done();
       };
       gamebot.simulateMessage('reset resistance', 'u0');
@@ -206,32 +206,32 @@ describe('Resistance module (core)', function () {
       var expectedResponses = [
         (target, response, params) => {
           expect(target).to.equal('resistance');
-          expect(response).to.include(`Test Bot has picked Henrietta, Rico, and Angelica to go on the next mission.`);
+          expect(response).to.include(`Test Bot has picked Angelica, Henrietta, and Rico to go on the next mission.`);
           expect(module.state.picks).to.deep.equal(['u2', 'u5', 'u6']);
         },
         (target, response, params) => {
           expect(target).to.equal('u2');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Angelica, Henrietta, and Rico`);
           expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u5');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Angelica, Henrietta, and Rico`);
           expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u6');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Angelica, Henrietta, and Rico`);
           expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u3');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Angelica, Henrietta, and Rico`);
           expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u4');
-          expect(response).to.include(`Henrietta, Rico, and Angelica`);
+          expect(response).to.include(`Angelica, Henrietta, and Rico`);
           expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
           done();
         }
