@@ -325,5 +325,55 @@ describe('Resistance module (6 player)', function () {
       gamebot.simulateMessage(`play resistance reverse`, 'u5');
       gamebot.simulateMessage(`play resistance reverse`, 'u2');
     });
+
+    it('should allow players to fail a 3 player mission with a single reverse', (done) => {
+      gamebot.simulateMessage(`resistance pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`resistance vote reject`, 'u1');
+      gamebot.simulateMessage(`resistance vote accept`, 'u2');
+      gamebot.simulateMessage(`resistance vote accept`, 'u3');
+      gamebot.simulateMessage(`resistance vote accept`, 'u4');
+      gamebot.simulateMessage(`resistance vote accept`, 'u5');
+      gamebot.simulateMessage(`resistance vote reject`, 'u6');
+
+      // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
+      var expectedResponses = [
+        (target, response, params) => {
+          expect(target).to.equal('u3');
+          expect(response).to.include(`Thank you Claus, your mission action has been completed.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Claus has completed their mission action.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u1');
+          expect(response).to.include(`Thank you John, your mission action has been completed.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`John has completed their mission action.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u5');
+          expect(response).to.include(`Thank you Rico, your mission action has been completed.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include(`Rico has completed their mission action.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response.split(NL)).to.deep.equal([`All mission actions have been completed; the results are as follows:`, `>Success (2) :success: :success:`, `>Reverse (1) :reverse:`, 'Overall mission status: Spies :bad_guy: victory']);
+          done();
+        }
+      ];
+      gamebot.respond = (target, response, params) => {
+        var expectation = expectedResponses.shift();
+        (expectation) ? expectation(target, response, params): done(response);
+      };
+      gamebot.simulateMessage(`play resistance success`, 'u3');
+      gamebot.simulateMessage(`play resistance reverse`, 'u1');
+      gamebot.simulateMessage(`play resistance success`, 'u5');
+    });
   });
 });
