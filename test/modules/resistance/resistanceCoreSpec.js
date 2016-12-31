@@ -270,6 +270,53 @@ describe('Resistance module (core)', function () {
     });
   });
 
+  describe('Playing cards onto a mission', () => {
+    xit('should prevent non-players from playing cards', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(target).to.equal('u1');
+        expect(response).to.include(`Unable to accept your mission action; you are not part of the current game.`);
+        expect(module.state.approved).to.equal(false);
+        done();
+      };
+      gamebot.simulateMessage(`resistance play success`, 'u1');
+    });
+
+    xit('should prevent players playing cards without an approved pick', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.respond = (target, response, params) => {
+        expect(target).to.equal('u1');
+        expect(response).to.include(`Unable to accept your mission action; no mission has been approved yet.`);
+        done();
+      };
+      expect(module.state.approved).to.equal(false);
+      gamebot.simulateMessage(`resistance play fail`, 'u1');
+    });
+
+    xit('should prevent non-mission players from playing cards', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.respond = (target, response, params) => {
+        expect(target).to.equal('u1');
+        expect(response).to.include(`Unable to accept your mission action; you are not part of the approved mission.`);
+        done();
+      };
+      module.state.picks = ['u0'];
+      module.state.approved = true;
+      gamebot.simulateMessage(`resistance play reverse`, 'u1');
+    });
+
+    xit('should accept votes from players on mission', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.respond = (target, response, params) => {
+        expect(target).to.equal('u1');
+        expect(response).to.include(`Thank you John, your mission action has been accepted.`);
+        done();
+      };
+      module.state.picks = ['u1'];
+      module.state.approved = true;
+      gamebot.simulateMessage(`resistance play success`, 'u1');
+    });
+  });
+
   describe('Help', () => {
     it('should allow a user to request help on resistance', (done) => {
       gamebot.respond = (target, response, params) => {

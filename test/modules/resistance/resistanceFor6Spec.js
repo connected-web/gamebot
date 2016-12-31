@@ -206,4 +206,49 @@ describe('Resistance module (6 player)', function () {
       gamebot.simulateMessage(`resistance vote accept`, 'u3');
     });
   });
+
+  describe('Playing cards onto a mission', () => {
+    xit('should allow players on a mission to play a card', (done) => {
+      gamebot.simulateMessage(`resistance pick Claus, John, Rico, Henrietta`, 'u0');
+      gamebot.simulateMessage(`resistance vote reject`, 'u1');
+      gamebot.simulateMessage(`resistance vote accept`, 'u2');
+      gamebot.simulateMessage(`resistance vote accept`, 'u3');
+      gamebot.simulateMessage(`resistance vote accept`, 'u4');
+      gamebot.simulateMessage(`resistance vote accept`, 'u5');
+      gamebot.simulateMessage(`resistance vote reject`, 'u6');
+
+      // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
+      var expectedResponses = [
+        (target, response, params) => {
+          expect(target).to.equal('u3');
+          expect(response).to.include(`Thank you Claus, your mission action has been accepted.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u1');
+          expect(response).to.include(`Thank you John, your mission action has been accepted.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u5');
+          expect(response).to.include(`Thank you Rico, your mission action has been accepted.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('u2');
+          expect(response).to.include(`Thank you Henrietta, your mission action has been accepted.`);
+        },
+        (target, response, params) => {
+          expect(target).to.equal('resistance');
+          expect(response).to.include([`All mission actions have been completed; the results are as follows:`, `> Success (2) :succ: :succ:`, `>Fail (1) :fail:`, `>Reverse (1) :reverse:`, 'Overall mission status: :good_guy: victory'].join(NL));
+          done();
+        }
+      ];
+      gamebot.respond = (target, response, params) => {
+        var expectation = expectedResponses.shift();
+        (expectation) ? expectation(target, response, params): done(response);
+      };
+      gamebot.simulateMessage(`resistance play success`, 'u3');
+      gamebot.simulateMessage(`resistance vote fail`, 'u1');
+      gamebot.simulateMessage(`resistance vote reverse`, 'u5');
+      gamebot.simulateMessage(`resistance vote success`, 'u2');
+    });
+  });
 });
