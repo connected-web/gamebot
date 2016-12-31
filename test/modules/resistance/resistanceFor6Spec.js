@@ -275,33 +275,12 @@ describe('Resistance module (6 player)', function () {
       gamebot.simulateMessage(`resistance vote accept`, 'u4');
       gamebot.simulateMessage(`resistance vote accept`, 'u5');
       gamebot.simulateMessage(`resistance vote reject`, 'u6');
+      gamebot.simulateMessage(`play resistance success`, 'u3');
+      gamebot.simulateMessage(`play resistance fail`, 'u1');
+      gamebot.simulateMessage(`play resistance reverse`, 'u5');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
       var expectedResponses = [
-        (target, response, params) => {
-          expect(target).to.equal('u3');
-          expect(response).to.include(`Thank you Claus, your mission action has been completed.`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`Claus has completed their mission action.`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('u1');
-          expect(response).to.include(`Thank you John, your mission action has been completed.`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`John has completed their mission action.`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('u5');
-          expect(response).to.include(`Thank you Rico, your mission action has been completed.`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`Rico has completed their mission action.`);
-        },
         (target, response, params) => {
           expect(target).to.equal('u2');
           expect(response).to.include(`Thank you Henrietta, your mission action has been completed.`);
@@ -320,9 +299,6 @@ describe('Resistance module (6 player)', function () {
         var expectation = expectedResponses.shift();
         (expectation) ? expectation(target, response, params): done(response);
       };
-      gamebot.simulateMessage(`play resistance success`, 'u3');
-      gamebot.simulateMessage(`play resistance fail`, 'u1');
-      gamebot.simulateMessage(`play resistance reverse`, 'u5');
       gamebot.simulateMessage(`play resistance reverse`, 'u2');
     });
 
@@ -334,25 +310,11 @@ describe('Resistance module (6 player)', function () {
       gamebot.simulateMessage(`resistance vote accept`, 'u4');
       gamebot.simulateMessage(`resistance vote accept`, 'u5');
       gamebot.simulateMessage(`resistance vote reject`, 'u6');
+      gamebot.simulateMessage(`play resistance success`, 'u3');
+      gamebot.simulateMessage(`play resistance reverse`, 'u1');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
       var expectedResponses = [
-        (target, response, params) => {
-          expect(target).to.equal('u3');
-          expect(response).to.include(`Thank you Claus, your mission action has been completed.`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`Claus has completed their mission action.`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('u1');
-          expect(response).to.include(`Thank you John, your mission action has been completed.`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`John has completed their mission action.`);
-        },
         (target, response, params) => {
           expect(target).to.equal('u5');
           expect(response).to.include(`Thank you Rico, your mission action has been completed.`);
@@ -371,8 +333,6 @@ describe('Resistance module (6 player)', function () {
         var expectation = expectedResponses.shift();
         (expectation) ? expectation(target, response, params): done(response);
       };
-      gamebot.simulateMessage(`play resistance success`, 'u3');
-      gamebot.simulateMessage(`play resistance reverse`, 'u1');
       gamebot.simulateMessage(`play resistance success`, 'u5');
     });
   });
