@@ -1,3 +1,6 @@
 {
-  "GAMEBOT_TOKEN": ""
+    "GAMEBOT_TOKEN": "",
+    "GAMEBOT_NAME": false,
+    "GAMEBOT_ID": false,
+    "GAMEBOT_AVATAR": false
 }
