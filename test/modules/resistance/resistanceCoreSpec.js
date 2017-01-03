@@ -268,6 +268,17 @@ describe('Resistance module (core)', function () {
       };
       gamebot.simulateMessage(`resistance pick Claus, John, James, Henrietta`, 'u0');
     });
+
+    it('should prevent non-players from voting on a pick', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage(`resistance pick John`, 'u6');
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include(`Unable to accept your vote; you are not part of the current game.`);
+        expect(target).to.equal('u6');
+        done();
+      };
+      gamebot.simulateMessage(`resistance vote accept`, 'u6');
+    });
   });
 
   describe('Playing cards onto a mission', () => {
