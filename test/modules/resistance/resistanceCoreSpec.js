@@ -6,6 +6,7 @@ const NL = '\n';
 describe('Resistance module (core)', function () {
 
   var module, gamebot;
+  const gameChannel = 'resistance';
 
   beforeEach(() => {
     gamebot = mockGamebot();
@@ -93,7 +94,7 @@ describe('Resistance module (core)', function () {
       gamebot.simulateMessage('join the resistance', 'u3');
       // Then start listening
       gamebot.respond = (target, response, params) => {
-        expect(target.channel).to.equal('sameChannel');
+        expect(target.channel).to.equal(gameChannel);
         expect(response).to.equal(`Goodbye comrade Henrietta, until next time.`);
         gamebot.respond = (channel, response, params) => {
           expect(channel).to.equal('resistance');
@@ -102,18 +103,18 @@ describe('Resistance module (core)', function () {
         };
       };
       // Remove user
-      gamebot.simulateMessage('leave the resistance', 'u2', 'sameChannel');
+      gamebot.simulateMessage('leave the resistance', 'u2', gameChannel);
     });
   });
 
   describe('List Players', () => {
     it('should be able respond with an empty list of players', (done) => {
       gamebot.respond = (target, response, params) => {
-        expect(target.channel).to.equal('sameChannel');
+        expect(target.channel).to.equal(gameChannel);
         expect(response).to.equal(`No one is currently registered to play resistance.`);
         done();
       };
-      gamebot.simulateMessage(`Who's playing resistance?`, 'u1', 'sameChannel');
+      gamebot.simulateMessage(`Who's playing resistance?`, 'u1', gameChannel);
     });
 
     it('should be able respond with the current list of players', (done) => {
@@ -121,11 +122,11 @@ describe('Resistance module (core)', function () {
       gamebot.simulateMessage('join the resistance', 'u2');
       gamebot.simulateMessage('join the resistance', 'u3');
       gamebot.respond = (target, response, params) => {
-        expect(target.channel).to.equal('sameChannel');
+        expect(target.channel).to.equal(gameChannel);
         expect(response).to.equal(`The current list of players is: John, Henrietta, Claus`);
         done();
       };
-      gamebot.simulateMessage(`Who's playing resistance?`, 'u1', 'sameChannel');
+      gamebot.simulateMessage(`Who's playing resistance?`, 'u1', gameChannel);
     });
   });
 
@@ -151,45 +152,58 @@ describe('Resistance module (core)', function () {
 
     it('should be able to describe a given role', (done) => {
       gamebot.respond = (target, response, params) => {
-        expect(target.channel).to.equal('sameChannel');
+        expect(target.channel).to.equal(gameChannel);
         expect(response).to.equal(['>Hidden Spy Reverser : Team :bad_guy:.', '>May only play :success: or :reverse:; hidden to the Commander. Attempt to fail three missions for your team.'].join(NL));
         done();
       };
-      gamebot.simulateMessage(`describe resistance role hidden spy reverser`, 'u1', 'sameChannel');
+      gamebot.simulateMessage(`describe resistance role hidden spy reverser`, 'u1', gameChannel);
     });
 
     it('should list available roles if a given role is not found', (done) => {
       gamebot.respond = (target, response, params) => {
-        expect(target.channel).to.equal('sameChannel');
+        expect(target.channel).to.equal(gameChannel);
         expect(response).to.include(`Did not match role 'Hidden Backstabber Captain'. Available types: Spy Reverser, False Commander`);
         done();
       };
-      gamebot.simulateMessage(`describe resistance role Hidden Backstabber Captain`, 'u1', 'sameChannel');
+      gamebot.simulateMessage(`describe resistance role Hidden Backstabber Captain`, 'u1', gameChannel);
     });
   });
 
   describe('Role Configurations', () => {
+    [4].forEach((x) => {
+      it(`should list the available roles for ${x} players`, (done) => {
+        gamebot.respond = (target, response, params) => {
+          expect(target.channel).to.equal(gameChannel);
+          expect(response).to.include(`The resistance roles for ${x} players are:`);
+          expect(response).to.include(`:good_guy: Resistance Reverser`);
+          expect(response).to.include(`:bad_guy: Hidden Spy Reverser`);
+          done();
+        };
+        gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', gameChannel);
+      });
+    });
+
     [5, 6, 7, 8, 9, 10].forEach((x) => {
       it(`should list the available roles for ${x} players`, (done) => {
         gamebot.respond = (target, response, params) => {
-          expect(target.channel).to.equal('sameChannel');
+          expect(target.channel).to.equal(gameChannel);
           expect(response).to.include(`The resistance roles for ${x} players are:`);
           expect(response).to.include(`:good_guy: Generic Resistance`);
           expect(response).to.include(`:bad_guy: False Commander`);
           done();
         };
-        gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', 'sameChannel');
+        gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', gameChannel);
       });
     });
 
-    [1, 2, 3, 4, 11].forEach((x) => {
+    [1, 2, 3, 11].forEach((x) => {
       it(`should let the user know that there are no configuration for ${x} players`, (done) => {
         gamebot.respond = (target, response, params) => {
-          expect(target.channel).to.equal('sameChannel');
+          expect(target.channel).to.equal(gameChannel);
           expect(response).to.include(`No resistance roles are configured for ${x} players.`);
           done();
         };
-        gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', 'sameChannel');
+        gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', gameChannel);
       });
     });
   });

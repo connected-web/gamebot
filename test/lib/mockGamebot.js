@@ -12,6 +12,7 @@ function mockGamebot() {
     'u5': 'Rico',
     'u6': 'Angelica'
   };
+  var channelIDIndex = {};
 
   var userNameIndex = {};
   Object.keys(userIDIndex).forEach((userId) => {
@@ -28,6 +29,10 @@ function mockGamebot() {
     return userIDIndex[id] || id;
   };
 
+  gamebot.getChannelName = (id) => {
+    return channelIDIndex[id] || id;
+  }
+
   gamebot.findUserByName = (name) => {
     return {
       name,
@@ -40,10 +45,10 @@ function mockGamebot() {
       type: 'message',
       text: message,
       user: userId,
-      channel: channelId
+      channel: channelId || 'private'
     }, LOG_ENABLED);
   };
-  
+
   gamebot.respond = () => {};
 
   return gamebot;
