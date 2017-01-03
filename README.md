@@ -2,6 +2,14 @@
 
 A slackbot for board games and games channels. Responds to gameplay related chatter.
 
+## Features
+- Basic understanding of users and channels
+- Private and non-private messaging
+- Modular structure for adding new responses
+- Accusation module for making baseless accusations
+- Howl module for occasional howling
+- Resistance module for playing group games of resistance
+
 ## Development
 
 - Checkout the code
@@ -20,6 +28,7 @@ Gamebot is currently hosted on a private openstack instance, if you've been give
 
 Copy the private key to `ssh/cloud.key`, then run `./redeploy.sh` to prompt the server to update.
 
+You will need to create `tokens.json` based on `tokens.template.json` and feed it with the a slackbot token in order to connect.
 
 ## Website
 
