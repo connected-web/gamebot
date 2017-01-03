@@ -20,12 +20,21 @@ describe('Resistance module (5 player)', function () {
   });
 
   describe('Role Assignment', () => {
+    it('should assign a player order at the start of a game', (done) => {
+      module.chooseSeeds(145, 455);
+      gamebot.respond = (target, response, params) => {};
+      gamebot.simulateMessage('start resistance', 'u0');
+      expect(module.state.playerOrder).to.deep.equal(['u5', 'u3', 'u4', 'u2', 'u1']);
+      expect(module.state.turnCounter).to.equal(0);
+      done();
+    });
+
     it('should assign roles at the start of a game', (done) => {
       module.chooseSeeds(245, 272);
 
       const expectedResponses = [
         (target, response, params) => {
-          expect(response).to.equal(`Test Bot has started the game; all players will shortly receive their roles.`);
+          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: John, Rico, Triela, Henrietta, then Claus. John has first pick.`]);
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
@@ -81,7 +90,7 @@ describe('Resistance module (5 player)', function () {
 
       const expectedResponses = [
         (target, response, params) => {
-          expect(response).to.equal(`Test Bot has started the game; all players will shortly receive their roles.`);
+          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: John, Henrietta, Claus, Triela, then Rico. John has first pick.`]);
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
