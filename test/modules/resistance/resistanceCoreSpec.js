@@ -212,27 +212,27 @@ describe('Resistance module (core)', function () {
         (target, response, params) => {
           expect(target).to.equal('u2');
           expect(response).to.include(`Angelica, Henrietta, and Rico`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+          expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u5');
           expect(response).to.include(`Angelica, Henrietta, and Rico`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+          expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u6');
           expect(response).to.include(`Angelica, Henrietta, and Rico`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+          expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u3');
           expect(response).to.include(`Angelica, Henrietta, and Rico`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+          expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u4');
           expect(response).to.include(`Angelica, Henrietta, and Rico`);
-          expect(response).to.include(`Please vote by responding with *resistance vote accept* or *resistance vote reject*`);
+          expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
           done();
         }
       ];
@@ -277,7 +277,7 @@ describe('Resistance module (core)', function () {
         expect(target).to.equal('u6');
         done();
       };
-      gamebot.simulateMessage(`resistance vote accept`, 'u6');
+      gamebot.simulateMessage(`vote accept`, 'u6');
     });
   });
 
