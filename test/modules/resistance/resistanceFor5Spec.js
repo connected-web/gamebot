@@ -236,6 +236,21 @@ describe('Resistance module (5 player)', function () {
       }
       gamebot.simulateMessage(`vote accept`, 'u5');
     });
+
+    it('should allow players to change their pick', (done) => {
+      gamebot.simulateMessage(`resistance pick Claus, John, Rico, Henrietta`, 'u0');
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('John has voted, 4 players remaining.');
+        expect(module.state.votes.u1).to.equal('reject');
+        gamebot.respond = (target, response, params) => {
+          expect(response).to.include('John has voted, 4 players remaining.');
+          expect(module.state.votes.u1).to.equal('accept');
+          done();
+        };
+      };
+      gamebot.simulateMessage(`vote reject`, 'u1');
+      gamebot.simulateMessage(`vote accept`, 'u1');
+    });
   });
 
   describe('Playing cards onto a mission', () => {
