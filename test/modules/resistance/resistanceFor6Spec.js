@@ -11,6 +11,7 @@ describe('Resistance module (6 player)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
+    module.chooseSeeds(6, 6);
 
     gamebot.simulateMessage('join the resistance', 'u1');
     gamebot.simulateMessage('join the resistance', 'u2');
@@ -26,7 +27,7 @@ describe('Resistance module (6 player)', function () {
 
       const expectedResponses = [
         (target, response, params) => {
-          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: Triela, John, Angelica, Rico, Henrietta, then Claus. Triela has first pick.`]);
+          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: Triela, John, Angelica, Rico, Henrietta, then Claus. Triela is the first leader; pick a team using **pick Name1, Name 2, ...**`]);
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
@@ -93,7 +94,7 @@ describe('Resistance module (6 player)', function () {
 
       const expectedResponses = [
         (target, response, params) => {
-          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: John, Claus, Triela, Henrietta, Rico, then Angelica. John has first pick.`]);
+          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: John, Claus, Triela, Henrietta, Rico, then Angelica. John is the first leader; pick a team using **pick Name1, Name 2, ...**`]);
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
@@ -151,7 +152,7 @@ describe('Resistance module (6 player)', function () {
 
   describe('Voting on Picks', (done) => {
     it('should allow players to vote on a valid pick', (done) => {
-      gamebot.simulateMessage(`resistance pick Claus, John, Rico, Henrietta`, 'u0');
+      gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u0');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
       var expectedResponses = [
@@ -221,7 +222,7 @@ describe('Resistance module (6 player)', function () {
 
   describe('Notifications to players on a mission', () => {
     it('should allow players to vote on a valid pick', (done) => {
-      gamebot.simulateMessage(`resistance pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u0');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -258,7 +259,8 @@ describe('Resistance module (6 player)', function () {
 
   describe('Playing cards onto a mission', () => {
     it('should allow players to succeed a 4 player mission with a fail and a reverse', (done) => {
-      gamebot.simulateMessage(`resistance pick Claus, John, Rico, Henrietta`, 'u0');
+      gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u0');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -302,7 +304,14 @@ describe('Resistance module (6 player)', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('resistance');
-          expect(response.split(NL)).to.deep.equal([`All mission actions have been completed; the results are as follows:`, `>Success (2) :success: :success:`, `>Fail (1) :fail:`, `>Reverse (1) :reverse:`, 'Overall mission status: Resistance :good_guy: victory']);
+          expect(response.split(NL)).to.deep.equal([
+            `All mission actions have been completed; the results are as follows:`,
+            `>Success (2) :success: :success:`,
+            `>Fail (1) :fail:`,
+            `>Reverse (1) :reverse:`,
+            'Overall mission status: Resistance :good_guy: victory',
+            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+          ]);
           done();
         }
       ];
@@ -317,7 +326,8 @@ describe('Resistance module (6 player)', function () {
     });
 
     it('should allow players to fail a 4 player mission with two reverses and a fail', (done) => {
-      gamebot.simulateMessage(`resistance pick Claus, John, Rico, Henrietta`, 'u0');
+      gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u0');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -340,7 +350,14 @@ describe('Resistance module (6 player)', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('resistance');
-          expect(response.split(NL)).to.deep.equal([`All mission actions have been completed; the results are as follows:`, `>Success (1) :success:`, `>Fail (1) :fail:`, `>Reverse (2) :reverse: :reverse:`, 'Overall mission status: Spies :bad_guy: victory']);
+          expect(response.split(NL)).to.deep.equal([
+            `All mission actions have been completed; the results are as follows:`,
+            `>Success (1) :success:`,
+            `>Fail (1) :fail:`,
+            `>Reverse (2) :reverse: :reverse:`,
+            'Overall mission status: Spies :bad_guy: victory',
+            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+          ]);
           done();
         }
       ];
@@ -352,7 +369,8 @@ describe('Resistance module (6 player)', function () {
     });
 
     it('should allow players to fail a 3 player mission with a single reverse', (done) => {
-      gamebot.simulateMessage(`resistance pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u0');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -374,7 +392,13 @@ describe('Resistance module (6 player)', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('resistance');
-          expect(response.split(NL)).to.deep.equal([`All mission actions have been completed; the results are as follows:`, `>Success (2) :success: :success:`, `>Reverse (1) :reverse:`, 'Overall mission status: Spies :bad_guy: victory']);
+          expect(response.split(NL)).to.deep.equal([
+            `All mission actions have been completed; the results are as follows:`,
+            `>Success (2) :success: :success:`,
+            `>Reverse (1) :reverse:`,
+            'Overall mission status: Spies :bad_guy: victory',
+            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+          ]);
           done();
         }
       ];
@@ -386,7 +410,8 @@ describe('Resistance module (6 player)', function () {
     });
 
     it('should allow players to fail a 3 player mission with two fails', (done) => {
-      gamebot.simulateMessage(`resistance pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u0');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -408,7 +433,13 @@ describe('Resistance module (6 player)', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('resistance');
-          expect(response.split(NL)).to.deep.equal([`All mission actions have been completed; the results are as follows:`, `>Success (1) :success:`, `>Fail (2) :fail: :fail:`, 'Overall mission status: Spies :bad_guy: victory']);
+          expect(response.split(NL)).to.deep.equal([
+            `All mission actions have been completed; the results are as follows:`,
+            `>Success (1) :success:`,
+            `>Fail (2) :fail: :fail:`,
+            'Overall mission status: Spies :bad_guy: victory',
+            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+          ]);
           done();
         }
       ];
@@ -420,7 +451,8 @@ describe('Resistance module (6 player)', function () {
     });
 
     it('should allow players to succeed a 3 player mission with three successes', (done) => {
-      gamebot.simulateMessage(`resistance pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u0');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -442,7 +474,12 @@ describe('Resistance module (6 player)', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('resistance');
-          expect(response.split(NL)).to.deep.equal([`All mission actions have been completed; the results are as follows:`, `>Success (3) :success: :success: :success:`, 'Overall mission status: Resistance :good_guy: victory']);
+          expect(response.split(NL)).to.deep.equal([
+            `All mission actions have been completed; the results are as follows:`,
+            `>Success (3) :success: :success: :success:`,
+            'Overall mission status: Resistance :good_guy: victory',
+            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+          ]);
           done();
         }
       ];
