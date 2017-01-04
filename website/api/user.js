@@ -20,7 +20,8 @@ endpoint.render = function (req, res) {
   });
 
   // Return user by name
-  var data = userIndex[req.params.name] || {
+  var name = req.params.name;
+  var data = gamebot.findUserByName(name) || {
     error: true,
     message: `User ${req.params.name} not found`
   };
