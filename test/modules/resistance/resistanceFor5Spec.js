@@ -259,7 +259,6 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote accept`, 'u3');
       gamebot.simulateMessage(`vote accept`, 'u4');
       gamebot.simulateMessage(`vote accept`, 'u5');
-      gamebot.simulateMessage(`vote reject`, 'u6');
 
       gamebot.respond = (target, response, params) => {
         expect(response).to.include('Unable to accept your vote, the current mission has already been approved.');
@@ -278,9 +277,8 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote accept`, 'u3');
       gamebot.simulateMessage(`vote accept`, 'u4');
       gamebot.simulateMessage(`vote accept`, 'u5');
-      gamebot.simulateMessage(`vote reject`, 'u6');
 
-      // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
+      // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico'
       var expectedResponses = [
         (target, response, params) => {
           expect(target).to.equal('u3');
