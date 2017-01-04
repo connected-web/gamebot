@@ -324,7 +324,6 @@ describe('Resistance module (5 player)', function () {
       };
       gamebot.simulateMessage(`vote accept`, 'u2');
 
-
       // Fourth pick
       gamebot.respond = (target, response, params) => {
         expect(response).to.include('Rico has picked Rico, and Triela to go on the next mission.');
@@ -340,7 +339,6 @@ describe('Resistance module (5 player)', function () {
         expect(response).to.include('Mission Rejected! :x: :x: :x: :x: 1 votes (Rico), 4 rejects (John, Henrietta, Claus, Triela).');
       };
       gamebot.simulateMessage(`vote accept`, 'u5');
-
 
       // Fifth pick
       gamebot.respond = (target, response, params) => {
