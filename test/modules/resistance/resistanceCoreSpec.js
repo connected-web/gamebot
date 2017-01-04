@@ -301,13 +301,24 @@ describe('Resistance module (core)', function () {
 
     it('should prevent non-players from voting on a pick', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
-      gamebot.simulateMessage(`pick John`, 'u6');
+      gamebot.simulateMessage('join the resistance', 'u6')
+      gamebot.simulateMessage(`pick John, Angelica`, 'u6');
       gamebot.respond = (target, response, params) => {
         expect(response).to.include(`Unable to accept your vote; you are not part of the current game.`);
-        expect(target).to.equal('u6');
+        expect(target).to.equal('u5');
         done();
       };
-      gamebot.simulateMessage(`vote accept`, 'u6');
+      gamebot.simulateMessage(`vote accept`, 'u5');
+    });
+
+    it('should reject picks that have less than 2 players', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u6');
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include(`Need to pick at least 2 valid players onto a mission.`);
+        done();
+      };
+      gamebot.simulateMessage(`pick Angelica`, 'u6');
     });
   });
 
