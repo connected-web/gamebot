@@ -251,6 +251,23 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u1');
     });
+
+    it('should prevent players to changing their pick once a pick has been approved', (done) => {
+      gamebot.simulateMessage(`resistance pick Claus, John, Rico, Henrietta`, 'u0');
+      gamebot.simulateMessage(`vote reject`, 'u1');
+      gamebot.simulateMessage(`vote accept`, 'u2');
+      gamebot.simulateMessage(`vote accept`, 'u3');
+      gamebot.simulateMessage(`vote accept`, 'u4');
+      gamebot.simulateMessage(`vote accept`, 'u5');
+      gamebot.simulateMessage(`vote reject`, 'u6');
+
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('Unable to accept your vote, the current mission has already been approved.');
+        expect(module.state.votes.u1).to.not.equal('accept');
+        done();
+      };
+      gamebot.simulateMessage(`vote accept`, 'u1');
+    });
   });
 
   describe('Playing cards onto a mission', () => {
