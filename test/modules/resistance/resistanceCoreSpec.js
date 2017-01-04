@@ -50,30 +50,19 @@ describe('Resistance module (core)', function () {
   });
 
   describe('Leaving and Joining', () => {
-    it('should respond to players wanting to join using "join resistance"', (done) => {
-      // Listen for specific responses
-      gamebot.respond = (channel, response, params) => {
-        expect(response).to.equal([`Welcome to the Resistance John.`, `Your assigned code is u1.`, 'Please await further instructions from command.'].join(NL));
+    ['join resistance', 'join the resistance', 'join spies'].forEach((joinMessage) => {
+      it(`should respond to players wanting to join using "${joinMessage}"`, (done) => {
+        // Listen for specific responses
         gamebot.respond = (channel, response, params) => {
-          expect(response).to.equal(`John has joined the resistance. There are now 1 players.`);
-          done();
-        }
-      };
-      // Add the user
-      gamebot.simulateMessage('join the resistance', 'u1');
-    });
-
-    it('should respond to players wanting to join using "join the resistance"', (done) => {
-      // Listen for specific responses
-      gamebot.respond = (channel, response, params) => {
-        expect(response).to.equal([`Welcome to the Resistance Claus.`, `Your assigned code is u3.`, 'Please await further instructions from command.'].join(NL));
-        gamebot.respond = (channel, response, params) => {
-          expect(response).to.equal(`Claus has joined the resistance. There are now 1 players.`);
-          done();
-        }
-      };
-      // Add the user
-      gamebot.simulateMessage('join the resistance', 'u3');
+          expect(response).to.equal([`Welcome to the Resistance John.`, `Your assigned code is u1.`, 'Please await further instructions from command.'].join(NL));
+          gamebot.respond = (channel, response, params) => {
+            expect(response).to.equal(`John has joined the resistance. There are now 1 players.`);
+            done();
+          }
+        };
+        // Add the user
+        gamebot.simulateMessage(joinMessage, 'u1');
+      });
     });
 
     it('should respond to players who have already joined', (done) => {
