@@ -271,6 +271,106 @@ describe('Resistance module (5 player)', function () {
     });
   });
 
+  describe('Failing a mission by being unable to reach consensus', () => {
+    it('should allow players to reject 5 missions in a row', (done) => {
+      gamebot.simulateMessage(`resistance start`, 'u1');
+      // First pick
+      gamebot.simulateMessage(`pick John, Henrietta`, 'u1');
+      gamebot.simulateMessage(`vote reject`, 'u2');
+      gamebot.simulateMessage(`vote reject`, 'u3');
+      gamebot.simulateMessage(`vote reject`, 'u4');
+      gamebot.simulateMessage(`vote reject`, 'u5');
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('Mission Rejected! :x: 1 votes (John), 4 rejects (Henrietta, Claus, Triela, Rico).');
+        expect(module.state.voteHistory[0]).to.deep.equal([{
+          "u1": "accept",
+          "u2": "reject",
+          "u3": "reject",
+          "u4": "reject",
+          "u5": "reject"
+        }]);
+      };
+      gamebot.simulateMessage(`vote accept`, 'u1');
+
+      // Second pick
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('Triela has picked Claus, and Triela to go on the next mission.');
+      };
+      gamebot.simulateMessage(`pick Triela, Claus`, 'u4');
+
+      gamebot.respond = () => {};
+      gamebot.simulateMessage(`vote reject`, 'u1');
+      gamebot.simulateMessage(`vote reject`, 'u2');
+      gamebot.simulateMessage(`vote reject`, 'u3');
+      gamebot.simulateMessage(`vote reject`, 'u5');
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('Mission Rejected! :x: :x: 1 votes (Triela), 4 rejects (John, Henrietta, Claus, Rico).');
+      };
+      gamebot.simulateMessage(`vote accept`, 'u4');
+
+      // Third pick
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('Henrietta has picked Henrietta, and Rico to go on the next mission.');
+      };
+      gamebot.simulateMessage(`pick Henrietta, Rico`, 'u2');
+
+      gamebot.respond = () => {};
+      gamebot.simulateMessage(`vote reject`, 'u1');
+      gamebot.simulateMessage(`vote reject`, 'u3');
+      gamebot.simulateMessage(`vote reject`, 'u4');
+      gamebot.simulateMessage(`vote reject`, 'u5');
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('Mission Rejected! :x: :x: :x: 1 votes (Henrietta), 4 rejects (John, Claus, Triela, Rico).');
+      };
+      gamebot.simulateMessage(`vote accept`, 'u2');
+
+
+      // Fourth pick
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('Rico has picked Rico, and Triela to go on the next mission.');
+      };
+      gamebot.simulateMessage(`pick Triela, Rico`, 'u5');
+
+      gamebot.respond = () => {};
+      gamebot.simulateMessage(`vote reject`, 'u1');
+      gamebot.simulateMessage(`vote reject`, 'u2');
+      gamebot.simulateMessage(`vote reject`, 'u3');
+      gamebot.simulateMessage(`vote reject`, 'u4');
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('Mission Rejected! :x: :x: :x: :x: 1 votes (Rico), 4 rejects (John, Henrietta, Claus, Triela).');
+      };
+      gamebot.simulateMessage(`vote accept`, 'u5');
+
+
+      // Fifth pick
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include('Claus has picked Claus, and Henrietta to go on the next mission.');
+      };
+      gamebot.simulateMessage(`pick Claus, Henrietta`, 'u3');
+
+      gamebot.respond = () => {};
+      gamebot.simulateMessage(`vote reject`, 'u1');
+      gamebot.simulateMessage(`vote reject`, 'u2');
+      gamebot.simulateMessage(`vote reject`, 'u4');
+      gamebot.simulateMessage(`vote reject`, 'u5');
+      gamebot.respond = (target, response, params) => {
+        expect(response.split(NL)).to.deep.equal([
+          'Claus has voted.',
+          'Mission Rejected! :x: :x: :x: :x: :x: 1 votes (Claus), 4 rejects (John, Henrietta, Triela, Rico).',
+          `Failed to reach consensus : overall mission status Spies :bad_guy: victory`,
+          `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
+          `The leader token moves to John. Pick a team using **pick Name1, Name2, ...**`
+        ]);
+        expect(module.state.missionHistory).to.deep.equal([{
+          logo: ':bad_guy:',
+          name: 'Spies'
+        }]);
+        done();
+      };
+      gamebot.simulateMessage(`vote accept`, 'u3');
+    });
+  });
+
   describe('Playing cards onto a mission', () => {
     it('should allow players to succeed a 3 player mission with a fail and a reverse', (done) => {
       gamebot.simulateMessage(`resistance start`, 'u1');
