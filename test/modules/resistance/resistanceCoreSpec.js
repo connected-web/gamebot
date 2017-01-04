@@ -179,7 +179,7 @@ describe('Resistance module (core)', function () {
           expect(target.channel).to.equal(gameChannel);
           expect(response).to.include(`The resistance roles for ${x} players are:`);
           expect(response).to.include(`:good_guy: Generic Resistance`);
-          expect(response).to.include(`:bad_guy: False Commander`);
+          expect(response).to.include(`:bad_guy: `);
           done();
         };
         gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', gameChannel);

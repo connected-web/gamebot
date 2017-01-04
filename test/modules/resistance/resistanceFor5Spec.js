@@ -39,7 +39,7 @@ describe('Resistance module (5 player)', function () {
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
-          expect(response).to.include('Congratulations Claus (Citizen u3) you have been assigned the role of :bad_guy: False Commander fighting for the Spies. May only');
+          expect(response).to.include('Congratulations Claus (Citizen u3) you have been assigned the role of :bad_guy: Assassin fighting for the Spies. May only');
           expect(target).to.equal('u3');
         },
         (target, response, params) => {
@@ -109,7 +109,7 @@ describe('Resistance module (5 player)', function () {
           expect(target).to.equal('u3');
         },
         (target, response, params) => {
-          expect(response).to.include('Congratulations Henrietta (Citizen u2) you have been assigned the role of :bad_guy: False Commander fighting for the Spies. May only');
+          expect(response).to.include('Congratulations Henrietta (Citizen u2) you have been assigned the role of :bad_guy: Assassin fighting for the Spies. May only');
         },
         (target, response, params) => {
           expect(response).to.include('The following players are known to you as spies:');
