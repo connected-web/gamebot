@@ -27,7 +27,7 @@ describe('Resistance module (6 player)', function () {
 
       const expectedResponses = [
         (target, response, params) => {
-          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: Triela, John, Angelica, Rico, Henrietta, then Claus. Triela is the first leader; pick a team using **pick Name1, Name 2, ...**`]);
+          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: Triela, John, Angelica, Rico, Henrietta, then Claus. Triela is the first leader; pick a team using *pick Name1, Name 2, ...*`]);
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
@@ -94,7 +94,7 @@ describe('Resistance module (6 player)', function () {
 
       const expectedResponses = [
         (target, response, params) => {
-          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: John, Claus, Triela, Henrietta, Rico, then Angelica. John is the first leader; pick a team using **pick Name1, Name 2, ...**`]);
+          expect(response.split(NL)).to.deep.equal([`Test Bot has started the game; all players will shortly receive their roles.`, `Player order is: John, Claus, Triela, Henrietta, Rico, then Angelica. John is the first leader; pick a team using *pick Name1, Name 2, ...*`]);
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
@@ -311,7 +311,7 @@ describe('Resistance module (6 player)', function () {
             `>Reverse (1) :reverse:`,
             'Overall mission status: Resistance :good_guy: victory',
             `Mission Progress: :good_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+            `The leader token moves to Rico. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
@@ -358,7 +358,7 @@ describe('Resistance module (6 player)', function () {
             `>Reverse (2) :reverse: :reverse:`,
             'Overall mission status: Spies :bad_guy: victory',
             `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+            `The leader token moves to Rico. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
@@ -400,7 +400,7 @@ describe('Resistance module (6 player)', function () {
             `>Reverse (1) :reverse:`,
             'Overall mission status: Spies :bad_guy: victory',
             `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+            `The leader token moves to Rico. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
@@ -442,7 +442,7 @@ describe('Resistance module (6 player)', function () {
             `>Fail (2) :fail: :fail:`,
             'Overall mission status: Spies :bad_guy: victory',
             `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+            `The leader token moves to Rico. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
@@ -483,7 +483,7 @@ describe('Resistance module (6 player)', function () {
             `>Success (3) :success: :success: :success:`,
             'Overall mission status: Resistance :good_guy: victory',
             `Mission Progress: :good_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
+            `The leader token moves to Rico. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
