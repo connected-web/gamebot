@@ -12,6 +12,7 @@ describe('Resistance module (core)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
+    module.chooseSeeds(1, 1);
   });
 
   describe('Stop and Reset', () => {
@@ -208,20 +209,35 @@ describe('Resistance module (core)', function () {
     });
   });
 
-
   describe('Picks', () => {
-    it('should allow a user to pick players', (done) => {
+    it('should prevent anyone but the current leader from making a pick', (done) => {
       gamebot.simulateMessage('join the resistance', 'u2');
       gamebot.simulateMessage('join the resistance', 'u5');
       gamebot.simulateMessage('join the resistance', 'u6');
       gamebot.simulateMessage('join the resistance', 'u3');
       gamebot.simulateMessage('join the resistance', 'u4');
+      gamebot.simulateMessage('start game', 'u0');
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include(`Only the leader (Triela) can make picks.`);
+        expect(target.channel).to.equal(gameChannel);
+        done();
+      };
+      gamebot.simulateMessage('pick John, Triela, Rico', 'u6', 'resistance');
+    });
+
+    it('should allow the leader to pick players', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u5');
+      gamebot.simulateMessage('join the resistance', 'u6');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.simulateMessage('join the resistance', 'u4');
+      gamebot.simulateMessage('start game', 'u0');
 
       var expectedResponses = [
         (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`Test Bot has picked Angelica, Henrietta, and Rico to go on the next mission.`);
+          expect(response).to.include(`Triela has picked Angelica, Henrietta, and Rico to go on the next mission.`);
           expect(module.state.picks).to.deep.equal(['u2', 'u5', 'u6']);
+          expect(target).to.equal('resistance');
         },
         (target, response, params) => {
           expect(target).to.equal('u2');
@@ -254,7 +270,7 @@ describe('Resistance module (core)', function () {
         var expectation = expectedResponses.shift();
         (expectation) ? expectation(target, response, params): done(response);
       }
-      gamebot.simulateMessage(`pick Henrietta, Rico, Angelica`, 'u0');
+      gamebot.simulateMessage(`pick Henrietta, Rico, Angelica`, 'u4');
     });
 
     it('should prevent picking players who have not joined the game', (done) => {
@@ -262,12 +278,12 @@ describe('Resistance module (core)', function () {
       gamebot.simulateMessage('join the resistance', 'u5');
       gamebot.simulateMessage('join the resistance', 'u6');
       gamebot.respond = (target, response, params) => {
-        expect(target).to.equal('resistance');
         expect(response).to.include(`Some of the picks were not recognised as players; John.`);
+        expect(target).to.equal('resistance');
         expect(module.state.picks).to.deep.equal([]);
         done();
       };
-      gamebot.simulateMessage(`pick Rico, John, Henrietta`, 'u0');
+      gamebot.simulateMessage(`pick Rico, John, Henrietta`, 'u4');
     });
 
     it('should prevent picking players who have unrecognised names', (done) => {

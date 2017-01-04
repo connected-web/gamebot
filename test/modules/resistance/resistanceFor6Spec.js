@@ -152,7 +152,7 @@ describe('Resistance module (6 player)', function () {
 
   describe('Voting on Picks', (done) => {
     it('should allow players to vote on a valid pick', (done) => {
-      gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u0');
+      gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u6');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
       var expectedResponses = [
@@ -222,7 +222,7 @@ describe('Resistance module (6 player)', function () {
 
   describe('Notifications to players on a mission', () => {
     it('should allow players to vote on a valid pick', (done) => {
-      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -260,7 +260,7 @@ describe('Resistance module (6 player)', function () {
   describe('Playing cards onto a mission', () => {
     it('should allow players to succeed a 4 player mission with a fail and a reverse', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
-      gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u0');
+      gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -327,7 +327,7 @@ describe('Resistance module (6 player)', function () {
 
     it('should allow players to fail a 4 player mission with two reverses and a fail', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
-      gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u0');
+      gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -370,7 +370,7 @@ describe('Resistance module (6 player)', function () {
 
     it('should allow players to fail a 3 player mission with a single reverse', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
-      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -411,7 +411,7 @@ describe('Resistance module (6 player)', function () {
 
     it('should allow players to fail a 3 player mission with two fails', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
-      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
@@ -452,7 +452,7 @@ describe('Resistance module (6 player)', function () {
 
     it('should allow players to succeed a 3 player mission with three successes', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
-      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u0');
+      gamebot.simulateMessage(`pick Claus, John, Rico`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
       gamebot.simulateMessage(`vote accept`, 'u3');
