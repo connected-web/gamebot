@@ -18,14 +18,17 @@ const gamebot = api(options);
 
 gamebot.load()
   .then(gamebot.connect)
+  .then(startWebsite)
   .catch(gamebot.handleError);
 
-var monitor = require('product-monitor');
-var server = monitor({
-  "serverPort": 9000,
-  "productInformation": {
-    "title": "Gamebot Monitor",
-  },
-  "userContentPath": "website",
-  "gamebot": gamebot
-});
+function startWebsite() {
+  var monitor = require('product-monitor');
+  var server = monitor({
+    "serverPort": 9000,
+    "productInformation": {
+      "title": "Gamebot Monitor",
+    },
+    "userContentPath": "website",
+    "gamebot": gamebot
+  });
+}

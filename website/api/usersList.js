@@ -1,27 +1,24 @@
 const fs = require('fs');
 
 var endpoint = function () {}
+var gamebot;
 
 endpoint.route = '/api/users/list';
 endpoint.cacheDuration = '30 seconds';
 endpoint.description = 'A list of users'
 
 endpoint.configure = function (config) {
-
+  gamebot = config.gamebot;
 }
 
 endpoint.render = function (req, res) {
-  var data = {};
-  try {
-    var users = JSON.parse(fs.readFileSync(__dirname + '/../../state/user-list.json', 'utf8'));
-    data = users.members.map((user) => {
-      return user.name;
-    });
-  } catch (ex) {
-    data.error = true;
-    data.message = 'Unable to read data file: ' + ex;
-    data.stack = ex.stack;
-  }
+  var users = gamebot.users.members;
+
+  // convert to list of names
+  var data = users.map((user) => {
+    return user.name;
+  });
+
   // send response
   res.jsonp(data);
 }

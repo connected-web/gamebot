@@ -1,35 +1,30 @@
 const fs = require('fs');
 
 var endpoint = function () {}
-var userIndex = false;
+var gamebot;
 
 endpoint.route = '/api/user/:name';
 endpoint.cacheDuration = '30 seconds';
 endpoint.description = 'A specific user'
 
 endpoint.configure = function (config) {
-
+  gamebot = config.gamebot;
 }
 
 endpoint.render = function (req, res) {
-  var data = {};
-  try {
-    if (!userIndex) {
-      var users = JSON.parse(fs.readFileSync(__dirname + '/../../state/user-list.json', 'utf8'));
-      userIndex = {};
-      users.members.forEach((user) => {
-        userIndex[user.name] = user;
-      });
-    }
-    data = userIndex[req.params.name] || {
-      error: true,
-      message: `User ${req.params.name} not found`
-    };
-  } catch (ex) {
-    data.error = true;
-    data.message = 'Unable to read data file: ' + ex;
-    data.stack = ex.stack;
-  }
+  // Index users
+  var users = gamebot.users.members;
+  var userIndex = {};
+  users.forEach((user) => {
+    userIndex[user.name] = user;
+  });
+
+  // Return user by name
+  var data = userIndex[req.params.name] || {
+    error: true,
+    message: `User ${req.params.name} not found`
+  };
+
   // send response
   res.jsonp(data);
 }
