@@ -310,6 +310,7 @@ describe('Resistance module (6 player)', function () {
             `>Fail (1) :fail:`,
             `>Reverse (1) :reverse:`,
             'Overall mission status: Resistance :good_guy: victory',
+            `Mission Progress: :good_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
             `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
           ]);
           done();
@@ -356,6 +357,7 @@ describe('Resistance module (6 player)', function () {
             `>Fail (1) :fail:`,
             `>Reverse (2) :reverse: :reverse:`,
             'Overall mission status: Spies :bad_guy: victory',
+            `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
             `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
           ]);
           done();
@@ -397,6 +399,7 @@ describe('Resistance module (6 player)', function () {
             `>Success (2) :success: :success:`,
             `>Reverse (1) :reverse:`,
             'Overall mission status: Spies :bad_guy: victory',
+            `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
             `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
           ]);
           done();
@@ -438,6 +441,7 @@ describe('Resistance module (6 player)', function () {
             `>Success (1) :success:`,
             `>Fail (2) :fail: :fail:`,
             'Overall mission status: Spies :bad_guy: victory',
+            `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
             `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
           ]);
           done();
@@ -478,6 +482,7 @@ describe('Resistance module (6 player)', function () {
             `All mission actions have been completed; the results are as follows:`,
             `>Success (3) :success: :success: :success:`,
             'Overall mission status: Resistance :good_guy: victory',
+            `Mission Progress: :good_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
             `The leader token moves to Rico. Pick a team using **pick Name1, Name2, ...**`
           ]);
           done();
