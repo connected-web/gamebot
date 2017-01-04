@@ -165,19 +165,19 @@ describe('Resistance module (5 player)', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('u3');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u1');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u5');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u2');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
           done();
         }
       ];
@@ -218,15 +218,15 @@ describe('Resistance module (5 player)', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('u3');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u1');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u5');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
+          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
           done();
         }
       ];
@@ -292,10 +292,10 @@ describe('Resistance module (5 player)', function () {
         var expectation = expectedResponses.shift();
         (expectation) ? expectation(target, response, params): done(response);
       };
-      gamebot.simulateMessage(`play resistance success`, 'u3');
-      gamebot.simulateMessage(`play resistance fail`, 'u1');
-      gamebot.simulateMessage(`play resistance reverse`, 'u5');
-      gamebot.simulateMessage(`play resistance success`, 'u2');
+      gamebot.simulateMessage(`play success`, 'u3');
+      gamebot.simulateMessage(`play fail`, 'u1');
+      gamebot.simulateMessage(`play reverse`, 'u5');
+      gamebot.simulateMessage(`play success`, 'u2');
     });
 
     it('should allow players to fail a 4 player mission with two reverses and a fail', (done) => {
@@ -306,9 +306,9 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote accept`, 'u4');
       gamebot.simulateMessage(`vote accept`, 'u5');
       gamebot.simulateMessage(`vote reject`, 'u6');
-      gamebot.simulateMessage(`play resistance success`, 'u3');
-      gamebot.simulateMessage(`play resistance fail`, 'u1');
-      gamebot.simulateMessage(`play resistance reverse`, 'u5');
+      gamebot.simulateMessage(`play success`, 'u3');
+      gamebot.simulateMessage(`play fail`, 'u1');
+      gamebot.simulateMessage(`play reverse`, 'u5');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
       var expectedResponses = [
@@ -330,7 +330,7 @@ describe('Resistance module (5 player)', function () {
         var expectation = expectedResponses.shift();
         (expectation) ? expectation(target, response, params): done(response);
       };
-      gamebot.simulateMessage(`play resistance reverse`, 'u2');
+      gamebot.simulateMessage(`play reverse`, 'u2');
     });
 
     it('should allow players to fail a 3 player mission with a single reverse', (done) => {
@@ -341,8 +341,8 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote accept`, 'u4');
       gamebot.simulateMessage(`vote accept`, 'u5');
       gamebot.simulateMessage(`vote reject`, 'u6');
-      gamebot.simulateMessage(`play resistance success`, 'u3');
-      gamebot.simulateMessage(`play resistance reverse`, 'u1');
+      gamebot.simulateMessage(`play success`, 'u3');
+      gamebot.simulateMessage(`play reverse`, 'u1');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
       var expectedResponses = [
@@ -364,7 +364,7 @@ describe('Resistance module (5 player)', function () {
         var expectation = expectedResponses.shift();
         (expectation) ? expectation(target, response, params): done(response);
       };
-      gamebot.simulateMessage(`play resistance success`, 'u5');
+      gamebot.simulateMessage(`play success`, 'u5');
     });
 
     it('should allow players to fail a 3 player mission with two fails', (done) => {
@@ -375,8 +375,8 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote accept`, 'u4');
       gamebot.simulateMessage(`vote accept`, 'u5');
       gamebot.simulateMessage(`vote reject`, 'u6');
-      gamebot.simulateMessage(`play resistance fail`, 'u3');
-      gamebot.simulateMessage(`play resistance fail`, 'u1');
+      gamebot.simulateMessage(`play fail`, 'u3');
+      gamebot.simulateMessage(`play fail`, 'u1');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
       var expectedResponses = [
@@ -398,7 +398,7 @@ describe('Resistance module (5 player)', function () {
         var expectation = expectedResponses.shift();
         (expectation) ? expectation(target, response, params): done(response);
       };
-      gamebot.simulateMessage(`play resistance success`, 'u5');
+      gamebot.simulateMessage(`play success`, 'u5');
     });
 
     it('should allow players to succeed a 3 player mission with three successes', (done) => {
@@ -409,8 +409,8 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote accept`, 'u4');
       gamebot.simulateMessage(`vote accept`, 'u5');
       gamebot.simulateMessage(`vote reject`, 'u6');
-      gamebot.simulateMessage(`play resistance success`, 'u3');
-      gamebot.simulateMessage(`play resistance success`, 'u1');
+      gamebot.simulateMessage(`play success`, 'u3');
+      gamebot.simulateMessage(`play success`, 'u1');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
       var expectedResponses = [
@@ -432,7 +432,7 @@ describe('Resistance module (5 player)', function () {
         var expectation = expectedResponses.shift();
         (expectation) ? expectation(target, response, params): done(response);
       };
-      gamebot.simulateMessage(`play resistance success`, 'u5');
+      gamebot.simulateMessage(`play success`, 'u5');
     });
   });
 });
