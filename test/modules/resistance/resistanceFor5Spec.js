@@ -161,11 +161,7 @@ describe('Resistance module (5 player)', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('resistance');
-          expect(response).to.include(`Rico has voted, no players remaining`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 1 rejects (John)`);
+          expect(response.split(NL)).to.deep.equal([`Rico has voted.`, `Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 1 rejects (John).`, `Players Claus, Henrietta, John, and Rico have been assigned to the current mission; awaiting their responses.`]);
         },
         (target, response, params) => {
           expect(target).to.equal('u3');
@@ -182,10 +178,6 @@ describe('Resistance module (5 player)', function () {
         (target, response, params) => {
           expect(target).to.equal('u2');
           expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`Players Claus, Henrietta, John, and Rico have been assigned to the current mission; awaiting their responses.`);
           done();
         }
       ];
@@ -221,12 +213,8 @@ describe('Resistance module (5 player)', function () {
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
       var expectedResponses = [
         (target, response, params) => {
-          expect(response).to.include(`Rico has voted, no players remaining.`);
+          expect(response.split(NL)).to.deep.equal([`Rico has voted.`, `Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 1 rejects (John).`, `Players Claus, John, and Rico have been assigned to the current mission; awaiting their responses.`]);
           expect(target).to.equal('resistance');
-        },
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 1 rejects (John)`);
         },
         (target, response, params) => {
           expect(target).to.equal('u3');
@@ -239,10 +227,6 @@ describe('Resistance module (5 player)', function () {
         (target, response, params) => {
           expect(target).to.equal('u5');
           expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play resistance success*`);
-        },
-        (target, response, params) => {
-          expect(target).to.equal('resistance');
-          expect(response).to.include(`Players Claus, John, and Rico have been assigned to the current mission; awaiting their responses.`);
           done();
         }
       ];
