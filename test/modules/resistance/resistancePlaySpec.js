@@ -20,14 +20,33 @@ describe('Resistance module (core)', function () {
 
   const variations = [];
 
+  function expectFailure(players, fail, reverse, success) {
+    variations.push({
+      players,
+      fail,
+      reverse,
+      success,
+      expected: MISSION_FAIL
+    });
+  }
+
+  function expectSuccess(players, fail, reverse, success) {
+    variations.push({
+      players,
+      fail,
+      reverse,
+      success,
+      expected: MISSION_SUCCESS
+    });
+  }
+
   // Two player variations
-  variations.push({
-    players: 2,
-    fail: 1,
-    reverse: 0,
-    success: 1,
-    expected: MISSION_FAIL
-  });
+  expectSuccess(2, 0, 0, 2);
+  expectSuccess(2, 1, 1, 0);
+  expectSuccess(2, 0, 2, 0);
+  expectFailure(2, 1, 0, 1);
+  expectFailure(2, 2, 0, 0);
+  expectFailure(2, 0, 1, 1);
 
   describe('Mission Success', () => {
     variations.forEach((variation) => {
