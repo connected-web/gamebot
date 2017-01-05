@@ -221,6 +221,7 @@ describe('Resistance module (core)', function () {
       gamebot.simulateMessage('join the resistance', 'u3');
       gamebot.simulateMessage('join the resistance', 'u4');
       gamebot.simulateMessage('start game', 'u0');
+      module.state.missionHistory.push(':skip:');
 
       var expectedResponses = [
         (target, response, params) => {
@@ -290,7 +291,10 @@ describe('Resistance module (core)', function () {
 
     it('should prevent non-players from voting on a pick', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
-      gamebot.simulateMessage('join the resistance', 'u6')
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.simulateMessage('join the resistance', 'u4');
+      gamebot.simulateMessage('join the resistance', 'u6');
       gamebot.simulateMessage(`pick John, Angelica`, 'u6');
       gamebot.respond = (target, response, params) => {
         expect(response).to.include(`Unable to accept your vote; you are not part of the current game.`);
@@ -302,9 +306,12 @@ describe('Resistance module (core)', function () {
 
     it('should reject picks that have less than 2 players', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u3');
+      gamebot.simulateMessage('join the resistance', 'u4');
       gamebot.simulateMessage('join the resistance', 'u6');
       gamebot.respond = (target, response, params) => {
-        expect(response).to.include(`Need to pick at least 2 valid players onto a mission.`);
+        expect(response).to.include(`Need to pick 2 valid players onto this mission.`);
         done();
       };
       gamebot.simulateMessage(`pick Angelica`, 'u6');

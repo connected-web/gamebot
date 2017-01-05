@@ -158,6 +158,7 @@ describe('Resistance module (6 player)', function () {
 
   describe('Voting on Picks', (done) => {
     it('should allow players to vote on a valid pick', (done) => {
+      module.state.missionHistory.push(':skip:', ':skip:');
       gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u6');
 
       // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
@@ -228,6 +229,7 @@ describe('Resistance module (6 player)', function () {
 
   describe('Notifications to players on a mission', () => {
     it('should allow players to vote on a valid pick', (done) => {
+      module.state.missionHistory.push(':skip:');
       gamebot.simulateMessage(`pick Claus, John, Rico`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
@@ -266,6 +268,7 @@ describe('Resistance module (6 player)', function () {
   describe('Playing cards onto a mission', () => {
     it('should allow players to succeed a 4 player mission with a fail and a reverse', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.missionHistory.push(':skip:', ':skip:');
       gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
@@ -316,8 +319,8 @@ describe('Resistance module (6 player)', function () {
             `>Fail (1) :fail:`,
             `>Reverse (1) :reverse:`,
             'Overall mission status: Resistance :good_guy: victory',
-            `Mission Progress: :good_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Mission 2 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
+            `Mission Progress: :skip: :skip: :good_guy: :white_circle: :white_circle:`,
+            `The leader token moves to Rico. Mission 4 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
@@ -334,6 +337,7 @@ describe('Resistance module (6 player)', function () {
 
     it('should allow players to fail a 4 player mission with two reverses and a fail', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.missionHistory.push(':skip:', ':skip:');
       gamebot.simulateMessage(`pick Claus, John, Rico, Henrietta`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
@@ -363,8 +367,8 @@ describe('Resistance module (6 player)', function () {
             `>Fail (1) :fail:`,
             `>Reverse (2) :reverse: :reverse:`,
             'Overall mission status: Spies :bad_guy: victory',
-            `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Mission 2 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
+            `Mission Progress: :skip: :skip: :bad_guy: :white_circle: :white_circle:`,
+            `The leader token moves to Rico. Mission 4 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
@@ -378,6 +382,7 @@ describe('Resistance module (6 player)', function () {
 
     it('should allow players to fail a 3 player mission with a single reverse', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.missionHistory.push(':skip:');
       gamebot.simulateMessage(`pick Claus, John, Rico`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
@@ -405,8 +410,8 @@ describe('Resistance module (6 player)', function () {
             `>Success (2) :success: :success:`,
             `>Reverse (1) :reverse:`,
             'Overall mission status: Spies :bad_guy: victory',
-            `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Mission 2 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
+            `Mission Progress: :skip: :bad_guy: :white_circle: :white_circle: :white_circle:`,
+            `The leader token moves to Rico. Mission 3 requires 4 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
@@ -420,6 +425,7 @@ describe('Resistance module (6 player)', function () {
 
     it('should allow players to fail a 3 player mission with two fails', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.missionHistory.push(':skip:');
       gamebot.simulateMessage(`pick Claus, John, Rico`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
@@ -447,8 +453,8 @@ describe('Resistance module (6 player)', function () {
             `>Success (1) :success:`,
             `>Fail (2) :fail: :fail:`,
             'Overall mission status: Spies :bad_guy: victory',
-            `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Mission 2 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
+            `Mission Progress: :skip: :bad_guy: :white_circle: :white_circle: :white_circle:`,
+            `The leader token moves to Rico. Mission 3 requires 4 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
@@ -462,6 +468,7 @@ describe('Resistance module (6 player)', function () {
 
     it('should allow players to succeed a 3 player mission with three successes', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.missionHistory.push(':skip:');
       gamebot.simulateMessage(`pick Claus, John, Rico`, 'u6');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
@@ -488,8 +495,8 @@ describe('Resistance module (6 player)', function () {
             `All mission actions have been completed; the results are as follows:`,
             `>Success (3) :success: :success: :success:`,
             'Overall mission status: Resistance :good_guy: victory',
-            `Mission Progress: :good_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
-            `The leader token moves to Rico. Mission 2 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
+            `Mission Progress: :skip: :good_guy: :white_circle: :white_circle: :white_circle:`,
+            `The leader token moves to Rico. Mission 3 requires 4 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
         }
