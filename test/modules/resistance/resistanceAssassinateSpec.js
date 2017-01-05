@@ -34,5 +34,17 @@ describe('Resistance module (Assassinations)', function () {
       };
       gamebot.simulateMessage(`assassinate Claus`, 'u5');
     });
+
+    it('should allow the assassin to assassinate non-commanders', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(response.split(NL)).to.deep.equal([
+          `Rico has revealed themself as the Assassin, and has assassinated Triela.`,
+          `Triela is revealed to be the Resistance Reverser.`,
+          `The :good_guy: Resistance win the game.`
+        ]);
+        done();
+      };
+      gamebot.simulateMessage(`assassinate Triela`, 'u5');
+    });
   });
 });
