@@ -30,6 +30,7 @@ describe('Resistance module (Assassinations)', function () {
           `Claus is revealed to be the Resistance Commander.`,
           `The Resistance Commander has been found, dead. The :bad_guy: Spies win the game.`
         ]);
+        expect(target).to.equal('resistance');
         done();
       };
       gamebot.simulateMessage(`assassinate Claus`, 'u5');
@@ -42,9 +43,21 @@ describe('Resistance module (Assassinations)', function () {
           `Triela is revealed to be the Resistance Reverser.`,
           `The :good_guy: Resistance win the game.`
         ]);
+        expect(target).to.equal('resistance');
         done();
       };
       gamebot.simulateMessage(`assassinate Triela`, 'u5');
+    });
+
+    it('should allow the prevent the assassin from assassinating people outside the game', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(response.split(NL)).to.deep.equal([
+          `Could not assassinate Angelica, they do not have a role in this game.`
+        ]);
+        expect(target).to.equal('u5');
+        done();
+      };
+      gamebot.simulateMessage(`assassinate Angelica`, 'u5');
     });
   });
 });
