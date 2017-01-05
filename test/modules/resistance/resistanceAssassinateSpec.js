@@ -49,7 +49,7 @@ describe('Resistance module (Assassinations)', function () {
       gamebot.simulateMessage(`assassinate Triela`, 'u5');
     });
 
-    it('should allow the prevent the assassin from assassinating people outside the game', (done) => {
+    it('should prevent the assassin from assassinating people outside the game', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(response.split(NL)).to.deep.equal([
           `Could not assassinate Angelica, they do not have a role in this game.`
@@ -58,6 +58,17 @@ describe('Resistance module (Assassinations)', function () {
         done();
       };
       gamebot.simulateMessage(`assassinate Angelica`, 'u5');
+    });
+
+    it('should prevent non-assassins from assassinating people', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(response.split(NL)).to.deep.equal([
+          `You are not stealthy enough to be an assassin, go home and learn your craft.`
+        ]);
+        expect(target).to.equal('u1');
+        done();
+      };
+      gamebot.simulateMessage(`assassinate Triela`, 'u1');
     });
   });
 });
