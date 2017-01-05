@@ -6,7 +6,7 @@ const NL = '\n';
 const MISSION_FAIL = 'mission fail';
 const MISSION_SUCCESS = 'mission success';
 
-describe('Resistance module (core)', function () {
+describe('Resistance module (Mission Plays)', function () {
 
   var module, gamebot;
   const gameChannel = 'resistance';

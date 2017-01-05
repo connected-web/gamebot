@@ -3,7 +3,7 @@ const resistance = require('../../../lib/modules/resistance');
 const mockGamebot = require('../../lib/mockGamebot');
 const NL = '\n';
 
-describe('Resistance module (core)', function () {
+describe('Resistance module (Core)', function () {
 
   var module, gamebot;
   const gameChannel = 'resistance';
