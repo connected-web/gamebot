@@ -125,8 +125,17 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage('join the resistance', 'u1');
       gamebot.respond = (target, response, params) => {
         expect(target).to.equal('u1');
-        expect(response).to.equal(`John, your role is... unassigned :good_guy: :bad_guy:.`);
+        expect(response.split(NL)).to.deep.equal([`John, your role is...`, `>Janitor : Team :good_guy:.`, `>Maintains a productive work environment`]);
         done();
+      };
+      module.state.roles = {
+        u1: {
+          name: 'Janitor',
+          description: 'Maintains a productive work environment',
+          team: {
+            logo: ':good_guy:'
+          }
+        }
       };
       gamebot.simulateMessage(`What's my role?`, 'u1');
     });
