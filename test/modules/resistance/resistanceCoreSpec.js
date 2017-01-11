@@ -112,7 +112,7 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage('join the resistance', 'u2');
       gamebot.respond = (target, response, params) => {
         expect(target.channel).to.equal(gameChannel);
-        expect(response).to.equal(`The current list of players is: John, Henrietta`);
+        expect(response).to.equal(`The current list of players is: Henrietta, and John`);
         done();
       };
       gamebot.simulateMessage(`Who is playing?`, 'u1', gameChannel);
@@ -124,7 +124,7 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage('join the resistance', 'u3');
       gamebot.respond = (target, response, params) => {
         expect(target.channel).to.equal(gameChannel);
-        expect(response).to.equal(`The current list of players is: John, Henrietta, Claus`);
+        expect(response).to.equal(`The current list of players is: Claus, Henrietta, and John`);
         done();
       };
       gamebot.simulateMessage(`Who's playing resistance?`, 'u1', gameChannel);
