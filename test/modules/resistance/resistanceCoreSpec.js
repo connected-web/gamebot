@@ -408,9 +408,25 @@ describe('Resistance module (Core)', function () {
   });
 
   describe('Game state', () => {
-    it('should report on the current state of the game', (done) => {
+    it('should report on the empty state of the game', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(response).to.include(`>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:\n>No leader assigned (Game not started?).`);
+        done();
+      };
+      gamebot.simulateMessage(`game state`, 'u1');
+    });
+
+    it('should report on the first pick of the game', (done) => {
+      gamebot.simulateMessage('join spies', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join resistance', 'u3');
+      gamebot.simulateMessage('join game', 'u4');
+      gamebot.simulateMessage('start game', 'u1');
+      gamebot.respond = (target, response, params) => {
+        expect(response.split(NL)).to.deep.equal([
+          `>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:`,
+          `>John is the current leader.`
+        ]);
         done();
       };
       gamebot.simulateMessage(`game state`, 'u1');
