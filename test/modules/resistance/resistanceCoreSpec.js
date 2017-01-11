@@ -107,6 +107,17 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage(`Who's playing resistance?`, 'u1', gameChannel);
     });
 
+    it('should be able respond with a list of players', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.respond = (target, response, params) => {
+        expect(target.channel).to.equal(gameChannel);
+        expect(response).to.equal(`The current list of players is: John, Henrietta`);
+        done();
+      };
+      gamebot.simulateMessage(`Who is playing?`, 'u1', gameChannel);
+    });
+
     it('should be able respond with the current list of players', (done) => {
       gamebot.simulateMessage('join the resistance', 'u1');
       gamebot.simulateMessage('join the resistance', 'u2');
