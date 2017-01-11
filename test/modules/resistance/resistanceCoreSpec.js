@@ -407,6 +407,16 @@ describe('Resistance module (Core)', function () {
     });
   });
 
+  describe('Game state', () => {
+    it('should report on the current state of the game', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include(`>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:\n>No leader assigned (Game not started?).`);
+        done();
+      };
+      gamebot.simulateMessage(`game state`, 'u1');
+    });
+  });
+
   describe('Help', () => {
     it('should allow a user to request help on resistance', (done) => {
       gamebot.respond = (target, response, params) => {
