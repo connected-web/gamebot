@@ -132,23 +132,25 @@ describe('Resistance module (Core)', function () {
   });
 
   describe('Role Information', () => {
-    it('should be able to remind players that they have no role assigned', (done) => {
-      gamebot.simulateMessage('join the resistance', 'u1');
-      gamebot.respond = (target, response, params) => {
-        expect(target).to.equal('u1');
-        expect(response.split(NL)).to.deep.equal([`John, your role is...`, `>Janitor : Team :good_guy:.`, `>Maintains a productive work environment`]);
-        done();
-      };
-      module.state.roles = {
-        u1: {
-          name: 'Janitor',
-          description: 'Maintains a productive work environment',
-          team: {
-            logo: ':good_guy:'
+    [`What's my role?`, 'whoami', 'who am I?'].forEach((command) => {
+      it(`should respond to "${command}" to remind players have a role assigned`, (done) => {
+        gamebot.simulateMessage('join the resistance', 'u1');
+        gamebot.respond = (target, response, params) => {
+          expect(target).to.equal('u1');
+          expect(response.split(NL)).to.deep.equal([`John, your role is...`, `>Janitor : Team :good_guy:.`, `>Maintains a productive work environment`]);
+          done();
+        };
+        module.state.roles = {
+          u1: {
+            name: 'Janitor',
+            description: 'Maintains a productive work environment',
+            team: {
+              logo: ':good_guy:'
+            }
           }
-        }
-      };
-      gamebot.simulateMessage(`What's my role?`, 'u1');
+        };
+        gamebot.simulateMessage(command, 'u1');
+      });
     });
 
     it('should be able to remind players that are not even playing', (done) => {
@@ -183,10 +185,10 @@ describe('Resistance module (Core)', function () {
     [4].forEach((x) => {
       it(`should list the available roles for ${x} players`, (done) => {
         gamebot.respond = (target, response, params) => {
-          expect(target.channel).to.equal(gameChannel);
           expect(response).to.include(`The resistance roles for ${x} players are:`);
           expect(response).to.include(`:good_guy: Resistance Reverser`);
           expect(response).to.include(`:bad_guy: Hidden Spy Reverser`);
+          expect(target.channel).to.equal(gameChannel);
           done();
         };
         gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', gameChannel);
@@ -196,10 +198,10 @@ describe('Resistance module (Core)', function () {
     [5, 6, 7, 8, 9, 10].forEach((x) => {
       it(`should list the available roles for ${x} players`, (done) => {
         gamebot.respond = (target, response, params) => {
-          expect(target.channel).to.equal(gameChannel);
           expect(response).to.include(`The resistance roles for ${x} players are:`);
           expect(response).to.include(`:good_guy: Generic Resistance`);
           expect(response).to.include(`:bad_guy: `);
+          expect(target.channel).to.equal(gameChannel);
           done();
         };
         gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', gameChannel);
@@ -209,8 +211,8 @@ describe('Resistance module (Core)', function () {
     [1, 2, 3, 11].forEach((x) => {
       it(`should let the user know that there are no configuration for ${x} players`, (done) => {
         gamebot.respond = (target, response, params) => {
-          expect(target.channel).to.equal(gameChannel);
           expect(response).to.include(`No resistance roles are configured for ${x} players.`);
+          expect(target.channel).to.equal(gameChannel);
           done();
         };
         gamebot.simulateMessage(`resistance roles for ${x} players`, 'u1', gameChannel);
@@ -411,6 +413,22 @@ describe('Resistance module (Core)', function () {
     it('should report on the empty state of the game', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(response).to.include(`>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:\n>No leader assigned (Game not started?).`);
+        done();
+      };
+      gamebot.simulateMessage(`game state`, 'u1');
+    });
+
+    it('should report on the first pick of the game', (done) => {
+      gamebot.simulateMessage('join spies', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join resistance', 'u3');
+      gamebot.simulateMessage('join game', 'u4');
+      gamebot.simulateMessage('start game', 'u1');
+      gamebot.respond = (target, response, params) => {
+        expect(response.split(NL)).to.deep.equal([
+          `>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:`,
+          `>John is the current leader.`
+        ]);
         done();
       };
       gamebot.simulateMessage(`game state`, 'u1');
