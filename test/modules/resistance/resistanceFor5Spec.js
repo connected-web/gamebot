@@ -177,15 +177,24 @@ describe('Resistance module (5 player)', function () {
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
+          expect(response.split(NL)).to.deep.equal([
+            `You are on an approved mission with John, and Rico.`,
+            `Please play by responding with *play success* or *play fail* or *play reverse*, according to your role.`
+          ]);
           expect(target).to.equal('u3');
         },
         (target, response, params) => {
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
+          expect(response.split(NL)).to.deep.equal([
+            `You are on an approved mission with Claus, and Rico.`,
+            `Please play by responding with *play success* or *play fail* or *play reverse*, according to your role.`
+          ]);
           expect(target).to.equal('u1');
         },
         (target, response, params) => {
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
+          expect(response.split(NL)).to.deep.equal([
+            `You are on an approved mission with Claus, and John.`,
+            `Please play by responding with *play success* or *play fail* or *play reverse*, according to your role.`
+          ]);
           expect(target).to.equal('u5');
           done();
         }
@@ -232,16 +241,25 @@ describe('Resistance module (5 player)', function () {
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
+          expect(response.split(NL)).to.deep.equal([
+            `You are on an approved mission with John, and Rico.`,
+            `Please play by responding with *play success* or *play fail* or *play reverse*, according to your role.`
+          ]);
           expect(target).to.equal('u3');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
         },
         (target, response, params) => {
+          expect(response.split(NL)).to.deep.equal([
+            `You are on an approved mission with Claus, and Rico.`,
+            `Please play by responding with *play success* or *play fail* or *play reverse*, according to your role.`
+          ]);
           expect(target).to.equal('u1');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
         },
         (target, response, params) => {
+          expect(response.split(NL)).to.deep.equal([
+            `You are on an approved mission with Claus, and John.`,
+            `Please play by responding with *play success* or *play fail* or *play reverse*, according to your role.`
+          ]);
           expect(target).to.equal('u5');
-          expect(response).to.include(`You are on an approved mission; please play *success*, *fail*, or *reverse* according to your role. e.g. *play success*`);
           done();
         }
       ];
