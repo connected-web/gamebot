@@ -229,7 +229,7 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage('join the resistance', 'u4');
       gamebot.simulateMessage('start game', 'u0');
       gamebot.respond = (target, response, params) => {
-        expect(response).to.include(`Only the leader (Triela) can make picks.`);
+        expect(response).to.include(`Only the leader (*Triela*) can make picks.`);
         expect(target.channel).to.equal(gameChannel);
         done();
       };
@@ -427,7 +427,7 @@ describe('Resistance module (Core)', function () {
       gamebot.respond = (target, response, params) => {
         expect(response.split(NL)).to.deep.equal([
           `>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:`,
-          `>John is the current leader.`
+          `>*John* is the current leader.`
         ]);
         done();
       };
@@ -443,7 +443,7 @@ describe('Resistance module (Core)', function () {
       gamebot.respond = (target, response, params) => {
         expect(response.split(NL)).to.deep.equal([
           `>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:`,
-          `>John is the current leader.`
+          `>*John* is the current leader.`
         ]);
         done();
       };
