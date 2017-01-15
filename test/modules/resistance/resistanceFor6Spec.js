@@ -80,6 +80,10 @@ describe('Resistance module (6 player)', function () {
           expect(response).to.include('The following players are known to you as commanders:');
           expect(response).to.include('>:bad_guy: ? :good_guy: John');
           expect(response).to.include('>:bad_guy: ? :good_guy: Rico');
+        },
+        (target, response, params) => {
+          expect(response).to.equal('Triela you are the leader. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
+          expect(target).to.equal('u4');
           done();
         }
       ];
@@ -143,6 +147,10 @@ describe('Resistance module (6 player)', function () {
         },
         (target, response, params) => {
           expect(response).to.include('Congratulations John (Citizen u1) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only');
+        },
+        (target, response, params) => {
+          expect(response).to.equal('John you are the leader. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
+          expect(target).to.equal('u1');
           done();
         }
       ];
@@ -333,6 +341,10 @@ describe('Resistance module (6 player)', function () {
           expect(response).to.include(`Henrietta has completed their mission action.`);
         },
         (target, response, params) => {
+          expect(response).to.equal('Rico you are the leader. Mission 4 requires 3 players. Pick a team using *pick Name1, Name2, ...*');
+          expect(target).to.equal('u5');
+        },
+        (target, response, params) => {
           expect(target).to.equal('resistance');
           expect(response.split(NL)).to.deep.equal([
             `All mission actions have been completed; the results are as follows:`,
@@ -381,7 +393,10 @@ describe('Resistance module (6 player)', function () {
           expect(response).to.include(`Henrietta has completed their mission action.`);
         },
         (target, response, params) => {
-          expect(target).to.equal('resistance');
+          expect(response).to.equal(`Rico you are the leader. Mission 4 requires 3 players. Pick a team using *pick Name1, Name2, ...*`);
+          expect(target).to.equal('u5');
+        },
+        (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
             `All mission actions have been completed; the results are as follows:`,
             `>Success (1) :success:`,
@@ -391,6 +406,7 @@ describe('Resistance module (6 player)', function () {
             `Mission Progress: :skip: :skip: :bad_guy: :white_circle: :white_circle:`,
             `The leader token moves to *Rico*. Mission 4 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
+          expect(target).to.equal('resistance');
           done();
         }
       ];
@@ -425,7 +441,10 @@ describe('Resistance module (6 player)', function () {
           expect(response).to.include(`Rico has completed their mission action.`);
         },
         (target, response, params) => {
-          expect(target).to.equal('resistance');
+          expect(response).to.equal(`Rico you are the leader. Mission 3 requires 4 players. Pick a team using *pick Name1, Name2, ...*`);
+          expect(target).to.equal('u5');
+        },
+        (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
             `All mission actions have been completed; the results are as follows:`,
             `>Success (2) :success: :success:`,
@@ -434,6 +453,7 @@ describe('Resistance module (6 player)', function () {
             `Mission Progress: :skip: :bad_guy: :white_circle: :white_circle: :white_circle:`,
             `The leader token moves to *Rico*. Mission 3 requires 4 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
+          expect(target).to.equal('resistance');
           done();
         }
       ];
@@ -468,7 +488,10 @@ describe('Resistance module (6 player)', function () {
           expect(response).to.include(`Rico has completed their mission action.`);
         },
         (target, response, params) => {
-          expect(target).to.equal('resistance');
+          expect(response).to.equal(`Rico you are the leader. Mission 3 requires 4 players. Pick a team using *pick Name1, Name2, ...*`);
+          expect(target).to.equal('u5');
+        },
+        (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
             `All mission actions have been completed; the results are as follows:`,
             `>Success (1) :success:`,
@@ -477,6 +500,7 @@ describe('Resistance module (6 player)', function () {
             `Mission Progress: :skip: :bad_guy: :white_circle: :white_circle: :white_circle:`,
             `The leader token moves to *Rico*. Mission 3 requires 4 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
+          expect(target).to.equal('resistance');
           done();
         }
       ];
@@ -511,7 +535,10 @@ describe('Resistance module (6 player)', function () {
           expect(response).to.include(`Rico has completed their mission action.`);
         },
         (target, response, params) => {
-          expect(target).to.equal('resistance');
+          expect(response).to.include(`Rico you are the leader. Mission 3 requires 4 players. Pick a team using *pick Name1, Name2, ...*`);
+          expect(target).to.equal('u5');
+        },
+        (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
             `All mission actions have been completed; the results are as follows:`,
             `>Success (3) :success: :success: :success:`,
@@ -519,6 +546,7 @@ describe('Resistance module (6 player)', function () {
             `Mission Progress: :skip: :good_guy: :white_circle: :white_circle: :white_circle:`,
             `The leader token moves to *Rico*. Mission 3 requires 4 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
+          expect(target).to.equal('resistance');
           done();
         }
       ];
