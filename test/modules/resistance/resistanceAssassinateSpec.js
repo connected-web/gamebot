@@ -3,6 +3,11 @@ const resistance = require('../../../lib/modules/resistance');
 const mockGamebot = require('../../lib/mockGamebot');
 const NL = '\n';
 
+const teamResistance = {
+  name: 'Resistance',
+  logo: ':good_guy:'
+};
+
 describe('Resistance module (Assassinations)', function () {
 
   var module, gamebot;
@@ -31,6 +36,8 @@ describe('Resistance module (Assassinations)', function () {
           `The Resistance Commander has been found, dead. The :bad_guy: Spies win the game.`
         ]);
         expect(target).to.equal('resistance');
+        expect(module.state.assassinationDisabled).to.equal(true);
+        expect(module.state.assassinationSuccessful).to.equal(true);
         done();
       };
       gamebot.simulateMessage(`assassinate Claus`, 'u5');
@@ -44,6 +51,8 @@ describe('Resistance module (Assassinations)', function () {
           `The :good_guy: Resistance win the game.`
         ]);
         expect(target).to.equal('resistance');
+        expect(module.state.assassinationDisabled).to.equal(true);
+        expect(module.state.assassinationSuccessful).to.equal(false);
         done();
       };
       gamebot.simulateMessage(`assassinate Triela`, 'u5');
@@ -52,9 +61,11 @@ describe('Resistance module (Assassinations)', function () {
     it('should prevent the assassin from assassinating people outside the game', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(response.split(NL)).to.deep.equal([
-          `Could not assassinate Angelica, they do not have a role in this game.`
+          `You cannot assassinate Angelica; they do not have a role in this game.`
         ]);
         expect(target).to.equal('u5');
+        expect(module.state.assassinationDisabled).to.equal(false);
+        expect(module.state.assassinationSuccessful).to.equal(false);
         done();
       };
       gamebot.simulateMessage(`assassinate Angelica`, 'u5');
@@ -63,12 +74,59 @@ describe('Resistance module (Assassinations)', function () {
     it('should prevent non-assassins from assassinating people', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(response.split(NL)).to.deep.equal([
-          `You are not stealthy enough to be an assassin, go home and learn your craft.`
+          `You are not stealthy enough to be an assassin; go home and learn your craft.`
         ]);
         expect(target).to.equal('u1');
+        expect(module.state.assassinationDisabled).to.equal(false);
+        expect(module.state.assassinationSuccessful).to.equal(false);
         done();
       };
       gamebot.simulateMessage(`assassinate Triela`, 'u1');
+    });
+
+    it('should notify assassins that should assassinate after a resistance win', (done) => {
+      module.state.missionHistory = [
+        teamResistance, teamResistance
+      ];
+      module.state.picks = ['u1', 'u2', 'u3'];
+      module.state.votes = {
+        'u1': 'accept',
+        'u2': 'accept',
+        'u3': 'accept',
+        'u4': 'accept',
+        'u5': 'accept'
+      };
+      module.state.approved = true;
+      gamebot.simulateMessage(`play success`, 'u1');
+      gamebot.simulateMessage(`play success`, 'u2');
+      var expectedResponses = [
+        (target, response, params) => {
+          expect(response.split(NL)).to.deep.equal(['Thank you Claus, your mission action has been completed.']);
+          expect(target).to.equal('u3');
+        },
+        (target, response, params) => {
+          expect(response.split(NL)).to.deep.equal(['Claus has completed their mission action.']);
+          expect(target).to.equal('resistance');
+        },
+        (target, response, params) => {
+          expect(response.split(NL)).to.deep.equal(['Though the resistance has prevailed you are presented the opportunity to assassinate their commander. Use *assassinate Name* to reclaim victory.']);
+          expect(target).to.equal('u5');
+        },
+        (target, response, params) => {
+          expect(response.split(NL)).to.deep.equal(['All mission actions have been completed; the results are as follows:',
+            '>Success (3) :success: :success: :success:',
+            'Overall mission status: Resistance :good_guy: victory',
+            'Mission Progress: :good_guy: :good_guy: :good_guy: :white_circle: :white_circle:'
+          ]);
+          expect(target).to.equal('resistance');
+          done();
+        }
+      ];
+      gamebot.respond = (target, response, params) => {
+        var expectation = expectedResponses.shift();
+        (expectation) ? expectation(target, response, params): done(response);
+      };
+      gamebot.simulateMessage(`play success`, 'u3');
     });
   });
 });
