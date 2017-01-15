@@ -327,11 +327,18 @@ describe('Resistance module (5 player)', function () {
         gamebot.respond = (target, response, params) => {
           expect(response).to.include('Mission Rejected! :x: 1 votes (John), 4 rejects (Henrietta, Claus, Triela, Rico).');
           expect(module.state.voteHistory[0]).to.deep.equal([{
-            "u1": "accept",
-            "u2": "reject",
-            "u3": "reject",
-            "u4": "reject",
-            "u5": "reject"
+            "leader": "u1",
+            "picks": [
+              "u1",
+              "u2"
+            ],
+            "votes": {
+              "u1": "accept",
+              "u2": "reject",
+              "u3": "reject",
+              "u4": "reject",
+              "u5": "reject"
+            }
           }]);
         };
       };
