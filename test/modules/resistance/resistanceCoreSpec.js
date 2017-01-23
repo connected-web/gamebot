@@ -247,33 +247,33 @@ describe('Resistance module (Core)', function () {
 
       var expectedResponses = [
         (target, response, params) => {
-          expect(response).to.include(`Triela has picked Angelica, Henrietta, and Rico to go on the next mission.`);
+          expect(response).to.include(`Triela has picked *Angelica*, *Henrietta*, and *Rico* to go on the next mission.`);
           expect(module.state.picks).to.deep.equal(['u2', 'u5', 'u6']);
           expect(target).to.equal('resistance');
         },
         (target, response, params) => {
           expect(target).to.equal('u2');
-          expect(response).to.include(`Angelica, Henrietta, and Rico`);
+          expect(response).to.include(`*Angelica*, *Henrietta*, and *Rico*`);
           expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u5');
-          expect(response).to.include(`Angelica, Henrietta, and Rico`);
+          expect(response).to.include(`*Angelica*, *Henrietta*, and *Rico*`);
           expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u6');
-          expect(response).to.include(`Angelica, Henrietta, and Rico`);
+          expect(response).to.include(`*Angelica*, *Henrietta*, and *Rico*`);
           expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u3');
-          expect(response).to.include(`Angelica, Henrietta, and Rico`);
+          expect(response).to.include(`*Angelica*, *Henrietta*, and *Rico*`);
           expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
         },
         (target, response, params) => {
           expect(target).to.equal('u4');
-          expect(response).to.include(`Angelica, Henrietta, and Rico`);
+          expect(response).to.include(`*Angelica*, *Henrietta*, and *Rico*`);
           expect(response).to.include(`Please vote by responding with *vote accept* or *vote reject*`);
           done();
         }

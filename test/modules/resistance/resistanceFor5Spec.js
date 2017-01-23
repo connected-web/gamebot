@@ -350,7 +350,7 @@ describe('Resistance module (5 player)', function () {
 
       // Second pick
       gamebot.respond = (target, response, params) => {
-        expect(response).to.include('Triela has picked Claus, and Triela to go on the next mission.');
+        expect(response).to.include('Triela has picked *Claus*, and *Triela* to go on the next mission.');
       };
       gamebot.simulateMessage(`pick Triela, Claus`, 'u4');
 
@@ -374,7 +374,7 @@ describe('Resistance module (5 player)', function () {
 
       // Third pick
       gamebot.respond = (target, response, params) => {
-        expect(response).to.include('Henrietta has picked Henrietta, and Rico to go on the next mission.');
+        expect(response).to.include('Henrietta has picked *Henrietta*, and *Rico* to go on the next mission.');
       };
       gamebot.simulateMessage(`pick Henrietta, Rico`, 'u2');
 
@@ -398,7 +398,7 @@ describe('Resistance module (5 player)', function () {
 
       // Fourth pick
       gamebot.respond = (target, response, params) => {
-        expect(response).to.include('Rico has picked Rico, and Triela to go on the next mission.');
+        expect(response).to.include('Rico has picked *Rico*, and *Triela* to go on the next mission.');
       };
       gamebot.simulateMessage(`pick Triela, Rico`, 'u5');
 
@@ -422,7 +422,7 @@ describe('Resistance module (5 player)', function () {
 
       // Fifth pick
       gamebot.respond = (target, response, params) => {
-        expect(response).to.include('Claus has picked Claus, and Henrietta to go on the next mission.');
+        expect(response).to.include('Claus has picked *Claus*, and *Henrietta* to go on the next mission.');
       };
       gamebot.simulateMessage(`pick Claus, Henrietta`, 'u3');
 
