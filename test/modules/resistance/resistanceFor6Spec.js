@@ -193,7 +193,11 @@ describe('Resistance module (6 player)', function () {
         },
         (target, response, params) => {
           expect(target).to.equal('resistance');
-          expect(response.split(NL)).to.deep.equal([`Angelica has voted.`, `Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 2 rejects (John, Angelica).`, `Players Claus, Henrietta, John, and Rico have been assigned to the current mission; awaiting their responses.`]);
+          expect(response.split(NL)).to.deep.equal([
+            `Angelica has voted.`,
+            `Mission Approved! 4 votes (*Henrietta*, *Claus*, Triela, *Rico*), 2 rejects (*John*, Angelica).`,
+            `Players Claus, Henrietta, John, and Rico have been assigned to the current mission; awaiting their responses.`
+          ]);
         },
         (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
@@ -261,7 +265,11 @@ describe('Resistance module (6 player)', function () {
       var expectedResponses = [
         (target, response, params) => {
           expect(target).to.equal('resistance');
-          expect(response.split(NL)).to.deep.equal([`Angelica has voted.`, `Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 2 rejects (John, Angelica).`, `Players Claus, John, and Rico have been assigned to the current mission; awaiting their responses.`]);
+          expect(response.split(NL)).to.deep.equal([
+            `Angelica has voted.`,
+            `Mission Approved! 4 votes (Henrietta, *Claus*, Triela, *Rico*), 2 rejects (*John*, Angelica).`,
+            `Players Claus, John, and Rico have been assigned to the current mission; awaiting their responses.`
+          ]);
         },
         (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([

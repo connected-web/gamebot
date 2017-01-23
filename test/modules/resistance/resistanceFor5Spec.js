@@ -179,7 +179,7 @@ describe('Resistance module (5 player)', function () {
         (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
             `Rico has voted.`,
-            `Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 1 rejects (John).`,
+            `Mission Approved! 4 votes (Henrietta, *Claus*, Triela, *Rico*), 1 rejects (*John*).`,
             `Players Claus, John, and Rico have been assigned to the current mission; awaiting their responses.`
           ]);
           expect(target).to.equal('resistance');
@@ -243,7 +243,7 @@ describe('Resistance module (5 player)', function () {
         (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
             `Rico has voted.`,
-            `Mission Approved! 4 votes (Henrietta, Claus, Triela, Rico), 1 rejects (John).`,
+            `Mission Approved! 4 votes (Henrietta, *Claus*, Triela, *Rico*), 1 rejects (*John*).`,
             `Players Claus, John, and Rico have been assigned to the current mission; awaiting their responses.`
           ]);
           expect(target).to.equal('resistance');
@@ -325,7 +325,11 @@ describe('Resistance module (5 player)', function () {
         expect(response).to.equal('Triela you are the leader. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
         expect(target).to.equal('u4');
         gamebot.respond = (target, response, params) => {
-          expect(response).to.include('Mission Rejected! :x: 1 votes (John), 4 rejects (Henrietta, Claus, Triela, Rico).');
+          expect(response.split(NL)).to.deep.equal([
+            'John has voted.',
+            'Mission Rejected! :x: 1 votes (*John*), 4 rejects (*Henrietta*, Claus, Triela, Rico).',
+            'The leader token moves to *Triela*. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*'
+          ]);
           expect(module.state.voteHistory[0]).to.deep.equal([{
             "leader": "u1",
             "picks": [
@@ -359,7 +363,11 @@ describe('Resistance module (5 player)', function () {
         expect(response).to.equal('Henrietta you are the leader. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
         expect(target).to.equal('u2');
         gamebot.respond = (target, response, params) => {
-          expect(response).to.include('Mission Rejected! :x: :x: 1 votes (Triela), 4 rejects (John, Henrietta, Claus, Rico).');
+          expect(response.split(NL)).to.deep.equal([
+            'Triela has voted.',
+            'Mission Rejected! :x: :x: 1 votes (*Triela*), 4 rejects (John, Henrietta, *Claus*, Rico).',
+            'The leader token moves to *Henrietta*. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*'
+          ]);
         };
       };
       gamebot.simulateMessage(`vote accept`, 'u4');
@@ -379,7 +387,11 @@ describe('Resistance module (5 player)', function () {
         expect(response).to.equal('Rico you are the leader. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
         expect(target).to.equal('u5');
         gamebot.respond = (target, response, params) => {
-          expect(response).to.include('Mission Rejected! :x: :x: :x: 1 votes (Henrietta), 4 rejects (John, Claus, Triela, Rico).');
+          expect(response.split(NL)).to.deep.equal([
+            'Henrietta has voted.',
+            'Mission Rejected! :x: :x: :x: 1 votes (*Henrietta*), 4 rejects (John, Claus, Triela, *Rico*).',
+            'The leader token moves to *Rico*. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*'
+          ]);
         };
       };
       gamebot.simulateMessage(`vote accept`, 'u2');
@@ -399,7 +411,11 @@ describe('Resistance module (5 player)', function () {
         expect(response).to.equal('Claus you are the leader. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
         expect(target).to.equal('u3');
         gamebot.respond = (target, response, params) => {
-          expect(response).to.include('Mission Rejected! :x: :x: :x: :x: 1 votes (Rico), 4 rejects (John, Henrietta, Claus, Triela).');
+          expect(response.split(NL)).to.deep.equal([
+            'Rico has voted.',
+            'Mission Rejected! :x: :x: :x: :x: 1 votes (*Rico*), 4 rejects (John, Henrietta, Claus, *Triela*).',
+            'The leader token moves to *Claus*. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*'
+          ]);
         };
       };
       gamebot.simulateMessage(`vote accept`, 'u5');
@@ -421,7 +437,7 @@ describe('Resistance module (5 player)', function () {
         gamebot.respond = (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
             'Claus has voted.',
-            'Mission Rejected! :x: :x: :x: :x: :x: 1 votes (Claus), 4 rejects (John, Henrietta, Triela, Rico).',
+            'Mission Rejected! :x: :x: :x: :x: :x: 1 votes (*Claus*), 4 rejects (John, *Henrietta*, Triela, Rico).',
             `Failed to reach consensus : overall mission status Spies :bad_guy: victory`,
             `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
             `The leader token moves to *John*. Mission 2 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
