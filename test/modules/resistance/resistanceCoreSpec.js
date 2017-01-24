@@ -448,7 +448,7 @@ describe('Resistance module (Core)', function () {
   describe('Game state', () => {
     it('should report on the empty state of the game', (done) => {
       gamebot.respond = (target, response, params) => {
-        expect(response).to.include(`>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:\n>No leader assigned (Game not started?).`);
+        expect(response).to.include(`>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:\n>No leaders; game not started`);
         done();
       };
       gamebot.simulateMessage(`game state`, 'u1');
@@ -463,7 +463,7 @@ describe('Resistance module (Core)', function () {
       gamebot.respond = (target, response, params) => {
         expect(response.split(NL)).to.deep.equal([
           `>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:`,
-          `>*John* is the current leader.`
+          `>Leader order: *John*, Claus, Triela, Henrietta, and finally *John*`
         ]);
         done();
       };
@@ -479,7 +479,7 @@ describe('Resistance module (Core)', function () {
       gamebot.respond = (target, response, params) => {
         expect(response.split(NL)).to.deep.equal([
           `>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:`,
-          `>*John* is the current leader.`
+          `>Leader order: *John*, Claus, Triela, Henrietta, and finally *John*`
         ]);
         done();
       };

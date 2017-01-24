@@ -62,7 +62,7 @@ describe('Resistance module (Custom Game Mode)', function () {
           expect(response.split(NL)).to.deep.equal([
             '>Custom roles in play: :bad_guy: Assassin, :bad_guy: Blind Spy, :good_guy: Body Guard, and :good_guy: Resistance Commander',
             '>Mission Progress: :white_circle: :white_circle: :white_circle: :white_circle: :white_circle:',
-            '>*John* is the current leader.'
+            '>Leader order: *John*, Triela, Henrietta, Rico, and finally *John*'
           ]);
           expect(target.user).to.equal('u5');
           expect(module.state.customGame).to.deep.equal({
