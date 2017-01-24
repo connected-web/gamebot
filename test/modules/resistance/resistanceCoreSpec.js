@@ -341,6 +341,41 @@ describe('Resistance module (Core)', function () {
     });
   });
 
+  describe('Pick Order', () => {
+
+    it('should report that there are no players', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join the resistance', 'u5');
+      gamebot.simulateMessage('join the resistance', 'u6');
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include(`No leaders; game not started`);
+        expect(target.channel).to.equal('private');
+        done();
+      };
+      gamebot.simulateMessage(`What is the player order?`, gameChannel);
+    });
+
+    [`What's the pick order?`, `player order`, `leader order`].forEach((message) => {
+      it(`saying "${message}" should report on the player order`, (done) => {
+        gamebot.simulateMessage('join the resistance', 'u1');
+        gamebot.simulateMessage('join the resistance', 'u2');
+        gamebot.simulateMessage('join the resistance', 'u5');
+        gamebot.simulateMessage('join the resistance', 'u6');
+        gamebot.simulateMessage('join the resistance', 'u3');
+        gamebot.simulateMessage('start game');
+        module.state.turnCounter = 2;
+        module.state.voteHistory = [[{}, {}]];
+        gamebot.respond = (target, response, params) => {
+          expect(response).to.include(`Leader order: Claus, Rico, *John*, Angelica, and finally Henrietta`);
+          expect(target.channel).to.equal('private');
+          done();
+        };
+        gamebot.simulateMessage(message, gameChannel);
+      });
+    });
+  });
+
   describe('Playing cards onto a mission', () => {
     it('should prevent non-players from playing cards', (done) => {
       gamebot.respond = (target, response, params) => {
