@@ -248,6 +248,7 @@ describe('Resistance module (Core)', function () {
       var expectedResponses = [
         (target, response, params) => {
           expect(response).to.include(`Triela has picked *Angelica*, *Henrietta*, and *Rico* to go on the next mission.`);
+          expect(response).to.include(`Leader order: *Triela*, Angelica, Henrietta, Claus, and finally Rico`);
           expect(module.state.picks).to.deep.equal(['u2', 'u5', 'u6']);
           expect(target).to.equal('resistance');
         },
