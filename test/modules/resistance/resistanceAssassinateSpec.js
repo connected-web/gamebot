@@ -116,7 +116,7 @@ describe('Resistance module (Assassinations)', function () {
           expect(response.split(NL)).to.deep.equal(['All mission actions have been completed; the results are as follows:',
             '>Success (3) :success: :success: :success:',
             'Overall mission status: Resistance :good_guy: victory',
-            'Mission Progress: :good_guy: :good_guy: :good_guy: :white_circle: :white_circle:'
+            'Mission Progress: :good_guy: :good_guy: :good_guy: :3: :3:'
           ]);
           expect(target).to.equal('resistance');
           done();

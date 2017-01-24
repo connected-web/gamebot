@@ -439,7 +439,7 @@ describe('Resistance module (5 player)', function () {
             'Claus has voted.',
             'Mission Rejected! :x: :x: :x: :x: :x: 1 votes (*Claus*), 4 rejects (John, *Henrietta*, Triela, Rico).',
             `Failed to reach consensus : overall mission status Spies :bad_guy: victory`,
-            `Mission Progress: :bad_guy: :white_circle: :white_circle: :white_circle: :white_circle:`,
+            `Mission Progress: :bad_guy: :3: :2: :3: :3:`,
             `The leader token moves to *John*. Mission 2 requires 3 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
         };
@@ -501,7 +501,7 @@ describe('Resistance module (5 player)', function () {
             `>Fail (1) :fail:`,
             `>Reverse (1) :reverse:`,
             'Overall mission status: Resistance :good_guy: victory',
-            `Mission Progress: :skip: :good_guy: :white_circle: :white_circle: :white_circle:`,
+            `Mission Progress: :skip: :good_guy: :2: :3: :3:`,
             'The leader token moves to *Triela*. Mission 3 requires 2 players. Pick a team using *pick Name1, Name2, ...*'
           ]);
           expect(target).to.equal('resistance');
@@ -551,7 +551,7 @@ describe('Resistance module (5 player)', function () {
             `>Fail (1) :fail:`,
             `>Reverse (2) :reverse: :reverse:`,
             'Overall mission status: Spies :bad_guy: victory',
-            `Mission Progress: :skip: :bad_guy: :white_circle: :white_circle: :white_circle:`,
+            `Mission Progress: :skip: :bad_guy: :2: :3: :3:`,
             `The leader token moves to *Triela*. Mission 3 requires 2 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
@@ -598,7 +598,7 @@ describe('Resistance module (5 player)', function () {
             `>Success (2) :success: :success:`,
             `>Reverse (1) :reverse:`,
             'Overall mission status: Spies :bad_guy: victory',
-            `Mission Progress: :skip: :bad_guy: :white_circle: :white_circle: :white_circle:`,
+            `Mission Progress: :skip: :bad_guy: :2: :3: :3:`,
             `The leader token moves to *Triela*. Mission 3 requires 2 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
@@ -645,7 +645,7 @@ describe('Resistance module (5 player)', function () {
             `>Success (1) :success:`,
             `>Fail (2) :fail: :fail:`,
             'Overall mission status: Spies :bad_guy: victory',
-            `Mission Progress: :skip: :bad_guy: :white_circle: :white_circle: :white_circle:`,
+            `Mission Progress: :skip: :bad_guy: :2: :3: :3:`,
             `The leader token moves to *Triela*. Mission 3 requires 2 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
@@ -691,7 +691,7 @@ describe('Resistance module (5 player)', function () {
             `All mission actions have been completed; the results are as follows:`,
             `>Success (3) :success: :success: :success:`,
             'Overall mission status: Resistance :good_guy: victory',
-            `Mission Progress: :skip: :good_guy: :white_circle: :white_circle: :white_circle:`,
+            `Mission Progress: :skip: :good_guy: :2: :3: :3:`,
             `The leader token moves to *Triela*. Mission 3 requires 2 players. Pick a team using *pick Name1, Name2, ...*`
           ]);
           done();
