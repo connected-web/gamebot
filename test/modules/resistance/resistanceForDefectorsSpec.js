@@ -102,10 +102,59 @@ describe('Resistance module (5 player)', function () {
     it('should shuffle defector cards at the start if the game', (done) => {
       expect(module.state.defectorCards).to.deep.equal([]);
       module.chooseSeeds(235, 213);
-      module.state.missionHistory.push(':skip:', ':skip:');
       gamebot.simulateMessage('start resistance', 'u0');
 
       expect(module.state.defectorCards).to.deep.equal(['no change', 'change allegiance', 'no change', 'no change', 'change allegiance']);
+      done();
+    });
+
+    it('should notify players of no-allegiange changes', (done) => {
+      module.chooseSeeds(245, 272);
+      module.state.missionHistory.push(':skip:');
+      gamebot.simulateMessage('start resistance', 'u0');
+      gamebot.simulateMessage('pick John, Triela, Rico', 'u1');
+      gamebot.simulateMessage('vote accept', 'u1');
+      gamebot.simulateMessage('vote accept', 'u2');
+      gamebot.simulateMessage('vote accept', 'u3');
+      gamebot.simulateMessage('vote accept', 'u4');
+      gamebot.simulateMessage('vote accept', 'u5');
+      gamebot.simulateMessage('play success', 'u1');
+      gamebot.simulateMessage('play success', 'u4');
+      const responses = [];
+      gamebot.respond = (target, response, params) => {
+        responses.push(response);
+      };
+      gamebot.simulateMessage('play success', 'u5');
+
+      expect(responses.join(NL)).to.include('Defector allegiance: no change');
+      expect(responses.join(NL)).to.include('There has been no change to your allegiance.');
+
+      expect(module.state.defectorCards).to.deep.equal(['change allegiance', 'no change', 'change allegiance', 'no change']);
+      done();
+    });
+
+    it('should notify players of allegiance changes', (done) => {
+      module.chooseSeeds(245, 275);
+      module.state.missionHistory.push(':skip:', ':skip:');
+      gamebot.simulateMessage('start resistance', 'u0');
+      gamebot.simulateMessage('pick Rico, Triela', 'u5');
+      gamebot.simulateMessage('vote accept', 'u1');
+      gamebot.simulateMessage('vote accept', 'u2');
+      gamebot.simulateMessage('vote accept', 'u3');
+      gamebot.simulateMessage('vote accept', 'u4');
+      gamebot.simulateMessage('vote accept', 'u5');
+      gamebot.simulateMessage('play success', 'u5');
+
+      const responses = [];
+      gamebot.respond = (target, response, params) => {
+        responses.push(response);
+      };
+      gamebot.simulateMessage('play success', 'u4');
+
+      expect(responses.join(NL)).to.include('Defector allegiance: change allegiance');
+      expect(responses.join(NL)).to.include('Your allegiance has changed; you are now fighting for the other team.');
+
+      expect(module.state.defectorCards).to.deep.equal(['change allegiance', 'no change', 'no change', 'no change']);
       done();
     });
   });
