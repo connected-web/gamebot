@@ -15,12 +15,15 @@ A slackbot for board games and games channels. Responds to gameplay related chat
 - Checkout the code
 - Install dependencies
   - `npm i`
-- Set the access token
-  - `export GAMEBOT_TOKEN={insert-token-here}`
+- Create a [slack bot to gain an access token](https://my.slack.com/services/new/bot)
+- Create an access token file using `tokens.template.json`
 - Test it
   - `npm test`
 - Run it
   - `npm start`
+
+You will also need to:
+- Import custom icons slack for `:good_guy:`, `:bad_guy:` etc.
 
 ## Hosting
 
