@@ -490,6 +490,85 @@ describe('Resistance module (Core)', function () {
     });
   });
 
+  describe('Vote history', () => {
+    it('should allow a user to request the voting history for the game', (done) => {
+      module.state.voteHistory = [
+        [{
+          leader: 'u1',
+          picks: ['u2', 'u5'],
+          votes: {
+            u1: 'reject',
+            u2: 'accept',
+            u4: 'reject',
+            u5: 'accept'
+          }
+        }, {
+          leader: 'u5',
+          picks: ['u1', 'u5'],
+          votes: {
+            u1: 'accept',
+            u2: 'reject',
+            u4: 'reject',
+            u5: 'accept'
+          }
+        }, {
+          leader: 'u2',
+          picks: ['u2', 'u5'],
+          votes: {
+            u1: 'reject',
+            u2: 'accept',
+            u4: 'reject',
+            u5: 'accept'
+          }
+        }, {
+          leader: 'u4',
+          picks: ['u5', 'u4'],
+          votes: {
+            u1: 'reject',
+            u2: 'reject',
+            u4: 'reject',
+            u5: 'accept'
+          }
+        }, {
+          leader: 'u1',
+          picks: ['u1', 'u4'],
+          votes: {
+            u1: 'accept',
+            u2: 'accept',
+            u4: 'accept',
+            u5: 'reject'
+          }
+        }],
+        [{
+          leader: 'u5',
+          picks: ['u2', 'u5', 'u4'],
+          votes: {
+            u1: 'reject',
+            u2: 'accept',
+            u4: 'accept',
+            u5: 'accept'
+          }
+        }]
+      ];
+
+      gamebot.respond = (target, response, params) => {
+        expect(response.split(NL)).to.deep.equal([
+          `Mission 1 vote history:`,
+          `>:1: Leader: _John_, Pick: *Henrietta*, *Rico*, 2 approve (*Henrietta*, *Rico*), 2 rejects (John, Triela)`,
+          `>:2: Leader: _Rico_, Pick: *John*, *Rico*, 2 approve (*John*, *Rico*), 2 rejects (Henrietta, Triela)`,
+          `>:3: Leader: _Henrietta_, Pick: *Henrietta*, *Rico*, 2 approve (*Henrietta*, *Rico*), 2 rejects (John, Triela)`,
+          `>:4: Leader: _Triela_, Pick: *Rico*, *Triela*, 1 approve (*Rico*), 3 rejects (John, Henrietta, *Triela*)`,
+          `>:5: Leader: _John_, Pick: *John*, *Triela*, 3 approve (*John*, Henrietta, *Triela*), 1 rejects (Rico)`,
+          `Mission 2 vote history:`,
+          `>:1: Leader: _Rico_, Pick: *Henrietta*, *Rico*, *Triela*, 3 approve (*Henrietta*, *Triela*, *Rico*), 1 rejects (John)`
+        ]);
+        expect(target).to.equal('u1');
+        done();
+      };
+      gamebot.simulateMessage(`vote history`, 'u1');
+    });
+  });
+
   describe('Help', () => {
     it('should allow a user to request help on resistance', (done) => {
       gamebot.respond = (target, response, params) => {
