@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 const resistance = require('../../../lib/modules/resistance');
+const role = require('../../../lib/modules/resistance/role');
 const mockGamebot = require('../../lib/mockGamebot');
 const NL = '\n';
 
@@ -452,6 +453,30 @@ describe('Resistance module (Core)', function () {
       gamebot.respond = (target, response, params) => {
         expect(response).to.include(`No leaders; game not started`);
         expect(response).to.not.include(`>Mission Progress:`);
+        done();
+      };
+      gamebot.simulateMessage(`game state`, 'u1');
+    });
+
+    it('should use the 2 fails required icon on an appropriate fourth mission', (done) => {
+      gamebot.simulateMessage('join spies', 'u1');
+      gamebot.simulateMessage('join the resistance', 'u2');
+      gamebot.simulateMessage('join resistance', 'u3');
+      gamebot.simulateMessage('join game', 'u4');
+      gamebot.simulateMessage('start game', 'u1');
+      module.state.customGame = {
+        roles: [
+          role.Assassin, role.SpyReverser, role.DeepCover, role.FalseCommander
+        ],
+        missions: [2, 3, 2, 3, 3],
+        twoFailsRequired: true
+      };
+      gamebot.respond = (target, response, params) => {
+        expect(response.split(NL)).to.deep.equal([
+          `>Custom roles in play: :bad_guy: Assassin, :bad_guy: Deep Cover, :bad_guy: False Commander, and :bad_guy: Spy Reverser`,
+          `>Mission Progress: :2: :3: :2: :3-2fr: :3:`,
+          `>Leader order: *John*, Claus, Triela, Henrietta, and finally *John*`
+        ]);
         done();
       };
       gamebot.simulateMessage(`game state`, 'u1');
