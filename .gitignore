@@ -4,3 +4,4 @@ ssh/*.key
 *.log
 state/*.json
 tokens.json
+.DS_Store
