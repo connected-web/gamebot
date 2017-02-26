@@ -33,7 +33,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should assign roles at the start of a game', (done) => {
       module.chooseSeeds(245, 272);
-      module.state.missionHistory.push(':skip:', ':skip:');
+      module.state.missionHistory.push({victoriousTeam: ':skip:'}, {victoriousTeam: ':skip:'});
 
       const expectedResponses = [
         (target, response, params) => {
@@ -110,7 +110,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should notify players of no-allegiange changes', (done) => {
       module.chooseSeeds(245, 272);
-      module.state.missionHistory.push(':skip:');
+      module.state.missionHistory.push({victoriousTeam: ':skip:'});
       gamebot.simulateMessage('start resistance', 'u0');
       gamebot.simulateMessage('pick John, Triela, Rico', 'u1');
       gamebot.simulateMessage('vote accept', 'u1');
@@ -135,7 +135,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should notify players of allegiance changes', (done) => {
       module.chooseSeeds(245, 275);
-      module.state.missionHistory.push(':skip:', ':skip:');
+      module.state.missionHistory.push({victoriousTeam: ':skip:'}, {victoriousTeam: ':skip:'});
       gamebot.simulateMessage('start resistance', 'u0');
       gamebot.simulateMessage('pick Rico, Triela', 'u5');
       gamebot.simulateMessage('vote accept', 'u1');

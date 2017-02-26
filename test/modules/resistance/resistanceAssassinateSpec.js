@@ -85,9 +85,10 @@ describe('Resistance module (Assassinations)', function () {
     });
 
     it('should notify assassins that should assassinate after a resistance win', (done) => {
-      module.state.missionHistory = [
-        teamResistance, teamResistance
-      ];
+      const resistanceWin = {
+        victoriousTeam: teamResistance
+      };
+      module.state.missionHistory = [resistanceWin, resistanceWin];
       module.state.picks = ['u1', 'u2', 'u3'];
       module.state.votes = {
         'u1': 'accept',

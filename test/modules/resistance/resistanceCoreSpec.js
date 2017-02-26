@@ -244,7 +244,7 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage('join the resistance', 'u3');
       gamebot.simulateMessage('join the resistance', 'u4');
       gamebot.simulateMessage('start game', 'u0');
-      module.state.missionHistory.push(':skip:');
+      module.state.missionHistory.push({victoriousTeam: ':skip:'});
 
       var expectedResponses = [
         (target, response, params) => {
