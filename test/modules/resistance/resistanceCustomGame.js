@@ -35,7 +35,8 @@ describe('Resistance module (Custom Game Mode)', function () {
           expect(target).to.equal('resistance');
           expect(module.state.customGame).to.deep.equal({
             roles: [roles.Assassin, roles.Commander, roles.BodyGuard],
-            missions: [2, 3, 2, 3, 3]
+            missions: [2, 3, 2, 3, 3],
+            twoFailsRequired: false
           });
           done();
         };
@@ -44,30 +45,32 @@ describe('Resistance module (Custom Game Mode)', function () {
 
       it('should allow custom roles to be set (for a 5 player game)', (done) => {
         gamebot.respond = (target, response, params) => {
-          expect(response.split(NL)).to.deep.equal(['Roles have been set to: :bad_guy: Assassin, :bad_guy: Blind Spy, :bad_guy: Spy Reverser, :good_guy: Body Guard, and :good_guy: Resistance Commander']);
+          expect(response.split(NL)).to.deep.equal(['Roles have been set to: :bad_guy: Assassin, :bad_guy: Deep Cover, :bad_guy: Spy Reverser, :good_guy: Body Guard, and :good_guy: Resistance Commander']);
           expect(target).to.equal('resistance');
           expect(module.state.customGame).to.deep.equal({
-            roles: [roles.Assassin, roles.SpyReverser, roles.BlindSpy, roles.Commander, roles.BodyGuard],
-            missions: [2, 3, 2, 3, 3]
+            roles: [roles.Assassin, roles.SpyReverser, roles.DeepCover, roles.Commander, roles.BodyGuard],
+            missions: [2, 3, 2, 3, 3],
+            twoFailsRequired: false
           });
           done();
         };
-        gamebot.simulateMessage(`set roles Assassin, Spy Reverser, Blind Spy, Commander, Body Guard`, 'u5');
+        gamebot.simulateMessage(`set roles Assassin, Spy Reverser, Deep Cover, Commander, Body Guard`, 'u5');
       });
 
       it('should show a banner in game state', (done) => {
-        gamebot.simulateMessage(`set roles Assassin, blinDspy, Commander, Body Guard`, 'u5');
+        gamebot.simulateMessage(`set roles Assassin, deepCover, Commander, Body Guard`, 'u5');
         gamebot.simulateMessage(`start game`, 'u5');
         gamebot.respond = (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
-            '>Custom roles in play: :bad_guy: Assassin, :bad_guy: Blind Spy, :good_guy: Body Guard, and :good_guy: Resistance Commander',
+            '>Custom roles in play: :bad_guy: Assassin, :bad_guy: Deep Cover, :good_guy: Body Guard, and :good_guy: Resistance Commander',
             '>Mission Progress: :2: :3: :2: :3: :3:',
             '>Leader order: *John*, Triela, Henrietta, Rico, and finally *John*'
           ]);
           expect(target.user).to.equal('u5');
           expect(module.state.customGame).to.deep.equal({
-            roles: [roles.Assassin, roles.BlindSpy, roles.Commander, roles.BodyGuard],
-            missions: [2, 3, 2, 3, 3]
+            roles: [roles.Assassin, roles.DeepCover, roles.Commander, roles.BodyGuard],
+            missions: [2, 3, 2, 3, 3],
+            twoFailsRequired: false
           });
           done();
         };
@@ -86,7 +89,7 @@ describe('Resistance module (Custom Game Mode)', function () {
 
       it('should prevent a game starting if there are the wrong number of players', (done) => {
         gamebot.simulateMessage('join the resistance', 'u3');
-        gamebot.simulateMessage(`set roles blindspy, commander`, 'u5');
+        gamebot.simulateMessage(`set roles deepcover, commander`, 'u5');
         gamebot.respond = (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([`Claus tried to start the game with 5 players, but a custom game mode is configured for 2 players. Use *set roles ...* or *reset roles* to continue.`]);
           expect(target).to.equal('resistance');
