@@ -224,6 +224,25 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote accept`, 'u5');
     });
 
+    ['lol no'].forEach((message) => {
+      it(`should allow players to vote using "${message}"`, (done) => {
+        gamebot.simulateMessage(`pick Claus, John`, 'u1');
+        // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
+        var expectedResponses = [
+          (target, response, params) => {
+            expect(response).to.include(`John has voted, 4 players remaining.`);
+            expect(target).to.equal('resistance');
+            done();
+          }
+        ]
+        gamebot.respond = (target, response, params) => {
+          var expectation = expectedResponses.shift();
+          (expectation) ? expectation(target, response, params): done(response);
+        }
+        gamebot.simulateMessage(`${message}`, 'u1');
+      });
+    });
+
     it('should prevent players to voting before a pick has been made', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(target).to.equal('u3');
