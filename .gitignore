@@ -5,3 +5,4 @@ ssh/*.key
 state/*.json
 tokens.json
 .DS_Store
+records/resistance/*.json
