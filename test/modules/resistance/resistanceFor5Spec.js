@@ -224,7 +224,7 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote accept`, 'u5');
     });
 
-    ['lol no'].forEach((message) => {
+    ['lol no', 'Lol, no', 'lol. no.'].forEach((message) => {
       it(`should allow players to vote using "${message}"`, (done) => {
         gamebot.simulateMessage(`pick Claus, John`, 'u1');
         // 'John', 'Henrietta', 'Claus', 'Triela', 'Rico', 'Angelica'
