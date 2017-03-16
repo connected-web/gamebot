@@ -20,7 +20,7 @@ describe('Resistance module (Core)', function () {
     it('should respond to players wanting to stop the current game', (done) => {
       gamebot.respond = (channel, response, params) => {
         expect(channel).to.equal('resistance');
-        expect(response).to.equal('Test Bot has stopped the game; all players have been executed.');
+        expect(response).to.equal('Non Player has stopped the game; all players have been executed.');
         done();
       };
       gamebot.simulateMessage('stop resistance', 'u0');
@@ -33,7 +33,7 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage('join the resistance', 'u3');
       gamebot.respond = (channel, response, params) => {
         expect(channel).to.equal('resistance');
-        expect(response).to.equal('Test Bot has reset the game. Current players are Claus, Henrietta, and John.');
+        expect(response).to.equal('Non Player has reset the game. Current players are Claus, Henrietta, and John.');
         done();
       };
       gamebot.simulateMessage('reset resistance', 'u0');
@@ -43,7 +43,7 @@ describe('Resistance module (Core)', function () {
       // Add users
       gamebot.respond = (channel, response, params) => {
         expect(channel).to.equal('resistance');
-        expect(response).to.equal('Test Bot has reset the game. No players have registered to play.');
+        expect(response).to.equal('Non Player has reset the game. No players have registered to play.');
         done();
       };
       gamebot.simulateMessage('reset resistance', 'u0');
@@ -598,7 +598,7 @@ describe('Resistance module (Core)', function () {
     it('should allow a user to request help on resistance', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(target).to.equal('u1');
-        const botname = '@bot';
+        const botname = '@testbot';
         expect(response).to.include(`You can use these commands wherever ${botname} is present; for sensitive commands please send them directly to ${botname} in private chat.`);
         done();
       };

@@ -21,7 +21,7 @@ describe('Howl module', function() {
 
   it('should register a matcher', () => {
     const matcher = gamebot.matchers[0];
-    expect(matcher.description).to.equal('Matched a howler');
+    expect(matcher.description).to.equal('Matched a woof');
     expect(matcher.handler.length).to.equal(2);
     expect(typeof matcher.handler).to.equal('function');
   });

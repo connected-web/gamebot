@@ -41,7 +41,7 @@ describe('Resistance module (5 player)', function () {
       const expectedResponses = [
         (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
-            `Test Bot has started the game; all players will shortly receive their roles.`,
+            `Non Player has started the game; all players will shortly receive their roles.`,
             `Player order is: John, Rico, Triela, Henrietta, then Claus. *John* is the first leader. First mission requires 2 players. Pick a team using *pick Name1, Name 2, ...*`
           ]);
           expect(target).to.equal('resistance');
@@ -104,7 +104,7 @@ describe('Resistance module (5 player)', function () {
       const expectedResponses = [
         (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
-            `Test Bot has started the game; all players will shortly receive their roles.`,
+            `Non Player has started the game; all players will shortly receive their roles.`,
             `Player order is: John, Henrietta, Claus, Triela, then Rico. *John* is the first leader. First mission requires 2 players. Pick a team using *pick Name1, Name 2, ...*`
           ]);
           expect(target).to.equal('resistance');

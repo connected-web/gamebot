@@ -4,13 +4,14 @@ const LOG_ENABLED = false;
 
 function mockGamebot() {
   var userIDIndex = {
-    'u0': 'Test Bot',
+    'ux': 'Test Bot',
+    'u0': 'Non Player',
     'u1': 'John',
     'u2': 'Henrietta',
     'u3': 'Claus',
     'u4': 'Triela',
     'u5': 'Rico',
-    'u6': 'Angelica'
+    'u6': 'Angelica',
   };
   var channelIDIndex = {};
 
@@ -21,9 +22,22 @@ function mockGamebot() {
 
   gamebot = api({
     slackbot: {
-      id: '@bot'
+      token: 'xyz123',
+      name: 'Test Bot',
+      id: '@testbot',
     }
   });
+
+  gamebot.getUserById = (userId) => {
+    const user = userIDIndex[userId];
+    if (!user) {
+      console.warn('No user found with ID', userId);
+    }
+    return {
+      id: userId,
+      name: user
+    };
+  };
 
   gamebot.getUserName = (id) => {
     return userIDIndex[id] || id;
