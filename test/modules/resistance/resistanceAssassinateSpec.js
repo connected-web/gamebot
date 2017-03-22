@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
-const resistance = require('../../../lib/modules/resistance');
+const resistance = require('../../../lib/modules/resistance');;
+const role = require('../../../lib/modules/resistance/role');
 const mockGamebot = require('../../lib/mockGamebot');
 const NL = '\n';
 
@@ -24,6 +25,14 @@ describe('Resistance module (Assassinations)', function () {
     gamebot.simulateMessage('join game', 'u4');
     gamebot.simulateMessage('join spies', 'u5');
     gamebot.simulateMessage('start game', 'u5');
+    module.state.playerOrder = ['u1', 'u2', 'u3', 'u4', 'u5'];
+    module.state.roles = {
+      u1: role.GenericSpy,
+      u2: role.GenericSpy,
+      u3: role.Commander,
+      u4: role.Reverser,
+      u5: role.Assassin
+    };
   });
 
   describe('Assasinations', () => {
