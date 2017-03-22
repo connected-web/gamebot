@@ -17,7 +17,6 @@ describe('Resistance module (Assassinations)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
-    module.chooseSeeds(3, 3);
 
     gamebot.simulateMessage('join the resistance', 'u1');
     gamebot.simulateMessage('join the resistance', 'u2');

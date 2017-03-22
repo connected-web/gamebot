@@ -11,7 +11,6 @@ describe('Resistance module (5 player)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
-    module.chooseSeeds(1, 2);
 
     gamebot.simulateMessage('join the resistance', 'u1');
     gamebot.simulateMessage('join the resistance', 'u2');
@@ -23,7 +22,6 @@ describe('Resistance module (5 player)', function () {
 
   describe('Role Assignment', () => {
     it('should assign a player order at the start of a game', (done) => {
-      module.chooseSeeds(145, 455);
       gamebot.respond = (target, response, params) => {};
       gamebot.simulateMessage('start resistance', 'u0');
       expect(module.state.playerOrder).to.deep.equal(['u5', 'u3', 'u4', 'u2', 'u1']);
@@ -32,7 +30,6 @@ describe('Resistance module (5 player)', function () {
     });
 
     it('should assign roles at the start of a game', (done) => {
-      module.chooseSeeds(245, 272);
       module.state.missionHistory.push({victoriousTeam: ':skip:'}, {victoriousTeam: ':skip:'});
 
       const expectedResponses = [
@@ -101,7 +98,6 @@ describe('Resistance module (5 player)', function () {
 
     it('should shuffle defector cards at the start if the game', (done) => {
       expect(module.state.defectorCards).to.deep.equal([]);
-      module.chooseSeeds(235, 213);
       gamebot.simulateMessage('start resistance', 'u0');
 
       expect(module.state.defectorCards).to.deep.equal(['no change', 'change allegiance', 'no change', 'no change', 'change allegiance']);
@@ -109,7 +105,6 @@ describe('Resistance module (5 player)', function () {
     });
 
     it('should notify players of no-allegiange changes', (done) => {
-      module.chooseSeeds(245, 272);
       module.state.missionHistory.push({victoriousTeam: ':skip:'});
       gamebot.simulateMessage('start resistance', 'u0');
       gamebot.simulateMessage('pick John, Triela, Rico', 'u1');
@@ -134,7 +129,6 @@ describe('Resistance module (5 player)', function () {
     });
 
     it('should notify players of allegiance changes', (done) => {
-      module.chooseSeeds(245, 275);
       module.state.missionHistory.push({victoriousTeam: ':skip:'}, {victoriousTeam: ':skip:'});
       gamebot.simulateMessage('start resistance', 'u0');
       gamebot.simulateMessage('pick Rico, Triela', 'u5');

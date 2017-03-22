@@ -11,7 +11,6 @@ describe('Resistance module (6 player)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
-    module.chooseSeeds(6, 6);
 
     gamebot.simulateMessage('join the resistance', 'u1');
     gamebot.simulateMessage('join the resistance', 'u2');
@@ -23,7 +22,6 @@ describe('Resistance module (6 player)', function () {
 
   describe('Role Assignment', () => {
     it('should assign roles at the start of a game', (done) => {
-      module.chooseSeeds(10, 20);
 
       const expectedResponses = [
         (target, response, params) => {
@@ -96,8 +94,7 @@ describe('Resistance module (6 player)', function () {
       gamebot.simulateMessage('start resistance', 'u0');
     });
 
-    it('should assign roles at the start of a game based on a new seed', (done) => {
-      module.chooseSeeds(6, 23);
+    it('should assign roles at the start of a game', (done) => {
 
       const expectedResponses = [
         (target, response, params) => {

@@ -11,7 +11,6 @@ describe('Resistance module (5 player)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
-    module.chooseSeeds(1, 2);
 
     gamebot.simulateMessage('join the resistance', 'u1');
     gamebot.simulateMessage('join the resistance', 'u2');
@@ -22,7 +21,6 @@ describe('Resistance module (5 player)', function () {
 
   describe('Role Assignment', () => {
     it('should assign a player order at the start of a game', (done) => {
-      module.chooseSeeds(145, 455);
       gamebot.respond = (target, response, params) => {};
       gamebot.simulateMessage('start resistance', 'u0');
       expect(module.state.playerOrder).to.deep.equal(['u5', 'u3', 'u4', 'u2', 'u1']);
@@ -31,7 +29,6 @@ describe('Resistance module (5 player)', function () {
     });
 
     it('should assign roles at the start of a game', (done) => {
-      module.chooseSeeds(245, 272);
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       }, {
@@ -98,8 +95,7 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage('start resistance', 'u0');
     });
 
-    it('should assign roles at the start of a game based on a new seed', (done) => {
-      module.chooseSeeds(8667, 234);
+    it('should assign roles at the start of a game', (done) => {
 
       const expectedResponses = [
         (target, response, params) => {

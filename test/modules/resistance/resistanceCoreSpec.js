@@ -13,7 +13,6 @@ describe('Resistance module (Core)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
-    module.chooseSeeds(1, 1);
   });
 
   describe('Stop and Reset', () => {

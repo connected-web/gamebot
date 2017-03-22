@@ -15,7 +15,6 @@ describe('Resistance module (Mission Plays)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
-    module.chooseSeeds(1, 1);
   });
 
   function expectFailure(players, fail, reverse, success, twoFailsRequired = false) {
