@@ -23,7 +23,12 @@ describe('Resistance module (5 player)', function () {
     it('should assign a player order at the start of a game', (done) => {
       gamebot.respond = (target, response, params) => {};
       gamebot.simulateMessage('start resistance', 'u0');
-      expect(module.state.playerOrder).to.deep.equal(['u5', 'u3', 'u4', 'u2', 'u1']);
+      expect(module.state.playerOrder).to.contain('u5');
+      expect(module.state.playerOrder).to.contain('u4');
+      expect(module.state.playerOrder).to.contain('u3');
+      expect(module.state.playerOrder).to.contain('u2');
+      expect(module.state.playerOrder).to.contain('u1');
+      expect(module.state.playerOrder.length).to.equal(5);
       expect(module.state.turnCounter).to.equal(0);
       done();
     });
