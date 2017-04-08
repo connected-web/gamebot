@@ -259,6 +259,7 @@ describe('Resistance module (5 player)', function () {
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
+      module.state.playerOrder = ['u1', 'u2', 'u3', 'u4', 'u5']
       gamebot.simulateMessage(`pick Claus, John, Rico`, 'u1');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
@@ -346,6 +347,7 @@ describe('Resistance module (5 player)', function () {
   describe('Failing a mission by being unable to reach consensus', () => {
     it('should allow players to reject 5 missions in a row', (done) => {
       gamebot.simulateMessage(`resistance start`, 'u1');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       // First pick
       gamebot.simulateMessage(`pick John, Henrietta`, 'u1');
       gamebot.simulateMessage(`vote reject`, 'u2');
@@ -353,14 +355,10 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote reject`, 'u4');
       gamebot.simulateMessage(`vote reject`, 'u5');
       gamebot.respond = (target, response, params) => {
-        expect(response).to.equal('Triela you are the leader. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
-        expect(target).to.equal('u4');
+        expect(response).to.match(/[A-z]+ you are the leader\. Mission 1 requires 2 players. Pick a team using \*pick Name1, Name2, \.\.\.\*/);
+        expect(target).to.match(/u\d/);
         gamebot.respond = (target, response, params) => {
-          expect(response.split(NL)).to.deep.equal([
-            'John has voted.',
-            'Mission Rejected! :x: 1 votes (*John*), 4 rejects (*Henrietta*, Claus, Triela, Rico).',
-            'The leader token moves to *Triela*. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*'
-          ]);
+          expect(response).to.match(/[A-z]+ has voted\.\nMission Rejected! :x: 1 votes \(\*?[A-z]+\*?\), 4 rejects \(\*?[A-z]+\*?, \*?[A-z]+\*?, \*?[A-z]+\*?, \*?[A-z]+\*?\)\.\nThe leader token moves to \*[A-z]+\*. Mission 1 requires 2 players\. Pick a team using \*pick Name1, Name2, \.\.\.\*/)
           expect(module.state.voteHistory[0]).to.deep.equal([{
             "leader": "u1",
             "picks": [
@@ -492,6 +490,7 @@ describe('Resistance module (5 player)', function () {
   describe('Playing cards onto a mission', () => {
     it('should allow players to succeed a 3 player mission with a fail and a reverse', (done) => {
       gamebot.simulateMessage(`resistance start`, 'u1');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
@@ -557,6 +556,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should allow players to fail a 3 player mission with two reverses and a fail', (done) => {
       gamebot.simulateMessage(`start game`, 'u0', 'resistance');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
@@ -606,6 +606,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should allow players to fail a 3 player mission with a single reverse', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
@@ -655,6 +656,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should allow players to fail a 3 player mission with two fails', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
@@ -704,6 +706,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should allow players to succeed a 3 player mission with three successes', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
