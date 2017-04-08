@@ -96,19 +96,24 @@ describe('Resistance module (5 player)', function () {
 
   describe('Allegiance changes', () => {
 
-    it('should shuffle defector cards at the start if the game', (done) => {
-      expect(module.state.defectorCards).to.deep.equal([]);
-      gamebot.simulateMessage('start resistance', 'u0');
+    for (let i = 0; i < 10; i++) {
+      it(`should shuffle defector cards at the start if the game (${i})`, (done) => {
+        expect(module.state.defectorCards).to.deep.equal([]);
+        gamebot.simulateMessage('start resistance', 'u0');
 
-      expect(module.state.defectorCards).to.deep.equal(['no change', 'change allegiance', 'no change', 'no change', 'change allegiance']);
-      done();
-    });
+        expect(module.state.defectorCards.filter((i) => i === 'change allegiance').length).to.equal(2);
+        expect(module.state.defectorCards.filter((i) => i === 'no change').length).to.equal(3);
+        done();
+      });
+    }
 
     it('should notify players of no-allegiange changes', (done) => {
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
       gamebot.simulateMessage('start resistance', 'u0');
+      module.state.playerOrder = ['u1', 'u3', 'u3', 'u4', 'u5']
+      module.state.defectorCards = ['no change', 'change allegiance', 'no change', 'change allegiance', 'no change']
       gamebot.simulateMessage('pick John, Triela, Rico', 'u1');
       gamebot.simulateMessage('vote accept', 'u1');
       gamebot.simulateMessage('vote accept', 'u2');
@@ -137,6 +142,8 @@ describe('Resistance module (5 player)', function () {
         victoriousTeam: ':skip:'
       });
       gamebot.simulateMessage('start resistance', 'u0');
+      module.state.playerOrder = ['u5', 'u3', 'u1', 'u4', 'u3']
+      module.state.defectorCards = ['change allegiance', 'change allegiance', 'no change', 'no change', 'no change']
       gamebot.simulateMessage('pick Rico, Triela', 'u5');
       gamebot.simulateMessage('vote accept', 'u1');
       gamebot.simulateMessage('vote accept', 'u2');
