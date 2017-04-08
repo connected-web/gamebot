@@ -1,6 +1,7 @@
 const expect = require('chai').expect;
 const resistance = require('../../../lib/modules/resistance');
 const mockGamebot = require('../../lib/mockGamebot');
+const expectResponses = require('../../lib/expectResponses');
 const NL = '\n';
 
 describe('Resistance module (5 player)', function () {
@@ -11,7 +12,6 @@ describe('Resistance module (5 player)', function () {
     gamebot = mockGamebot();
     module = resistance(gamebot, false);
     module.reset();
-    module.chooseSeeds(1, 2);
 
     gamebot.simulateMessage('join the resistance', 'u1');
     gamebot.simulateMessage('join the resistance', 'u2');
@@ -22,136 +22,136 @@ describe('Resistance module (5 player)', function () {
 
   describe('Role Assignment', () => {
     it('should assign a player order at the start of a game', (done) => {
-      module.chooseSeeds(145, 455);
       gamebot.respond = (target, response, params) => {};
       gamebot.simulateMessage('start resistance', 'u0');
-      expect(module.state.playerOrder).to.deep.equal(['u5', 'u3', 'u4', 'u2', 'u1']);
+      expect(module.state.playerOrder).to.contain('u5');
+      expect(module.state.playerOrder).to.contain('u4');
+      expect(module.state.playerOrder).to.contain('u3');
+      expect(module.state.playerOrder).to.contain('u2');
+      expect(module.state.playerOrder).to.contain('u1');
+      expect(module.state.playerOrder.length).to.equal(5);
       expect(module.state.turnCounter).to.equal(0);
       done();
     });
 
     it('should assign roles at the start of a game', (done) => {
-      module.chooseSeeds(245, 272);
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       }, {
         victoriousTeam: ':skip:'
       });
 
-      const expectedResponses = [
-        (target, response, params) => {
-          expect(response.split(NL)).to.deep.equal([
-            `Non Player has started the game; all players will shortly receive their roles.`,
-            `Player order is: John, Rico, Triela, Henrietta, then Claus. *John* is the first leader. First mission requires 2 players. Pick a team using *pick Name1, Name 2, ...*`
-          ]);
-          expect(target).to.equal('resistance');
+      const expectedResponses = [{
+          message: [
+            /[A-z\s]+ has started the game; all players will shortly receive their roles./,
+            /Player order is\: ([A-z]+,?)+\. \*([A-z]+)\* is the first leader\. First mission requires 2 players. Pick a team using \*pick Name1, Name 2, ...\*/
+          ],
+          channel: 'resistance'
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations Claus (Citizen u3) you have been assigned the role of :bad_guy: Assassin fighting for the Spies. May only');
-          expect(target).to.equal('u3');
+        {
+          message: [
+            /Congratulations ([A-z]+) \(Citizen u\d\) you have been assigned the role of \:bad_guy\: Assassin fighting for the Spies. May only/,
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.include('The following players are known to you as spies:');
-          expect(response).to.include('>:bad_guy: Claus');
-          expect(response).to.include('>:bad_guy: Henrietta');
-          expect(target).to.equal('u3');
+        {
+          message: [
+            /The following players are known to you as spies\:/,
+            />\:bad_guy\: [A-z]+\n\:bad_guy\: [A-z]+\n$/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations Henrietta (Citizen u2) you have been assigned the role of :bad_guy: Hidden Spy Reverser fighting for the Spies. May only');
-          expect(target).to.equal('u2');
+        {
+          message: [
+            /Congratulations ([A-z]+) \(Citizen u\d\) you have been assigned the role of :bad_guy: Hidden Spy Reverser fighting for the Spies. May only/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.include('The following players are known to you as spies:');
-          expect(response).to.include('>:bad_guy: Claus');
-          expect(response).to.include('>:bad_guy: Henrietta');
-          expect(target).to.equal('u2');
+        {
+          message: [
+            /The following players are known to you as spies:\n>:bad_guy: [A-z]+\n>:bad_guy: [A-z]+$/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations Triela (Citizen u4) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only');
-          expect(target).to.equal('u4');
+        {
+          message: [
+            /Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.include('The following players are known to you as spies:');
-          expect(response).to.include('>:bad_guy: Claus');
-          expect(target).to.equal('u4');
+        {
+          message: [
+            /The following players are known to you as spies:\n>\:bad_guy\: [A-z]+$/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations Rico (Citizen u5) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance. May only');
-          expect(target).to.equal('u5');
+        {
+          message: [
+            /Congratulations ([A-z]+) \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance. May only/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations John (Citizen u1) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only');
-          expect(target).to.equal('u1');
+        {
+          message: [
+            /Congratulations ([A-z]+) \(Citizen u\d\) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.equal('John you are the leader. Mission 3 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
-          expect(target).to.equal('u1');
-          done();
+        {
+          message: [
+            /[A-z]+ you are the leader\. Mission 3 requires 2 players\. Pick a team using \*pick Name1, Name2, \.\.\.\*/
+          ]
         }
       ];
 
-      gamebot.respond = (target, response, params) => {
-        var expectation = expectedResponses.shift();
-        (expectation) ? expectation(target, response, params): done(response);
-      }
+      gamebot.respond = expectResponses(expectedResponses, done)
 
-      gamebot.simulateMessage('start resistance', 'u0');
+      gamebot.simulateMessage('start resistance', 'u0')
     });
 
-    it('should assign roles at the start of a game based on a new seed', (done) => {
-      module.chooseSeeds(8667, 234);
 
-      const expectedResponses = [
-        (target, response, params) => {
-          expect(response.split(NL)).to.deep.equal([
-            `Non Player has started the game; all players will shortly receive their roles.`,
-            `Player order is: John, Henrietta, Claus, Triela, then Rico. *John* is the first leader. First mission requires 2 players. Pick a team using *pick Name1, Name 2, ...*`
-          ]);
-          expect(target).to.equal('resistance');
+    it('should assign roles at the start of a game', (done) => {
+
+      const expectedResponses = [{
+          message: [
+            /Non Player has started the game; all players will shortly receive their roles./,
+            /Player order is: [A-z]+, [A-z]+, [A-z]+, [A-z]+, then [A-z]+\. \*[A-z]+\* is the first leader\. First mission requires 2 players\. Pick a team using \*pick Name1, Name 2, \.\.\.\*/
+          ],
+          channel: 'resistance'
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations Rico (Citizen u5) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only');
+        {
+          message: [/Congratulations [A-z]+ \(Citizen [u\d]\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only/]
         },
-        (target, response, params) => {
-          expect(response).to.include('The following players are known to you as spies:');
-          expect(response).to.include('>:bad_guy: Henrietta');
+        {
+          message: [
+            /The following players are known to you as spies:/,
+            />:bad_guy: [A-z]+/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations Triela (Citizen u4) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance. May only');
+        {
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance. May only/]
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations Claus (Citizen u3) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only');
-          expect(target).to.equal('u3');
+        {
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only/]
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations Henrietta (Citizen u2) you have been assigned the role of :bad_guy: Assassin fighting for the Spies. May only');
+        {
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: Assassin fighting for the Spies. May only'/]
         },
-        (target, response, params) => {
-          expect(response).to.include('The following players are known to you as spies:');
-          expect(response).to.include('>:bad_guy: Henrietta');
-          expect(response).to.include('>:bad_guy: John');
-          expect(target).to.equal('u2');
+        {
+          message: [
+            /The following players are known to you as spies:/,
+            />:bad_guy: [A-z]+/,
+            />:bad_guy: [A-z]+/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.include('Congratulations John (Citizen u1) you have been assigned the role of :bad_guy: Hidden Spy Reverser fighting for the Spies. May only');
+        {
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: Hidden Spy Reverser fighting for the Spies. May only/]
         },
-        (target, response, params) => {
-          expect(target).to.equal('u1');
-          expect(response).to.include('The following players are known to you as spies:');
-          expect(response).to.include('>:bad_guy: Henrietta');
-          expect(response).to.include('>:bad_guy: John');
+        {
+          message: [
+            /The following players are known to you as spies:/,
+            />:bad_guy: [A-z]+/,
+            />:bad_guy: [A-z]+/
+          ]
         },
-        (target, response, params) => {
-          expect(response).to.equal('John you are the leader. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
-          expect(target).to.equal('u1');
-          done();
+        {
+          message: [/[A-z]+ you are the leader\. Mission 1 requires 2 players\. Pick a team using \*pick Name1, Name2, \.\.\.\*/]
         }
       ];
 
-      gamebot.respond = (target, response, params) => {
-        var expectation = expectedResponses.shift();
-        (expectation) ? expectation(target, response, params): done(response);
-      }
+      gamebot.respond = expectResponses(expectedResponses, done)
 
       gamebot.simulateMessage('start resistance', 'u0');
     });
@@ -259,6 +259,7 @@ describe('Resistance module (5 player)', function () {
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
+      module.state.playerOrder = ['u1', 'u2', 'u3', 'u4', 'u5']
       gamebot.simulateMessage(`pick Claus, John, Rico`, 'u1');
       gamebot.simulateMessage(`vote reject`, 'u1');
       gamebot.simulateMessage(`vote accept`, 'u2');
@@ -346,6 +347,7 @@ describe('Resistance module (5 player)', function () {
   describe('Failing a mission by being unable to reach consensus', () => {
     it('should allow players to reject 5 missions in a row', (done) => {
       gamebot.simulateMessage(`resistance start`, 'u1');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       // First pick
       gamebot.simulateMessage(`pick John, Henrietta`, 'u1');
       gamebot.simulateMessage(`vote reject`, 'u2');
@@ -353,14 +355,10 @@ describe('Resistance module (5 player)', function () {
       gamebot.simulateMessage(`vote reject`, 'u4');
       gamebot.simulateMessage(`vote reject`, 'u5');
       gamebot.respond = (target, response, params) => {
-        expect(response).to.equal('Triela you are the leader. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*');
-        expect(target).to.equal('u4');
+        expect(response).to.match(/[A-z]+ you are the leader\. Mission 1 requires 2 players. Pick a team using \*pick Name1, Name2, \.\.\.\*/);
+        expect(target).to.match(/u\d/);
         gamebot.respond = (target, response, params) => {
-          expect(response.split(NL)).to.deep.equal([
-            'John has voted.',
-            'Mission Rejected! :x: 1 votes (*John*), 4 rejects (*Henrietta*, Claus, Triela, Rico).',
-            'The leader token moves to *Triela*. Mission 1 requires 2 players. Pick a team using *pick Name1, Name2, ...*'
-          ]);
+          expect(response).to.match(/[A-z]+ has voted\.\nMission Rejected! :x: 1 votes \(\*?[A-z]+\*?\), 4 rejects \(\*?[A-z]+\*?, \*?[A-z]+\*?, \*?[A-z]+\*?, \*?[A-z]+\*?\)\.\nThe leader token moves to \*[A-z]+\*. Mission 1 requires 2 players\. Pick a team using \*pick Name1, Name2, \.\.\.\*/)
           expect(module.state.voteHistory[0]).to.deep.equal([{
             "leader": "u1",
             "picks": [
@@ -492,6 +490,7 @@ describe('Resistance module (5 player)', function () {
   describe('Playing cards onto a mission', () => {
     it('should allow players to succeed a 3 player mission with a fail and a reverse', (done) => {
       gamebot.simulateMessage(`resistance start`, 'u1');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
@@ -557,6 +556,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should allow players to fail a 3 player mission with two reverses and a fail', (done) => {
       gamebot.simulateMessage(`start game`, 'u0', 'resistance');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
@@ -606,6 +606,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should allow players to fail a 3 player mission with a single reverse', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
@@ -655,6 +656,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should allow players to fail a 3 player mission with two fails', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
@@ -704,6 +706,7 @@ describe('Resistance module (5 player)', function () {
 
     it('should allow players to succeed a 3 player mission with three successes', (done) => {
       gamebot.simulateMessage(`start resistance`, 'u0', 'resistance');
+      module.state.playerOrder = ['u1', 'u4', 'u2', 'u5', 'u3']
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       });
