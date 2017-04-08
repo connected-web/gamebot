@@ -468,6 +468,7 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage('join resistance', 'u3');
       gamebot.simulateMessage('join game', 'u4');
       gamebot.simulateMessage('start game', 'u1');
+      module.state.playerOrder = ['u1', 'u3', 'u4', 'u2'];
       module.state.customGame = {
         roles: [
           role.Assassin, role.SpyReverser, role.DeepCover, role.FalseCommander
@@ -492,6 +493,7 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage('join resistance', 'u3');
       gamebot.simulateMessage('join game', 'u4');
       gamebot.simulateMessage('start game', 'u1');
+      module.state.playerOrder = ['u1', 'u3', 'u4', 'u2'];
       gamebot.respond = (target, response, params) => {
         expect(response.split(NL)).to.deep.equal([
           `>Mission Progress: :2: :3: :2: :3: :3:`,
@@ -508,6 +510,7 @@ describe('Resistance module (Core)', function () {
       gamebot.simulateMessage('join resistance', 'u3');
       gamebot.simulateMessage('join game', 'u4');
       gamebot.simulateMessage('start game', 'u1');
+      module.state.playerOrder = ['u1', 'u3', 'u4', 'u2'];
       gamebot.respond = (target, response, params) => {
         expect(response.split(NL)).to.deep.equal([
           `>Mission Progress: :2: :3: :2: :3: :3:`,

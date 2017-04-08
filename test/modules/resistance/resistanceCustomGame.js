@@ -59,6 +59,7 @@ describe('Resistance module (Custom Game Mode)', function () {
       it('should show a banner in game state', (done) => {
         gamebot.simulateMessage(`set roles Assassin, deepCover, Commander, Body Guard`, 'u5');
         gamebot.simulateMessage(`start game`, 'u5');
+        module.state.playerOrder = ['u1', 'u4', 'u2', 'u5'];
         gamebot.respond = (target, response, params) => {
           expect(response.split(NL)).to.deep.equal([
             '>Custom roles in play: :bad_guy: Assassin, :bad_guy: Deep Cover, :good_guy: Body Guard, and :good_guy: Resistance Commander',
