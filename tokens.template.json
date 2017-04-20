@@ -1,6 +1,14 @@
-{
-    "GAMEBOT_TOKEN": "",
-    "GAMEBOT_NAME": false,
-    "GAMEBOT_ID": false,
-    "GAMEBOT_AVATAR": false
-}
+[{
+    "token": "",
+    "name": false,
+    "id": false,
+    "avatar": false,
+    "modules": [
+      "accusation",
+      "channels",
+      "howl",
+      "messages",
+      "resistance",
+      "users"
+    ]
+}]

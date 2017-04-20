@@ -1,25 +1,38 @@
 const api = require('./lib/api');
 const tokens = require('./tokens.json');
 
-const options = {
-  slackbot: {
-    token: tokens.GAMEBOT_TOKEN, // Add a bot
-    name: tokens.GAMEBOT_NAME || 'Mr Wolf',
-    id: tokens.GAMEBOT_ID || '@gamebot',
-  },
-  message: {
-    params: {
-      icon_url: tokens.GAMEBOT_AVATAR || 'https://avatars.slack-edge.com/2016-07-21/61753258595_de5830aea51e1509144e_48.jpg'
-    }
-  }
-};
+const bots = tokens.map(makeBot);
 
-const gamebot = api(options);
+function makeBot(config) {
+  const options = {
+    slackbot: {
+      token: config.token,
+      name: config.name,
+      id: config.id,
+    },
+    message: {
+      params: {
+        icon_url: config.avatar
+      }
+    },
+    modules: config.modules
+  };
+  const bot = api(options);
 
-gamebot.load()
-  .then(gamebot.connect)
+  return bot;
+}
+
+function startBot(bot) {
+  return bot.load()
+    .then(bot.connect)
+    .catch(bot.handleError);
+}
+
+Promise.all(bots.map(startBot))
   .then(startWebsite)
-  .catch(gamebot.handleError);
+  .catch((ex) => {
+    console.error('Catch All', ex, ex.stack)
+  })
 
 function startWebsite() {
   var monitor = require('product-monitor');
