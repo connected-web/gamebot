@@ -34,7 +34,7 @@ Promise.all(bots.map(startBot))
     console.error('Catch All', ex, ex.stack)
   })
 
-function startWebsite() {
+function startWebsite(bots) {
   var monitor = require('product-monitor');
   var server = monitor({
     "serverPort": 9000,
@@ -42,6 +42,7 @@ function startWebsite() {
       "title": "Gamebot Monitor",
     },
     "userContentPath": "website",
-    "gamebot": gamebot
+    "gamebot": bots[0],
+    "bots": bots
   });
 }
