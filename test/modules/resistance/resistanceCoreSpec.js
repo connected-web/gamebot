@@ -524,15 +524,18 @@ describe('Resistance module (Core)', function () {
 
   describe('Vote history', () => {
     it('should allow a user to request the voting history for the game', (done) => {
-      module.state.missionHistory = [
-        {
-          playResults: {
-            fail: 1,
-            success: 2,
-            reverse: 1
-          }
-        }
-      ]
+      module.state.missionHistory = [{
+        playResults: {
+          fail: 1,
+          success: 2,
+          reverse: 1
+        },
+        victoriousTeam: {
+          name : 'Resistance',
+          logo: ':good_guy:'
+        },
+        success: true
+      }]
       module.state.voteHistory = [
         [{
           leader: 'u1',
@@ -600,7 +603,7 @@ describe('Resistance module (Core)', function () {
           `>:3: Leader: _Henrietta_, Pick: *Henrietta*, *Rico*, 2 approve (*Henrietta*, *Rico*), 2 rejects (John, Triela)`,
           `>:4: Leader: _Triela_, Pick: *Rico*, *Triela*, 1 approve (*Rico*), 3 rejects (John, Henrietta, *Triela*)`,
           `>:5: Leader: _John_, Pick: *John*, *Triela*, 3 approve (*John*, Henrietta, *Triela*), 1 rejects (Rico)`,
-          `>Result: :success: :success: :reverse: :fail:`,
+          `>Result: :good_guy: :success: :success: :reverse: :fail:`,
           `Mission 2 vote history:`,
           `>:1: Leader: _Rico_, Pick: *Henrietta*, *Rico*, *Triela*, 3 approve (*Henrietta*, *Triela*, *Rico*), 1 rejects (John)`,
           `>No mission result`,
