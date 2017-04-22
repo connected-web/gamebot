@@ -1,6 +1,13 @@
 const expect = require('chai').expect;
 const NL = '\n';
 
+function createResponse(message, channel) {
+  return {
+    message: [message],
+    channel
+  }
+}
+
 function expectResponses(expectedResponses, done) {
   return (target, response, params) => {
     const actual = {
@@ -16,12 +23,12 @@ function expectResponses(expectedResponses, done) {
     while (expectedResponses.length > 0) {
       // check each response
       const expected = expectedResponses.shift();
-      if (checkMessage(actual.message, expected.message) && checkChannel(actual.channel, expected.channel) === false) {
+      if (checkMessage(actual.message, expected.message) && checkChannel(actual.channel, expected.channel)) {
+        //console.log('Matched', actual.message, 'to', expected.message)
+        move(expectedResponses).to(checkedResponses)
+      } else {
         // store unused responses
         checkedResponses.push(expected)
-      } else {
-        // console.log('Matched', actual.message, 'to', JSON.stringify(expected.message))
-        move(expectedResponses).to(checkedResponses)
       }
     }
     // check for no match
@@ -52,11 +59,11 @@ function move(a) {
 }
 
 function checkMessage(string, matchers) {
-  var result = false;
+  var result = false
   matchers.forEach((matcher) => {
-    result = result || matcher.test(string);
-  });
-  return result;
+    result = result || matcher.test(string)
+  })
+  return result
 }
 
 function checkChannel(actual, expected) {
@@ -65,5 +72,7 @@ function checkChannel(actual, expected) {
   }
   return actual === expected
 }
+
+expectResponses.createResponse = createResponse
 
 module.exports = expectResponses;

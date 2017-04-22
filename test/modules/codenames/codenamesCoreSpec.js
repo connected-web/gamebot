@@ -1,7 +1,9 @@
-const expect = require('chai').expect;
-const codenames = require('../../../lib/modules/codenames/codenames');
-const mockGamebot = require('../../lib/mockGamebot');
-const NL = '\n';
+const expect = require('chai').expect
+const codenames = require('../../../lib/modules/codenames/codenames')
+const mockGamebot = require('../../lib/mockGamebot')
+const expectResponses = require('../../lib/expectResponses')
+const response = expectResponses.createResponse
+const NL = '\n'
 
 describe('Codenames module (Core)', function () {
 
@@ -9,10 +11,21 @@ describe('Codenames module (Core)', function () {
   const gameChannel = 'codenames';
 
   beforeEach(() => {
-    gamebot = mockGamebot();
-    module = codenames(gamebot, false);
-    module.reset();
+    gamebot = mockGamebot()
+    module = codenames(gamebot, false)
+    module.reset()
   });
+
+  describe('Joining and Leaving', () => {
+    it('should allow a user join a game', (done) => {
+      module.model.players.push('u3', 'u2')
+      gamebot.respond = expectResponses([
+        response(/^Hey [A-z]+, you've joined codenames\. Your team will be assigned randomly after the game is started\./, 'u1'),
+        response(/^[A-z]+ has joined the game\. Current players: [A-z]+, [A-z]+, [A-z]+/, gameChannel)
+      ], done)
+      gamebot.simulateMessage('join game', 'u1')
+    })
+  })
 
   describe('Help', () => {
     ['codenames help', 'How do I play codenames?', 'how do I play'].forEach((command) => {
