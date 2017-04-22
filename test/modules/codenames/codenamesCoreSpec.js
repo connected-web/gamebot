@@ -15,7 +15,7 @@ describe('Codenames module (Core)', function () {
   });
 
   describe('Help', () => {
-    ['help', 'How do I play codenames?', 'how do I play'].forEach((command) => {
+    ['codenames help', 'How do I play codenames?', 'how do I play'].forEach((command) => {
       it('should allow a user to request help on how to play codenames', (done) => {
         gamebot.respond = (target, response, params) => {
           expect(target).to.equal('u1');
