@@ -55,8 +55,7 @@ describe('Resistance module (5 player)', function () {
         },
         {
           message: [
-            /The following players are known to you as spies\:/,
-            />\:bad_guy\: [A-z]+\n\:bad_guy\: [A-z]+\n$/
+            /The following players are known to you as spies:\n>:bad_guy: [A-z]+\n>:bad_guy: [A-z]+$/
           ]
         },
         {
@@ -71,22 +70,22 @@ describe('Resistance module (5 player)', function () {
         },
         {
           message: [
-            /Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only/
+            /Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance\. May only/
           ]
         },
         {
           message: [
-            /The following players are known to you as spies:\n>\:bad_guy\: [A-z]+$/
+            /^The following players are known to you as spies:\n>\:bad_guy\: [A-z]+$/
           ]
         },
         {
           message: [
-            /Congratulations ([A-z]+) \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance. May only/
+            /Congratulations ([A-z]+) \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance\. May only/
           ]
         },
         {
           message: [
-            /Congratulations ([A-z]+) \(Citizen u\d\) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only/
+            /Congratulations ([A-z]+) \(Citizen u\d\) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance\. May only/
           ]
         },
         {
@@ -112,12 +111,11 @@ describe('Resistance module (5 player)', function () {
           channel: 'resistance'
         },
         {
-          message: [/Congratulations [A-z]+ \(Citizen [u\d]\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only/]
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only/]
         },
         {
           message: [
-            /The following players are known to you as spies:/,
-            />:bad_guy: [A-z]+/
+            /The following players are known to you as spies:\n>:bad_guy: [A-z]+$/
           ]
         },
         {
@@ -127,13 +125,12 @@ describe('Resistance module (5 player)', function () {
           message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only/]
         },
         {
-          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: Assassin fighting for the Spies. May only'/]
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: Assassin fighting for the Spies. May only/]
         },
         {
           message: [
             /The following players are known to you as spies:/,
-            />:bad_guy: [A-z]+/,
-            />:bad_guy: [A-z]+/
+            />:bad_guy: [A-z]+\n>:bad_guy: [A-z]+$/
           ]
         },
         {
@@ -142,8 +139,7 @@ describe('Resistance module (5 player)', function () {
         {
           message: [
             /The following players are known to you as spies:/,
-            />:bad_guy: [A-z]+/,
-            />:bad_guy: [A-z]+/
+            />:bad_guy: [A-z]+\n>:bad_guy: [A-z]+$/
           ]
         },
         {

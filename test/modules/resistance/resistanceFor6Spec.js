@@ -33,40 +33,40 @@ describe('Resistance module (6 player)', function () {
             channel: 'resistance'
           },
           {
-            message: [/Congratulations Claus \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance\. May only/]
+            message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance\. May only/]
           },
           {
-            message: [/Congratulations Henrietta \(Citizen u\d\) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance\. May only/]
+            message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance\. May only/]
           },
           {
-            message: [/Congratulations Rico \(Citizen u\d\) you have been assigned the role of :bad_guy: False Commander fighting for the Spies\. May only/]
+            message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: False Commander fighting for the Spies\. May only/]
           },
           {
             message: [
               /^The following players are known to you as spies:/,
-              />:bad_guy: [A-z]+\n>:bad_guy: [A-z]+^/
+              />:bad_guy: [A-z]+\n>:bad_guy: [A-z]+$/
             ]
           },
           {
-            message: [/Congratulations Angelica \(Citizen u\d\) you have been assigned the role of :bad_guy: Spy Reverser fighting for the Spies\. May only/]
+            message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: Spy Reverser fighting for the Spies\. May only/]
           },
           {
             message: [
               /The following players are known to you as spies:/,
-              />:bad_guy: [A-z]+\n>:bad_guy: [A-z]+^/
+              />:bad_guy: [A-z]+\n>:bad_guy: [A-z]+$/
             ]
           },
           {
-            message: [/Congratulations John \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance\. May only/]
+            message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance\. May only/]
           },
           {
             message: [
               /^The following players are known to you as spies:/,
-              />:bad_guy: [A-z]+\n>:bad_guy: [A-z]+^/
+              />:bad_guy: [A-z]+\n>:bad_guy: [A-z]+$/
             ]
           },
           {
-            message: [/Congratulations Triela \(Citizen u\d\) you have been assigned the role of :good_guy: Body Guard fighting for the Resistance\. May only/]
+            message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Body Guard fighting for the Resistance\. May only/]
           },
           {
             message: [

@@ -49,42 +49,40 @@ describe('Resistance module (5 player)', function () {
           channel: 'resistance'
         },
         {
-          message: [/Congratulations [A-z]+ \(Citizen [u\d]\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance. May only/]
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Commander fighting for the Resistance\. May only/]
         },
         {
           message: [
             /The following players are known to you as spies:/,
-            />:bad_guy: [A-z]+/
+            /^>:bad_guy: [A-z]+$/
           ]
         },
         {
-          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Reverser fighting for the Resistance. May only/]
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Resistance Defector fighting for the Resistance\. May only/]
         },
         {
-          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Generic Resistance fighting for the Resistance. May only/]
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: Spy Defector fighting for the Spies\. May only/]
         },
         {
-          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: Assassin fighting for the Spies. May only'/]
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :good_guy: Body Guard fighting for the Resistance\. May only/]
+        },
+        {
+          message: [
+            /^The following players are known to you as commanders:/,
+            />:bad_guy: \? :good_guy: [A-z]\n>:bad_guy: \? :good_guy: [A-z]$/
+          ]
+        },
+        {
+          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: Assassin fighting for the Spies. May only/]
         },
         {
           message: [
             /The following players are known to you as spies:/,
-            />:bad_guy: [A-z]+/,
-            />:bad_guy: [A-z]+/
+            />:bad_guy: [A-z]+\n>:bad_guy: [A-z]+$/
           ]
         },
         {
-          message: [/Congratulations [A-z]+ \(Citizen u\d\) you have been assigned the role of :bad_guy: Hidden Spy Reverser fighting for the Spies. May only/]
-        },
-        {
-          message: [
-            /The following players are known to you as spies:/,
-            />:bad_guy: [A-z]+/,
-            />:bad_guy: [A-z]+/
-          ]
-        },
-        {
-          message: [/[A-z]+ you are the leader\. Mission 1 requires 2 players\. Pick a team using \*pick Name1, Name2, \.\.\.\*/]
+          message: [/[A-z]+ you are the leader\. Mission 3 requires 2 players\. Pick a team using \*pick Name1, Name2, \.\.\.\*/]
         }
       ];
 

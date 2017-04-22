@@ -34,7 +34,7 @@ function expectResponses(expectedResponses, done) {
     // check for no match
     if (startCount === checkedResponses.length) {
       console.error('No message match found for:', JSON.stringify(actual.message), '|', actual.message, '|')
-      console.error('Checked responses:', checkedResponses.length, checkedResponses)
+      console.error('Unmatched responses:', checkedResponses.length, checkedResponses)
       expect('No message match found for').to.equal(actual.message)
     }
     // check for completion
