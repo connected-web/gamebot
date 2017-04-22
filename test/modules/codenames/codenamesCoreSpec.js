@@ -22,7 +22,7 @@ describe('Codenames module (Core)', function () {
           const botname = '@testbot';
           expect(response).to.include(`You can use these commands wherever ${botname} is present; for sensitive commands please send them directly to ${botname} in private chat.`);
           expect(response).to.include(`Provide a list of commands on how to play codenames`);
-          expect(response).to.include(`Examples: *help*`);
+          expect(response).to.include(`Examples: *codenames help*`);
           done();
         };
         gamebot.simulateMessage(command, 'u1');
