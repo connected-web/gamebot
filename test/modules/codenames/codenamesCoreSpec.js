@@ -34,6 +34,14 @@ describe('Codenames module (Core)', function () {
       ], done)
       gamebot.simulateMessage('leave game', 'u1')
     })
+
+    it('should prevent a non-players from leaving a game', (done) => {
+      module.model.players.push('u3', 'u2')
+      gamebot.respond = expectResponses([
+        response(/^Hey [A-z]+, you weren't playing codenames\./, 'u1'),
+      ], done)
+      gamebot.simulateMessage('leave game', 'u1')
+    })
   })
 
   describe('Help', () => {
