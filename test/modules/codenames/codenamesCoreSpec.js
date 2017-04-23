@@ -35,6 +35,14 @@ describe('Codenames module (Core)', function () {
       gamebot.simulateMessage('leave game', 'u1')
     })
 
+    it('should prevent an existing player from rejoining the game', (done) => {
+      module.model.players.push('u3', 'u2', 'u1')
+      gamebot.respond = expectResponses([
+        response(/^You are already playing codenames\./, 'u1'),
+      ], done)
+      gamebot.simulateMessage('join game', 'u1')
+    })
+
     it('should prevent a non-players from leaving a game', (done) => {
       module.model.players.push('u3', 'u2')
       gamebot.respond = expectResponses([
