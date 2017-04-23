@@ -12,6 +12,7 @@ function mockGamebot() {
     'u4': 'Triela',
     'u5': 'Rico',
     'u6': 'Angelica',
+    'u7': 'Hannah'
   };
   var channelIDIndex = {};
 
