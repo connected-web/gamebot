@@ -44,6 +44,36 @@ describe('Codenames module (Core)', function () {
     })
   })
 
+  describe('Starting a game', () => {
+
+    beforeEach(() => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.simulateMessage('join game', 'u3')
+    })
+
+    it('should prevent non-players from starting a game', (done) => {
+      gamebot.respond = expectResponses([
+        response(/^[A-z]+ - you can't start the game, you're not playing\./, 'u2'),
+      ], done)
+      gamebot.simulateMessage('start game', 'u2')
+    })
+
+    it('should prevent a game starting if there are less than two players', (done) => {
+      gamebot.simulateMessage('leave game', 'u3')
+      gamebot.respond = expectResponses([
+        response(/^Unable to start the game, there needs to be at least two players\./, 'u1'),
+      ], done)
+      gamebot.simulateMessage('start game', 'u1')
+    })
+
+    it('should allow an active player to start a game', (done) => {
+      gamebot.respond = expectResponses([
+        response(/^Code names has begun, teams are:/, gameChannel),
+      ], done)
+      gamebot.simulateMessage('start game', 'u1')
+    })
+  })
+
   describe('Help', () => {
     ['codenames help', 'How do I play codenames?', 'how do I play'].forEach((command) => {
       it('should allow a user to request help on how to play codenames', (done) => {
