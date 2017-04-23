@@ -53,7 +53,7 @@ describe('Codenames module (Core)', function () {
 
     it('should prevent non-players from starting a game', (done) => {
       gamebot.respond = expectResponses([
-        response(/^[A-z]+ - you can't start the game, you're not playing\./, 'u2'),
+        response(/^[A-z]+ - please join the game in order to begin playing\. Say 'start game' when ready\./, 'u2'),
       ], done)
       gamebot.simulateMessage('start game', 'u2')
     })
@@ -68,7 +68,7 @@ describe('Codenames module (Core)', function () {
 
     it('should allow an active player to start a game', (done) => {
       gamebot.respond = expectResponses([
-        response(/^Code names has begun, teams are:/, gameChannel),
+        response(/^Codenames has begun, teams are:/, gameChannel),
       ], done)
       gamebot.simulateMessage('start game', 'u1')
     })
