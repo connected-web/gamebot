@@ -9,6 +9,11 @@ function createResponse(message, channel) {
 }
 
 function expectResponses(expectedResponses, done) {
+  const timeout = setTimeout(() => {
+    const error = ['Unmatched respones:'].concat(expectedResponses.map((r) => r.message)).join(NL)
+    console.log(error)
+    done(error)
+  }, 250)
   return (target, response, params) => {
     const actual = {
       message: response,
@@ -17,6 +22,7 @@ function expectResponses(expectedResponses, done) {
     const checkedResponses = [];
     const startCount = expectedResponses.length
     if (startCount === 0) {
+      clearTimeout(timeout)
       return done()
     }
     // search for a match
@@ -39,6 +45,7 @@ function expectResponses(expectedResponses, done) {
     }
     // check for completion
     if (startCount === 1 && checkedResponses.length === 0) {
+      clearTimeout(timeout)
       return done()
     }
     // reset items
