@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const resistance = require('../../../lib/modules/resistance');
+const resistance = require('../../../lib/modules/resistance/resistance');
 const mockGamebot = require('../../lib/mockGamebot');
 const NL = '\n';
 
