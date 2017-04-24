@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const api = require('../../lib/api');
-const howl = require('../../lib/modules/howl');
+const howl = require('../../lib/modules/howl/howl');
 
 describe('Howl module', function() {
 

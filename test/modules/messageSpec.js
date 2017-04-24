@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const mockGamebot = require('../lib/mockGamebot');
-const howl = require('../../lib/modules/howl');
+const howl = require('../../lib/modules/howl/howl');
 const NL = '\n';
 
 describe('Messaging', () => {
