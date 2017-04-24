@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run gamebot",
     "gamebot": "pm2 start index.js --name 'Gamebot'",
-    "test": "mocha --recursive",
+    "test": "standard && mocha --recursive",
     "stop": "pm2 delete 'Gamebot'"
   },
   "keywords": [
@@ -25,6 +25,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.5.3",
-    "product-monitor": "^2.2.4"
+    "product-monitor": "^2.2.4",
+    "standard": "^10.0.2"
   }
 }
