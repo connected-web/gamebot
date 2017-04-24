@@ -1,14 +1,14 @@
-const api = require('./lib/api');
-const tokens = require('./tokens.json');
+const api = require('./lib/api')
+const tokens = require('./tokens.json')
 
-const bots = tokens.map(makeBot);
+const bots = tokens.map(makeBot)
 
-function makeBot(config) {
+function makeBot (config) {
   const options = {
     slackbot: {
       token: config.token,
       name: config.name,
-      id: config.id,
+      id: config.id
     },
     message: {
       params: {
@@ -16,16 +16,16 @@ function makeBot(config) {
       }
     },
     modules: config.modules
-  };
-  const bot = api(options);
+  }
+  const bot = api(options)
 
-  return bot;
+  return bot
 }
 
-function startBot(bot) {
+function startBot (bot) {
   return bot.load()
     .then(bot.connect)
-    .catch(bot.handleError);
+    .catch(bot.handleError)
 }
 
 Promise.all(bots.map(startBot))
@@ -34,15 +34,15 @@ Promise.all(bots.map(startBot))
     console.error('Catch All', ex, ex.stack)
   })
 
-function startWebsite(bots) {
-  var monitor = require('product-monitor');
-  var server = monitor({
-    "serverPort": 9000,
-    "productInformation": {
-      "title": "Gamebot Monitor",
+function startWebsite (bots) {
+  var monitor = require('product-monitor')
+  monitor({
+    'serverPort': 9000,
+    'productInformation': {
+      'title': 'Gamebot Monitor'
     },
-    "userContentPath": "website",
-    "gamebot": bots[0],
-    "bots": bots
-  });
+    'userContentPath': 'website',
+    'gamebot': bots[0],
+    'bots': bots
+  })
 }

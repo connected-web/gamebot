@@ -1,23 +1,20 @@
-const expect = require('chai').expect
+/* global describe it beforeEach */
 const codenames = require('../../../lib/modules/codenames/codenames')
 const mockGamebot = require('../../lib/mockGamebot')
 const expectResponses = require('../../lib/expectResponses')
 const response = expectResponses.createResponse
-const NL = '\n'
 
 describe('Codenames module (2 Player Game)', function () {
-
-  var module, gamebot;
-  const gameChannel = 'codenames';
+  var module, gamebot
+  const gameChannel = 'codenames'
 
   beforeEach(() => {
     gamebot = mockGamebot()
     module = codenames(gamebot, false)
     module.reset()
-  });
+  })
 
   describe('Starting a two-player game', () => {
-
     beforeEach(() => {
       gamebot.simulateMessage('join game', 'u1')
       gamebot.simulateMessage('join game', 'u7')
@@ -30,4 +27,4 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.simulateMessage('start game', 'u7')
     })
   })
-});
+})

@@ -1,16 +1,14 @@
-const expect = require('chai').expect;
-const mockGamebot = require('../lib/mockGamebot');
-const howl = require('../../lib/modules/howl/howl');
-const NL = '\n';
+/* global describe it beforeEach */
+const expect = require('chai').expect
+const mockGamebot = require('../lib/mockGamebot')
+const howl = require('../../lib/modules/howl/howl')
 
 describe('Messaging', () => {
-
-  var module, gamebot;
-  const gameChannel = 'resistance';
+  var gamebot
 
   beforeEach(() => {
     gamebot = mockGamebot()
-    module = howl(gamebot);
+    howl(gamebot)
   })
 
   it('should respond to messages', (done) => {

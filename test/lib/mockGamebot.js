@@ -1,8 +1,8 @@
-const api = require('../../lib/api');
-const handleMessage = require('../../lib/handleMessage');
-const LOG_ENABLED = false;
+const api = require('../../lib/api')
+const handleMessage = require('../../lib/handleMessage')
+const LOG_ENABLED = false
 
-function mockGamebot() {
+function mockGamebot () {
   var userIDIndex = {
     'ux': 'Test Bot',
     'u0': 'Non Player',
@@ -13,46 +13,46 @@ function mockGamebot() {
     'u5': 'Rico',
     'u6': 'Angelica',
     'u7': 'Hannah'
-  };
-  var channelIDIndex = {};
+  }
+  var channelIDIndex = {}
 
-  var userNameIndex = {};
+  var userNameIndex = {}
   Object.keys(userIDIndex).forEach((userId) => {
-    userNameIndex[userIDIndex[userId].toLowerCase()] = userId;
-  });
+    userNameIndex[userIDIndex[userId].toLowerCase()] = userId
+  })
 
-  gamebot = api({
+  let gamebot = api({
     slackbot: {
       token: 'xyz123',
       name: 'Test Bot',
-      id: '@testbot',
+      id: '@testbot'
     }
-  });
+  })
 
   gamebot.getUserById = (userId) => {
-    const user = userIDIndex[userId];
+    const user = userIDIndex[userId]
     if (!user) {
-      console.warn('No user found with ID', userId);
+      console.warn('No user found with ID', userId)
     }
     return {
       id: userId,
       name: user
-    };
-  };
+    }
+  }
 
   gamebot.getUserName = (id) => {
-    return userIDIndex[id] || id;
-  };
+    return userIDIndex[id] || id
+  }
 
   gamebot.getChannelName = (id) => {
-    return channelIDIndex[id] || id;
+    return channelIDIndex[id] || id
   }
 
   gamebot.findUserByName = (name) => {
     return {
       name,
       id: userNameIndex[(name + '').toLowerCase()]
-    };
+    }
   }
 
   gamebot.simulateMessage = (message, userId, channelId) => {
@@ -61,12 +61,12 @@ function mockGamebot() {
       text: message,
       user: userId,
       channel: channelId || 'private'
-    }, LOG_ENABLED);
-  };
+    }, LOG_ENABLED)
+  }
 
-  gamebot.respond = () => {};
+  gamebot.respond = () => {}
 
-  return gamebot;
+  return gamebot
 }
 
-module.exports = mockGamebot;
+module.exports = mockGamebot
