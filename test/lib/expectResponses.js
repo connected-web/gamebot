@@ -10,7 +10,7 @@ function createResponse (message, channel) {
 
 function expectResponses (expectedResponses, done) {
   const timeout = setTimeout(() => {
-    const error = ['Unmatched respones:'].concat(expectedResponses.map((r) => r.message)).join(NL)
+    const error = ['[TIMEOUT] Unmatched respones:'].concat(expectedResponses.map((r) => r.message)).join(NL)
     console.log(error)
     done(error)
   }, 250)
@@ -39,7 +39,7 @@ function expectResponses (expectedResponses, done) {
     }
     // check for no match
     if (startCount === checkedResponses.length) {
-      console.error('No message match found for:', JSON.stringify(actual.message), '|', actual.message, '|')
+      console.error('[MISSING] No message match found for:', JSON.stringify(actual.message))
       console.error('Unmatched responses:', checkedResponses.length, checkedResponses)
       expect('No message match found for').to.equal(actual.message)
     }
@@ -74,10 +74,10 @@ function checkMessage (string, matchers) {
 }
 
 function checkChannel (actual, expected) {
-  if (!expected) {
+  if (!expected || !actual) {
     return true
   }
-  return actual === expected
+  return actual === expected || actual.channel === expected || actual.user === expected
 }
 
 expectResponses.createResponse = createResponse
