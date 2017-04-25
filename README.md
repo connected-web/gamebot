@@ -27,11 +27,17 @@ You will also need to:
 
 ## Hosting
 
-Gamebot is currently hosted on a private openstack instance, if you've been given the private key you can redeploy.
+Gamebot is currently hosted on a private openstack instance, login to the machine requires the correct private key creating at `ssh/cloud.key`, at which point you can use `ssh/login.sh` to gain access.
 
-Copy the private key to `ssh/cloud.key`, then run `./redeploy.sh` to prompt the server to update.
+On the machine you will need to create `tokens.json` based on `tokens.template.json` and feed it with the a slackbot token in order to connect.
 
-You will need to create `tokens.json` based on `tokens.template.json` and feed it with the a slackbot token in order to connect.
+## Release
+
+A cron tab has been setup on the machine to check for updated from the remote every minute. If a change is detected, then the update script will run `npm install` followed by `pm2 restart all`.
+
+See [update.sh](./update.sh) and `crontab -e`. Use `crontab -l` to check the existing settings.
+
+Recommended value for Ubuntu server: `* * * * * /home/ubuntu/tap-slack-bot/update.sh > /dev/pts/0`
 
 ## Website
 
