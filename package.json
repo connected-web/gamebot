@@ -9,6 +9,10 @@
     "test": "standard && mocha --recursive",
     "stop": "pm2 delete 'Gamebot'"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:connected-web/gamebot.git"
+  },
   "keywords": [
     "slack",
     "bot",
