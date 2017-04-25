@@ -1,6 +1,6 @@
 /* global describe it beforeEach */
 const expect = require('chai').expect
-const api = require('../../lib/api')
+const api = require('../../lib/api/api')
 const accusation = require('../../lib/modules/accusation/accusation')
 
 describe('Accusation module', function () {

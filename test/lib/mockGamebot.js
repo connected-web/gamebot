@@ -1,5 +1,5 @@
-const api = require('../../lib/api')
-const handleMessage = require('../../lib/handleMessage')
+const api = require('../../lib/api/api')
+const handleMessage = require('../../lib/api/handleMessage')
 const LOG_ENABLED = false
 
 function mockGamebot () {

@@ -1,6 +1,6 @@
 /* global describe it beforeEach */
 const expect = require('chai').expect
-const gamebot = require('../lib/api')
+const gamebot = require('../lib/api/api')
 
 describe('Gamebot API', function () {
   var api

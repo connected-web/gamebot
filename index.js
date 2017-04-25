@@ -1,4 +1,4 @@
-const api = require('./lib/api')
+const api = require('./lib/api/api')
 const tokens = require('./tokens.json')
 
 const bots = tokens.map(makeBot)
