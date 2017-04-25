@@ -43,5 +43,5 @@ Recommended value for Ubuntu server: `* * * * * /home/ubuntu/tap-slack-bot/updat
 
 Gamebot has its own website monitoring system as well.
 
-To start the website for develoment, run:
+To start the website for development, run:
 - `npm run website`
