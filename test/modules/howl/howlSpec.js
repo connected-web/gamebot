@@ -1,7 +1,7 @@
 /* global describe it beforeEach */
 const expect = require('chai').expect
-const api = require('../../lib/api/api')
-const howl = require('../../lib/modules/howl/howl')
+const api = require('../../../lib/api/api')
+const howl = require('../../../lib/modules/howl/howl')
 
 describe('Howl module', function () {
   var gamebot

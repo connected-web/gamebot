@@ -1,7 +1,7 @@
 /* global describe it beforeEach */
 const expect = require('chai').expect
-const mockGamebot = require('../lib/mockGamebot')
-const howl = require('../../lib/modules/howl/howl')
+const mockGamebot = require('../../lib/mockGamebot')
+const howl = require('../../../lib/modules/howl/howl')
 
 describe('Messaging', () => {
   var gamebot
