@@ -51,6 +51,38 @@ describe('Codenames module (Core)', function () {
     })
   })
 
+  describe('Stop and reset', () => {
+    let stopCommands = ['stop game', 'stop codenames']
+    let resetCommands = ['reset game', 'reset codenames']
+
+    beforeEach(() => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.simulateMessage('join game', 'u3')
+    })
+
+    stopCommands.forEach((command) => {
+      it(`${command} should clear the game state and eject all players`, (done) => {
+        gamebot.respond = expectResponses([
+          response(/^[A-z]+ has stopped the game\. All players have been gone underground\.$/, gameChannel)
+        ], done)
+        expect(module.model.players).to.deep.equal(['u1', 'u3'])
+        gamebot.simulateMessage(command, 'u2')
+        expect(module.model.players).to.deep.equal([])
+      })
+    })
+
+    resetCommands.forEach((command) => {
+      it(`${command} should clear the game state but keep all players`, (done) => {
+        gamebot.respond = expectResponses([
+          response(/^Claus has reset the game\. Current players: John, Claus/, gameChannel)
+        ], done)
+        expect(module.model.players).to.deep.equal(['u1', 'u3'])
+        gamebot.simulateMessage(command, 'u3')
+        expect(module.model.players).to.deep.equal(['u1', 'u3'])
+      })
+    })
+  })
+
   describe('Starting a game', () => {
     beforeEach(() => {
       gamebot.simulateMessage('join game', 'u1')
