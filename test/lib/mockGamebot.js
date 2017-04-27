@@ -31,9 +31,6 @@ function mockGamebot () {
 
   gamebot.getUserById = (userId) => {
     const user = userIDIndex[userId]
-    if (!user) {
-      console.warn('No user found with ID', userId)
-    }
     return {
       id: userId,
       name: user
