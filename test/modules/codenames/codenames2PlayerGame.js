@@ -35,11 +35,12 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.simulateMessage('start game', 'u7')
     })
 
-    it('should pick a list of 25 words after a spy master is selected', (done) => {
+    it('should send words to players after spy master has been identified', (done) => {
       gamebot.respond = expectResponses([
         response(/^Hannah you are now a spy master$/, 'private'),
         response(/^Hannah has been assigned as a spy master for Team Blue$/, gameChannel),
-        response(/^Locations have been identified:(\n>[A-z]+){25}$/, gameChannel)
+        response(/^Locations have been identified:(\n>[A-z]+){25}$/, gameChannel),
+        response(/^Locations have been identified:(\n>:assassin: [A-z]+)(\n>:blue: [A-z]+){9}(\n>:red: [A-z]+){8}(\n>:neutral: [A-z]+){7}$/, 'u7')
       ], done)
 
       gamebot.simulateMessage('make me spy master', 'u7')
