@@ -46,7 +46,24 @@ describe('Codenames module (2 Player Game)', function () {
       ], done)
 
       gamebot.simulateMessage('make me spy master', 'u7')
-      expect(module.model.activeSpymaster).to.equal('u7')
+      expect(module.model.activeSpymaster()).to.equal('u7')
+    })
+  })
+
+  describe('First clue', () => {
+    beforeEach(() => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.simulateMessage('join game', 'u7')
+      gamebot.simulateMessage('start game', 'u7')
+      gamebot.simulateMessage('make me spy master', 'u7')
+    })
+
+    it('should notify users of a valid clue, and prompt them to take action', (done) => {
+      gamebot.respond = expectResponses([
+        response(/^Clue has been given to the Blue Team: \*sabotage 3\* - identify 3 words by replying with \*pick word\*$/, gameChannel)
+      ], done)
+
+      gamebot.simulateMessage('sabotage 3', 'u7')
     })
   })
 })
