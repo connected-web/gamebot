@@ -1,4 +1,5 @@
 /* global describe it beforeEach */
+const expect = require('chai').expect
 const codenames = require('../../../lib/modules/codenames/codenames')
 const mockGamebot = require('../../lib/mockGamebot')
 const expectResponses = require('../../lib/expectResponses')
@@ -45,6 +46,7 @@ describe('Codenames module (2 Player Game)', function () {
       ], done)
 
       gamebot.simulateMessage('make me spy master', 'u7')
+      expect(module.model.activeSpymaster).to.equal('u7')
     })
   })
 })
