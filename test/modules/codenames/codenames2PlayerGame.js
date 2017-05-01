@@ -65,5 +65,13 @@ describe('Codenames module (2 Player Game)', function () {
 
       gamebot.simulateMessage('sabotage 3', 'u7')
     })
+
+    it('should only accept clues from the spymaster on the active team', (done) => {
+      gamebot.respond = expectResponses([
+        response(/^\*Warning\*: Clues can only be given by the spymaster on the active team \(\*Hannah\*\)$/, 'private')
+      ], done)
+
+      gamebot.simulateMessage('sabotage 3', 'u3')
+    })
   })
 })
