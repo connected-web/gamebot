@@ -71,7 +71,15 @@ describe('Codenames module (2 Player Game)', function () {
         response(/^\*Warning\*: Clues can only be given by the spymaster on the active team \(\*Hannah\*\)$/, 'private')
       ], done)
 
-      gamebot.simulateMessage('sabotage 3', 'u3')
+      gamebot.simulateMessage('gruel 2', 'u4')
+    })
+
+    it('should prevent a spymaster from setting a second clue', (done) => {
+      gamebot.simulateMessage('conquered 1', 'u7')
+      gamebot.respond = expectResponses([
+        response(/^\*Warning\*: Clues can only be set once per turn$/, 'private')
+      ], done)
+      gamebot.simulateMessage('laughing 4', 'u7')
     })
   })
 })
