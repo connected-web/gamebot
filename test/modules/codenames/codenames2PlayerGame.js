@@ -82,4 +82,51 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.simulateMessage('laughing 4', 'u7')
     })
   })
+
+  describe('First pick', () => {
+    beforeEach(() => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.simulateMessage('join game', 'u6')
+      gamebot.simulateMessage('join game', 'u7')
+      gamebot.simulateMessage('start game', 'u6')
+      gamebot.simulateMessage('make me spy master', 'u7')
+      gamebot.simulateMessage('sabotage 3', 'u7')
+    })
+
+    it('should prevent non-team members making picks', (done) => {
+      gamebot.respond = expectResponses([
+        response(/^\*Warning\*: Picks can only be made by players on the active team \(\*Angelica\*, and \*John\*\)$/, gameChannel)
+      ], done)
+
+      let validWord = module.model.words[0].word
+      gamebot.simulateMessage(`pick ${validWord}`, 'u4')
+    })
+
+    it('should prevent the active spymaster from making picks', (done) => {
+      gamebot.respond = expectResponses([
+        response(/^\*Warning\*: Picks can not be made by spy masters$/, gameChannel)
+      ], done)
+
+      let validWord = module.model.words[0].word
+      gamebot.simulateMessage(`pick ${validWord}`, 'u7')
+    })
+
+    it('should prevent team members making invalid picks', (done) => {
+      gamebot.respond = expectResponses([
+        response(/^\*Warning\*: [A-z]+ is not a valid pick\. Use \*list words\* to relist the available options$/, gameChannel)
+      ], done)
+
+      let invalidWord = 'greaseball'
+      gamebot.simulateMessage(`pick ${invalidWord}`, 'u1')
+    })
+
+    it('should allow team members to make picks', (done) => {
+      gamebot.respond = expectResponses([
+        response(/^[A-z]+ can be made as a pick\.$/, gameChannel)
+      ], done)
+
+      let validWord = module.model.words[0].word
+      gamebot.simulateMessage(`pick ${validWord}`, 'u1')
+    })
+  })
 })
