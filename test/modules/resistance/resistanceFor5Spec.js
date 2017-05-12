@@ -149,6 +149,19 @@ describe('Resistance module (5 player)', function () {
 
       gamebot.simulateMessage('start resistance', 'u0')
     })
+
+    it('should only assign the role of assassin to the assassin if there is an assassin present', () => {
+      gamebot.simulateMessage('start resistance', 'u0')
+      let badGuys = Object.keys(module.state.roles)
+        .map((id) => module.state.roles[id])
+        .filter((role) => role.team.name === 'Spies')
+
+      badGuys.forEach((role) => {
+        if (role.name !== 'Assassin' && role.assassin === true) {
+          throw new Error(`Did not expect ${role.name} to be marked as an assassin in this configuration`)
+        }
+      })
+    })
   })
 
   describe('Voting on Picks', (done) => {
