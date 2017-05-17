@@ -128,7 +128,7 @@ describe('Resistance module (5 player)', function () {
       expect(responses.join(NL)).to.include('Defector allegiance: no change')
       expect(responses.join(NL)).to.include('There has been no change to your allegiance.')
 
-      expect(module.state.defectorCards).to.deep.equal(['change allegiance', 'no change', 'change allegiance', 'no change'])
+      expect(module.state.defectorCards).to.deep.equal(['no change', 'change allegiance', 'no change', 'change allegiance', 'no change'])
       done()
     })
 
@@ -158,7 +158,7 @@ describe('Resistance module (5 player)', function () {
       expect(responses.join(NL)).to.include('Defector allegiance: change allegiance')
       expect(responses.join(NL)).to.include('Your allegiance has changed; you are now fighting for the other team.')
 
-      expect(module.state.defectorCards).to.deep.equal(['change allegiance', 'no change', 'no change', 'no change'])
+      expect(module.state.defectorCards).to.deep.equal(['change allegiance', 'change allegiance', 'no change', 'no change', 'no change'])
       done()
     })
   })
