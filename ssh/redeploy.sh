@@ -1,4 +1,4 @@
-ssh -i cloud.key ubuntu@10.10.39.34 <<'ENDSSH'
+ssh -i cloud.key ubuntu@10.10.39.12 <<'ENDSSH'
 
 cd gamebot
 ls
