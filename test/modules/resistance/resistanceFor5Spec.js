@@ -322,7 +322,7 @@ describe('Resistance module (5 player)', function () {
         expect(response).to.include('John has voted, 4 players remaining.')
         expect(module.state.votes.u1).to.equal('reject')
         gamebot.respond = (target, response, params) => {
-          expect(response).to.include('John has voted, 4 players remaining.')
+          expect(response).to.include('John has resubmitted their vote, 4 players remaining.')
           expect(module.state.votes.u1).to.equal('accept')
           done()
         }
