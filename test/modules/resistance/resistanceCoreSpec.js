@@ -343,6 +343,19 @@ describe('Resistance module (Core)', function () {
       }
       gamebot.simulateMessage(`pick Angelica`, 'u6')
     })
+
+    it('should reject picks that contain the same player more then once', (done) => {
+      gamebot.simulateMessage('join the resistance', 'u1')
+      gamebot.simulateMessage('join the resistance', 'u2')
+      gamebot.simulateMessage('join the resistance', 'u3')
+      gamebot.simulateMessage('join the resistance', 'u4')
+      gamebot.simulateMessage('join the resistance', 'u6')
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.include(`Unable to make a pick with the same player multiple times.`)
+        done()
+      }
+      gamebot.simulateMessage(`pick Angelica, Angelica`, 'u6')
+    })
   })
 
   describe('Pick Order', () => {
