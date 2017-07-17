@@ -1,6 +1,7 @@
 /* global describe it beforeEach */
 const expect = require('chai').expect
 const resistance = require('../../../lib/modules/resistance/resistance')
+const role = require('../../../lib/modules/resistance/role')
 const mockGamebot = require('../../lib/mockGamebot')
 const expectResponses = require('../../lib/expectResponses')
 const NL = '\n'
@@ -501,6 +502,8 @@ describe('Resistance module (5 player)', function () {
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       })
+      module.state.roles.u1 = role.GenericSpy
+      module.state.roles.u2 = role.Reverser
       gamebot.simulateMessage(`pick Claus, John, Henrietta`, 'u1')
       gamebot.simulateMessage(`vote reject`, 'u1')
       gamebot.simulateMessage(`vote accept`, 'u2')
@@ -567,6 +570,9 @@ describe('Resistance module (5 player)', function () {
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       })
+      module.state.roles.u2 = role.SpyReverser
+      module.state.roles.u3 = role.GenericSpy
+      module.state.roles.u5 = role.Reverser
       gamebot.simulateMessage(`pick Claus, Rico, Henrietta`, 'u1')
       gamebot.simulateMessage(`vote reject`, 'u1')
       gamebot.simulateMessage(`vote accept`, 'u2')
@@ -617,6 +623,7 @@ describe('Resistance module (5 player)', function () {
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       })
+      module.state.roles.u1 = role.Reverser
       gamebot.simulateMessage(`pick Claus, John, Rico`, 'u1')
       gamebot.simulateMessage(`vote reject`, 'u1')
       gamebot.simulateMessage(`vote accept`, 'u2')
@@ -667,6 +674,8 @@ describe('Resistance module (5 player)', function () {
       module.state.missionHistory.push({
         victoriousTeam: ':skip:'
       })
+      module.state.roles.u1 = role.GenericSpy
+      module.state.roles.u3 = role.GenericSpy
       gamebot.simulateMessage(`pick Claus, John, Rico`, 'u1')
       gamebot.simulateMessage(`vote reject`, 'u1')
       gamebot.simulateMessage(`vote accept`, 'u2')
