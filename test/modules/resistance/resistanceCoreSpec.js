@@ -146,7 +146,8 @@ describe('Resistance module (Core)', function () {
             description: 'Maintains a productive work environment',
             team: {
               logo: ':good_guy:'
-            }
+            },
+            validMissionActions: ['success']
           }
         }
         gamebot.simulateMessage(command, 'u1')
@@ -458,6 +459,8 @@ describe('Resistance module (Core)', function () {
           done()
         }
       }
+      module.state.roles.u1 = role.GenericResistance
+      module.state.roles.u2 = role.GenericResistance
       module.state.picks = ['u1', 'u2']
       module.state.approved = true
       gamebot.simulateMessage(`play success`, 'u1')
