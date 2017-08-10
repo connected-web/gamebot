@@ -40,8 +40,8 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.respond = expectResponses([
         response(/^Hannah you are now a spy master$/, 'private'),
         response(/^Hannah has been assigned as a spy master for Team Blue$/, gameChannel),
-        response(/^Locations have been identified:(\n>[A-z]+){25}$/, gameChannel),
-        response(/^Locations have been identified:(\n>:assassin: [A-z]+)(\n>:blue: [A-z]+){9}(\n>:red: [A-z]+){8}(\n>:neutral: [A-z]+){7}$/, 'u7'),
+        response(/^Locations have been identified:(\n>[A-z\s]+){25}$/, gameChannel),
+        response(/^Locations have been identified:(\n>:assassin: [A-z\s]+)(\n>:blue: [A-z\s]+){9}(\n>:red: [A-z\s]+){8}(\n>:neutral: [A-z\s]+){7}$/, 'u7'),
         response(/^Hannah your operatives are now active\. Give a one word clue, followed by a number; for example: \*flying 3\* to match 3 words relating to flying\. Say \*help clues\* for more information\./)
       ], done)
 
@@ -80,6 +80,22 @@ describe('Codenames module (2 Player Game)', function () {
         response(/^\*Warning\*: Clues can only be set once per turn$/, 'private')
       ], done)
       gamebot.simulateMessage('laughing 4', 'u7')
+    })
+  })
+
+  describe('Game State', () => {
+    it('allow users to list words once a game has started', (done) => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.simulateMessage('join game', 'u6')
+      gamebot.simulateMessage('join game', 'u7')
+      gamebot.simulateMessage('start game', 'u6')
+      gamebot.simulateMessage('make me spy master', 'u7')
+
+      gamebot.respond = expectResponses([
+        response(/^Current list of locations:(\n>\d+.\t[A-z\s]+){25}$/, gameChannel)
+      ], done)
+
+      gamebot.simulateMessage('list words', 'u7')
     })
   })
 
