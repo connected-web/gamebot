@@ -40,7 +40,7 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.respond = expectResponses([
         response(/^Hannah you are now a spy master$/, 'private'),
         response(/^Hannah has been assigned as a spy master for Team Blue$/, gameChannel),
-        response(/^Starting locations have been identified:(\n>\d+.\t[A-z\s]+){25}$/, gameChannel),
+        response(/^Starting locations have been identified:(\n>:unclaimed:\s[A-z\s]+){25}$/, gameChannel),
         response(/^Locations have been identified:(\n>:assassin: [A-z\s]+)(\n>:blue: [A-z\s]+){9}(\n>:red: [A-z\s]+){8}(\n>:neutral: [A-z\s]+){7}$/, 'u7'),
         response(/^Hannah your operatives are now active\. Give a one word clue, followed by a number; for example: \*flying 3\* to match 3 words relating to flying\. Say \*help clues\* for more information\./)
       ], done)
@@ -92,7 +92,7 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.simulateMessage('make me spy master', 'u7')
 
       gamebot.respond = expectResponses([
-        response(/^Current list of locations:(\n>\d+.\t[A-z\s]+){25}$/, gameChannel)
+        response(/^Current list of locations:(\n>:(unclaimed|red|blue|neutral|assassin):\s[A-z\s]+){25}$/, gameChannel)
       ], done)
 
       gamebot.simulateMessage('list words', 'u7')
