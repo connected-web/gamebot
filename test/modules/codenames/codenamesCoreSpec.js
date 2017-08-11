@@ -9,10 +9,14 @@ describe('Codenames module (Core)', function () {
   var module, gamebot
   const gameChannel = 'codenames'
 
-  beforeEach(() => {
+  beforeEach((done) => {
     gamebot = mockGamebot()
-    module = codenames(gamebot, false)
-    module.reset()
+    codenames(gamebot, false)
+      .then((m) => {
+        module = m
+        module.reset()
+        done()
+      })
   })
 
   describe('Joining and Leaving', () => {

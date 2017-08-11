@@ -9,10 +9,14 @@ describe('Codenames module (2 Player Game)', function () {
   var module, gamebot
   const gameChannel = 'codenames'
 
-  beforeEach(() => {
+  beforeEach((done) => {
     gamebot = mockGamebot()
-    module = codenames(gamebot, false)
-    module.reset()
+    codenames(gamebot, false)
+      .then((m) => {
+        module = m
+        module.reset()
+        done()
+      })
   })
 
   describe('Starting a two-player game', () => {
