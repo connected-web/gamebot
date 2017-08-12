@@ -116,6 +116,20 @@ describe('Codenames module (Core)', function () {
     })
   })
 
+  describe('Who is playing?', () => {
+    ['who is playing', 'list players'].forEach((command) => {
+      it('should allow a user to request a list of players', (done) => {
+        gamebot.simulateMessage('join game', 'u1')
+        gamebot.simulateMessage('join game', 'u7')
+        gamebot.respond = (target, response, params) => {
+          expect(response).to.equal(`Current players: John, Hannah`)
+          done()
+        }
+        gamebot.simulateMessage(command, 'u1')
+      })
+    })
+  })
+
   describe('Help', () => {
     ['codenames help', 'How do I play codenames?', 'how do I play'].forEach((command) => {
       it('should allow a user to request help on how to play codenames', (done) => {
