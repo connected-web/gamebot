@@ -140,9 +140,9 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.simulateMessage(`pick ${invalidWord}`, 'u1')
     })
 
-    it('should allow team members to make picks', (done) => {
+    it('should allow team members to make valid picks', (done) => {
       gamebot.respond = expectResponses([
-        response(/^[A-z]+ can be made as a pick\.$/, gameChannel)
+        response(/^[A-z] is a :(blue|red): (Blue|Red) location. :(blue|red): (Blue|Red) Team have \d more guesses this turn!/, gameChannel)
       ], done)
 
       let validWord = module.model.words[0].word
