@@ -96,10 +96,10 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.simulateMessage('make me spy master', 'u7')
 
       gamebot.respond = expectResponses([
-        response(/^Current list of locations:(\n>:(unclaimed|red|blue|neutral|assassin):\s[A-z\s]+){25}$/, gameChannel)
+        response(/^Current list of locations:(\n>:(unclaimed|red|blue|neutral|assassin):\s[A-z\s]+){25}$/, 'u1')
       ], done)
 
-      gamebot.simulateMessage('list words', 'u7')
+      gamebot.simulateMessage('list words', 'u1')
     })
   })
 
