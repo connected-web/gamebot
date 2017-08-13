@@ -64,7 +64,7 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should notify users of a valid clue, and prompt them to take action', (done) => {
       gamebot.respond = expectResponses([
-        response(/^Clue has been given to the Blue Team: \*sabotage 3\* - identify 3 words by replying with \*pick word\*$/, gameChannel)
+        response(/^Clue has been given to the Blue Team: \*sabotage 3\* - identify 3 word\(s\) by replying with \*pick word\*$/, gameChannel)
       ], done)
 
       gamebot.simulateMessage('sabotage 3', 'u7')
@@ -142,10 +142,10 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should allow team members to make valid picks', (done) => {
       gamebot.respond = expectResponses([
-        response(/^[A-z] is a :(blue|red): (Blue|Red) location. :(blue|red): (Blue|Red) Team have \d more guesses this turn!/, gameChannel)
+        response(/^[A-z]+ is a :blue: blue team location/, gameChannel)
       ], done)
 
-      let validWord = module.model.words[0].word
+      let validWord = module.model.words.filter((location) => location.team === 'blue')[0].word
       gamebot.simulateMessage(`pick ${validWord}`, 'u1')
     })
   })
