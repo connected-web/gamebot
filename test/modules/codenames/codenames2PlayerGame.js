@@ -142,7 +142,7 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should allow team members to make valid picks for team locations', (done) => {
       gamebot.respond = expectResponses([
-        response(/^[A-z]+ is a :blue: blue team location/, gameChannel)
+        response(/^\*[A-z]+\* is a :blue: blue team location/, gameChannel)
       ], done)
 
       let validWord = module.model.words.filter((location) => location.team === 'blue')[0].word
@@ -151,7 +151,7 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should allow team members to make valid picks for enemy locations', (done) => {
       gamebot.respond = expectResponses([
-        response(/^[A-z]+ is a :red: red team location, the :blue: Blue Team have ended their turn!/, gameChannel),
+        response(/^\*[A-z]+\* is a :red: red team location, the :blue: Blue Team have ended their turn!/, gameChannel),
         response(/It is now :red: Red Team's turn!/, gameChannel)
       ], done)
 
@@ -161,7 +161,7 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should allow team members to make valid picks for neutral locations', (done) => {
       gamebot.respond = expectResponses([
-        response(/^[A-z]+ is a :neutral: neutral team location, the :blue: Blue Team have ended their turn!/, gameChannel),
+        response(/^\*[A-z]+\* is a :neutral: neutral team location, the :blue: Blue Team have ended their turn!/, gameChannel),
         response(/It is now :red: Red Team's turn!/, gameChannel)
       ], done)
 
@@ -171,7 +171,7 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should allow team members to make valid picks for the assassin location', (done) => {
       gamebot.respond = expectResponses([
-        response(/^[A-z]+ is the :assassin: assassin team location, the :blue: Blue Team loses the game!/, gameChannel)
+        response(/^\*[A-z]+\* is the :assassin: assassin team location, the :blue: Blue Team loses the game!/, gameChannel)
       ], done)
 
       let validWord = module.model.words.filter((location) => location.team === 'assassin')[0].word
