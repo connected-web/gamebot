@@ -67,7 +67,7 @@ describe('Codenames module (Core)', function () {
     stopCommands.forEach((command) => {
       it(`${command} should clear the game state and eject all players`, (done) => {
         gamebot.respond = expectResponses([
-          response(/^[A-z]+ has stopped the game\. All players have been gone underground\.$/, gameChannel)
+          response(/^[A-z]+ has stopped the game\. All players have gone underground\.$/, gameChannel)
         ], done)
         expect(module.model.players).to.deep.equal(['u1', 'u3'])
         gamebot.simulateMessage(command, 'u2')
