@@ -64,7 +64,7 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should notify users of a valid clue, and prompt them to take action', (done) => {
       gamebot.respond = expectResponses([
-        response(/^Clue has been given to the Blue Team: \*sabotage 3\* - identify 3 word\(s\) by replying with \*pick word\*$/, gameChannel)
+        response(/^Clue has been given to the Blue Team: \*sabotage 3\* - @John, @Hannah identify 3 word\(s\) by replying with \*pick word\*$/, gameChannel)
       ], done)
 
       gamebot.simulateMessage('sabotage 3', 'u7')
