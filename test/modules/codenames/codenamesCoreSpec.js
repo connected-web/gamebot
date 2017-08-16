@@ -137,7 +137,7 @@ describe('Codenames module (Core)', function () {
         gamebot.simulateMessage('make me spymaster', 'u7')
         gamebot.simulateMessage('make me spymaster', 'u3')
         gamebot.respond = (target, response, params) => {
-          expect(response).to.match(/Teams assigned: :blue: Blue [A-z]+, :blue: Blue [A-z]+, :red: Red [A-z]+, and :red: Red [A-z]+/)
+          expect(response).to.match(/Teams assigned: :blue: [A-z]+, :blue: [A-z]+, :red: [A-z]+, and :red: [A-z]+/)
           done()
         }
         gamebot.simulateMessage(command, 'u1')
