@@ -122,7 +122,22 @@ describe('Codenames module (Core)', function () {
         gamebot.simulateMessage('join game', 'u1')
         gamebot.simulateMessage('join game', 'u7')
         gamebot.respond = (target, response, params) => {
-          expect(response).to.equal(`Current players: John, Hannah`)
+          expect(response).to.equal(`Teams not assigned, current players: Hannah, and John`)
+          done()
+        }
+        gamebot.simulateMessage(command, 'u1')
+      })
+
+      it('should allow a user to request a list of teams', (done) => {
+        gamebot.simulateMessage('join game', 'u1')
+        gamebot.simulateMessage('join game', 'u2')
+        gamebot.simulateMessage('join game', 'u3')
+        gamebot.simulateMessage('join game', 'u7')
+        gamebot.simulateMessage('start game', 'u1')
+        gamebot.simulateMessage('make me spymaster', 'u7')
+        gamebot.simulateMessage('make me spymaster', 'u3')
+        gamebot.respond = (target, response, params) => {
+          expect(response).to.match(/Teams assigned: :blue: Blue [A-z]+, :blue: Blue [A-z]+, :red: Red [A-z]+, and :red: Red [A-z]+/)
           done()
         }
         gamebot.simulateMessage(command, 'u1')
