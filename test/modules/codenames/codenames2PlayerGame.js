@@ -27,7 +27,7 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should allow an active player to start a two player game', (done) => {
       gamebot.respond = expectResponses([
-        response(/^Codenames has begun, teams are:\n>Team Blue: Hannah, and John\n>Team Red: Solitaire Mode\nChoose a spy master for your team by saying "make me spy master"$/, gameChannel)
+        response(/^Codenames has begun, teams are:\n>:blue: Blue Team: Hannah, and John\n>:red: Red Team: Solitaire Mode\nChoose a spy master for your team by saying "make me spy master"$/, gameChannel)
       ], done)
       gamebot.simulateMessage('start game', 'u7')
     })
