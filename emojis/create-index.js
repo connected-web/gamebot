@@ -12,8 +12,10 @@ At present, the best way to create these is using a Chrome Plugin named [Bulk Em
 
 Here is a list of all the emojis in use by the gamebot games:
 
+| Emoji | Name | Encode |
+| ----- | ---- | ------ |
 {{#each emojis}}
-### <img src="./{{this}}" alt="{{@key}}" width="32" style="vertical-align: middle" /> :{{@key}}:
+|<img src="./{{this}}" alt="{{@key}}" width="32" style="vertical-align: middle" /> | {{@key}} | :{{@key}}: |
 {{/each}}
 `)
 
