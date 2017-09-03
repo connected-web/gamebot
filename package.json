@@ -7,6 +7,7 @@
     "start": "npm run gamebot",
     "gamebot": "pm2 start index.js --name 'Gamebot'",
     "test": "standard && mocha --recursive",
+    "index-emojis": "node emojis/create-index.js",
     "stop": "pm2 delete 'Gamebot'"
   },
   "repository": {
