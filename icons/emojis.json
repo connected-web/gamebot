@@ -13,5 +13,9 @@
     ":good_guy:": "good_guy.png",
     ":fail:": "fail.png",
     ":reverse:": "reverse.png",
-    ":success:": "success.png"
+    ":success:": "success.png",
+    ":assassin:": "assassin.png",
+    ":neutral:": "neutral.png",
+    ":red:": "red.png",
+    ":blue:": "blue.png"
 }
