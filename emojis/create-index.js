@@ -13,7 +13,7 @@ At present, the best way to create these is using a Chrome Plugin named [Bulk Em
 Here is a list of all the emojis in use by the gamebot games:
 
 {{#each emojis}}
-### <img src=./{{this}}" alt="{{@key}}" width="48"> :{{@key}}:
+### <img src="./{{this}}" alt="{{@key}}" width="32" style="vertical-align: middle" /> :{{@key}}:
 {{/each}}
 `)
 
