@@ -19,7 +19,6 @@ Here is a list of all the emojis in use by the gamebot games:
 {{/each}}
 `)
 
-
 find(path.join(__dirname, '/*.png'))
   .then((files) => {
     return files.map(file => path.basename(file, '.png'))
