@@ -10,6 +10,6 @@ zip -qr9 -X $DESTINATION_DIR/gamebot.zip \
   $DIR/emojis $DIR/lib \
   $DIR/node_modules \
   $DIR/records $DIR/ssh $DIR/state $DIR/test $DIR/users $DIR/website \
-  $DIR/index.js $DIR/package.json $DIR/README.md $DIR/update.sh $DIR/tokens.json
+  $DIR/index.js $DIR/package.json $DIR/README.md $DIR/update.sh
 
 ls -la $DESTINATION_DIR/gamebot.zip
