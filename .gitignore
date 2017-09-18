@@ -1,6 +1,7 @@
 node_modules
 ssh/*.pub
 ssh/*.key
+ssh/gamebot-backup.zip
 *.log
 state/*.json
 tokens.json
