@@ -52,8 +52,7 @@ function mockGamebot () {
     }
   }
 
-  gamebot.mention = (name) => {
-    let id = userNameIndex[(name + '').toLowerCase()]
+  gamebot.mention = (id) => {
     return `<@${id}>`
   }
 
