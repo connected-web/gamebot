@@ -15,6 +15,7 @@ function expectResponses (expectedResponses, done) {
     done(error)
   }, 250)
   return (target, response, params) => {
+    console.log('RESPONSE', response)
     const actual = {
       message: response,
       channel: target

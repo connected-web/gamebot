@@ -150,20 +150,20 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should allow team members to make valid picks for team locations', (done) => {
       gamebot.respond = expectResponses([
-        response(/^\*[A-z]+\* is a :blue: blue team location/, gameChannel)
+        response(/^\*[A-z]+\* is a :blue: Blue team location/, gameChannel)
       ], done)
 
-      let validWord = module.model.words.filter((location) => location.team === 'blue')[0].word
+      let validWord = module.model.words.filter((location) => location.team === 'team1')[0].word
       gamebot.simulateMessage(`pick ${validWord}`, 'u1')
     })
 
     it('should allow team members to make valid picks for enemy locations', (done) => {
       gamebot.respond = expectResponses([
-        response(/^\*[A-z]+\* is a :red: red team location, the :blue: Blue Team have ended their turn!/, gameChannel),
+        response(/^\*[A-z]+\* is a :red: Red team location, the :blue: Blue Team have ended their turn!/, gameChannel),
         response(/It is now :red: Red Team's turn!/, gameChannel)
       ], done)
 
-      let validWord = module.model.words.filter((location) => location.team === 'red')[0].word
+      let validWord = module.model.words.filter((location) => location.team === 'team2')[0].word
       gamebot.simulateMessage(`pick ${validWord}`, 'u1')
     })
 
