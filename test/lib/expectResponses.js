@@ -9,21 +9,23 @@ function createResponse (message, channel) {
 }
 
 function expectResponses (expectedResponses, done) {
+  const receivedMessages = []
   const timeout = setTimeout(() => {
-    const error = ['[TIMEOUT] Unmatched respones:'].concat(expectedResponses.map((r) => r.message)).join(NL)
+    const error = ['[TIMEOUT] Unmatched respones:'].concat(expectedResponses.map((r) => r.message)).concat(receivedMessages).join(NL)
     console.log(error)
     done(error)
-  }, 250)
+  }, 1000)
   return (target, response, params) => {
     const actual = {
       message: response,
       channel: target
     }
+    receivedMessages.push(`${target}: ${response}`)
     const checkedResponses = []
     const startCount = expectedResponses.length
     if (startCount === 0) {
       clearTimeout(timeout)
-      return done()
+      return done(response)
     }
     // search for a match
     while (expectedResponses.length > 0) {
