@@ -171,7 +171,7 @@ describe('Codenames module (2 Player Game)', function () {
 
     it('should allow team members to make valid picks for the assassin location', (done) => {
       gamebot.respond = expectResponses([
-        response(/^\*[A-z]+\* is the :assassin: assassin team location, the :blue: Blue Team loses the game!/, gameChannel)
+        response(/^\*[A-z\s]+\* is the :assassin: assassin team location, the :blue: Blue Team loses the game!/, gameChannel)
       ], done)
 
       let validWord = module.model.words.filter((location) => location.team === 'assassin')[0].word
