@@ -70,6 +70,14 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.simulateMessage('sabotage 3', 'u7')
     })
 
+    it('should accept clues with a comma', (done) => {
+      gamebot.respond = expectResponses([
+        response(/^Clue has been given to the Blue Team: \*pickle 3\* - @John identify 3 word\(s\) by replying with \*pick word\*$/, gameChannel)
+      ], done)
+
+      gamebot.simulateMessage('pickle, 3', 'u7')
+    })
+
     it('should only accept clues from the spymaster on the active team', (done) => {
       gamebot.respond = expectResponses([
         response(/^\*Warning\*: Clues can only be given by the spymaster on the active team \(\*Hannah\*\)$/, 'private')
