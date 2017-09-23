@@ -52,6 +52,11 @@ function mockGamebot () {
     }
   }
 
+  gamebot.mention = (name) => {
+    let id = userNameIndex[(name + '').toLowerCase()]
+    return `<@${id}>`
+  }
+
   gamebot.simulateMessage = (message, userId, channelId) => {
     handleMessage(gamebot, {
       type: 'message',
