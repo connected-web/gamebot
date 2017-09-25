@@ -41,7 +41,7 @@ describe('Accusation module', function () {
     const matcher = gamebot.matchers[0]
     gamebot.respond = (channel, response) => {
       gamebot.respond = (channel, response) => {
-        expect(response).to.include('Carrie is')
+        expect(response).to.include('Carrie ')
         done()
       }
     }
