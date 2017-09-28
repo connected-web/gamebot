@@ -29,7 +29,7 @@ describe('Accusation module', function () {
   it('should respond with a random accusation', (done) => {
     const matcher = gamebot.matchers[0]
     gamebot.respond = (channel, response, params) => {
-      expect(response).to.include('John is')
+      expect(response).to.match(/John [A-z]/)
       done()
     }
     matcher.handler(gamebot, {
@@ -56,7 +56,7 @@ describe('Accusation module', function () {
   it('should be self aware', (done) => {
     const matcher = gamebot.matchers[0]
     gamebot.respond = (channel, response, params) => {
-      expect(response).to.include('I am')
+      expect(response).to.match(/I [A-z]+/)
       done()
     }
     matcher.handler(gamebot, {
