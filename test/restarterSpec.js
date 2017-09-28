@@ -27,14 +27,14 @@ describe('Restarting', () => {
     restarter.start(api)
     api.respond = (channel, message) => {
       expect(channel).to.equal(statusChannel)
-      expect(message).to.equal('Started a restart timer for 60 minutes')
+      expect(message).to.match(/^Started a restart timer for \d+ minutes$/)
       done()
     }
     clock.tick(5 * 1000)
     expect(process.exit).not.to.have.been.called()
   })
 
-  it('should notify the status channel of a pending restart after an hour', (done) => {
+  it('should notify the status channel of a pending restart after a random delay', (done) => {
     restarter.start(api)
     api.respond = (channel, message) => {
       api.respond = (channel, message) => {
@@ -43,13 +43,13 @@ describe('Restarting', () => {
         done()
       }
     }
-    clock.tick(3600 * 1000)
+    clock.tick(restarter.delayInMs)
     expect(process.exit).not.to.have.been.called()
   })
 
-  it('should call process.exit after 1 hour and 10 seconds', () => {
+  it('should call process.exit after a random delay and 10 seconds', () => {
     restarter.start(api)
-    clock.tick((3600 + 10) * 1000)
+    clock.tick(restarter.delayInMs + 10000)
     expect(process.exit).to.have.been.called()
   })
 })
