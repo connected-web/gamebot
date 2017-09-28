@@ -38,6 +38,7 @@
     "mocha": "^2.5.3",
     "product-monitor": "^2.2.4",
     "promise-path": "^1.2.4",
+    "sinon": "^4.0.0",
     "standard": "^10.0.2"
   }
 }

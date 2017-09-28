@@ -1,5 +1,6 @@
 const api = require('./lib/api/api')
 const tokens = require('./tokens.json')
+const restarter = require('./lib/restarter')
 
 const bots = tokens.map(makeBot)
 
@@ -30,6 +31,7 @@ function startBot (bot) {
 
 Promise.all(bots.map(startBot))
   .then(startWebsite)
+  .then(startRestarter)
   .catch((ex) => {
     console.error('Catch All', ex, ex.stack)
   })
@@ -45,4 +47,10 @@ function startWebsite (bots) {
     'gamebot': bots[0],
     'bots': bots
   })
+  return bots
+}
+
+function startRestarter (bots) {
+  const gamebot = bots[0]
+  restarter.start()
 }
