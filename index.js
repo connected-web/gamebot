@@ -52,5 +52,5 @@ function startWebsite (bots) {
 
 function startRestarter (bots) {
   const gamebot = bots[0]
-  restarter.start()
+  restarter.start(gamebot)
 }
