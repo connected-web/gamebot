@@ -82,7 +82,7 @@ eagle
 genius
 america
 ivory
-solider
+soldier
 berry
 plot
 pupil
@@ -127,7 +127,7 @@ dice
 cotton
 fish
 laser
-skyscrapper
+skyscraper
 web
 fan
 palm
