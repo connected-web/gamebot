@@ -24,8 +24,8 @@ describe('Loveletter module (2 Player Game)', function () {
       gamebot.simulateMessage('join game', 'u2')
       gamebot.respond = expectResponses([
         response(/^Love Letter has begun, the player order is:\n(>[A-z]+\n){2}[A-z]+ has the first turn.$/, gameChannel),
-        response(/^Your starting card is [A-z]+\.$/, 'u1'),
-        response(/^Your starting card is [A-z]+\.$/, 'u2')
+        response(/^Hey John! Your starting card is [A-z]+\.$/, 'u1'),
+        response(/^Hey Henrietta! Your starting card is [A-z]+\.$/, 'u2')
       ], done)
       gamebot.simulateMessage('start game', 'u2')
     })
