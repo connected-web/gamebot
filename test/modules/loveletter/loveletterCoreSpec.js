@@ -46,7 +46,7 @@ describe('Loveletter module (Core)', function () {
       gamebot.simulateMessage('join game', 'u1')
     })
 
-    it('should prevent a non-players from leaving a game', (done) => {
+    it('should prevent a non-player from leaving a game', (done) => {
       module.model.players.push('u3', 'u2')
       gamebot.respond = expectResponses([
         response(/^Hey [A-z]+, you weren't playing love letter\./, 'u1')
@@ -83,6 +83,20 @@ describe('Loveletter module (Core)', function () {
         expect(module.model.players).to.deep.equal(['u1', 'u3'])
         gamebot.simulateMessage(command, 'u3')
         expect(module.model.players).to.deep.equal(['u1', 'u3'])
+      })
+    })
+  })
+
+  describe('Who is playing?', () => {
+    ['who is playing', 'list players'].forEach((command) => {
+      it('should allow a user to request a list of players', (done) => {
+        gamebot.simulateMessage('join game', 'u1')
+        gamebot.simulateMessage('join game', 'u7')
+        gamebot.respond = (target, response, params) => {
+          expect(response).to.equal(`The players currently in the castle are: Hannah, and John`)
+          done()
+        }
+        gamebot.simulateMessage(command, 'u1')
       })
     })
   })
