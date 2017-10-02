@@ -25,7 +25,7 @@ function expectResponses (expectedResponses, done) {
     const startCount = expectedResponses.length
     if (startCount === 0) {
       clearTimeout(timeout)
-      return done(response)
+      return done(`Unexpected response: ${response}, ${target}`)
     }
     // search for a match
     while (expectedResponses.length > 0) {
@@ -41,7 +41,7 @@ function expectResponses (expectedResponses, done) {
     }
     // check for no match
     if (startCount === checkedResponses.length) {
-      console.error('[MISSING] No message match found for:', JSON.stringify(actual.message))
+      console.error('[MISSING] No message match found for:', JSON.stringify(actual.message), actual.channel)
       console.error('Unmatched responses:', checkedResponses.length, checkedResponses)
       expect('No message match found for').to.equal(actual.message)
     }
