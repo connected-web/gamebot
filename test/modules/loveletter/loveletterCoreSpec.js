@@ -87,6 +87,30 @@ describe('Loveletter module (Core)', function () {
     })
   })
 
+  describe('Starting the game', () => {
+    it('should prevent the game being started if there are more than 4 players', (done) => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.equal(`Unable to start the game, there needs to be at least two players.`)
+        done()
+      }
+      gamebot.simulateMessage('start game', 'u1')
+    })
+
+    it('should prevent the game being started if there are more than 4 players', (done) => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.simulateMessage('join game', 'u2')
+      gamebot.simulateMessage('join game', 'u3')
+      gamebot.simulateMessage('join game', 'u4')
+      gamebot.simulateMessage('join game', 'u7')
+      gamebot.respond = (target, response, params) => {
+        expect(response).to.equal(`Unable to start the game, there are too many players! This game only plays up to four players.`)
+        done()
+      }
+      gamebot.simulateMessage('start game', 'u1')
+    })
+  })
+
   describe('Who is playing?', () => {
     ['who is playing', 'list players'].forEach((command) => {
       it('should allow a user to request a list of players', (done) => {
