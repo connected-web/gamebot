@@ -30,4 +30,16 @@ describe('Loveletter module (2 Player Game)', function () {
       gamebot.simulateMessage('start game', 'u2')
     })
   })
+
+  describe('Playing a card', () => {
+    it('should allow players to play a card on their turn', (done) => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.simulateMessage('join game', 'u2')
+      gamebot.simulateMessage('start game', 'u2')
+      gamebot.respond = expectResponses([
+        response(/^You have played Priest \(2\)\. If you play a priest on your turn, choose an unprotected player, that player must reveal their card to you\.$/, gameChannel)
+      ], done)
+      gamebot.simulateMessage('play Priest', 'u1')
+    })
+  })
 })
