@@ -40,7 +40,10 @@ describe('Loveletter module (2 Player Game)', function () {
 
     it('should allow players to play a card on their turn', (done) => {
       const playerCard = module.model.playerCards.filter((pc) => pc.player === 'u1')[0]
-      gamebot.respond = expectResponses([response(/^You have played [A-z]+ \(\d\)\. If.../, gameChannel)], done)
+      gamebot.respond = expectResponses([
+        response(/^You have played [A-z]+ \(\d\)\. If.../, gameChannel),
+        response(/^Please choose a player to target by responding with \*target _Name_\*/, 'u1')
+      ], done)
       gamebot.simulateMessage(`play ${playerCard.cards[0]}`, 'u1')
     })
 
@@ -60,6 +63,15 @@ describe('Loveletter module (2 Player Game)', function () {
 
       gamebot.respond = expectResponses([response(/^Unable to play card, you do not have a _[A-z]+_ card in your hand\.$/, 'u1')], done)
       gamebot.simulateMessage(`play ${notPlayerCard}`, 'u1')
+    })
+
+    it('should prevent players playing a second card on their turn', (done) => {
+      const currentPlayer = module.model.currentPlayer()
+      const playerCard = module.model.playerCards.filter((pc) => pc.player === currentPlayer)[0]
+
+      gamebot.simulateMessage(`play ${playerCard.cards[0]}`, currentPlayer)
+      gamebot.respond = expectResponses([response(/^Unable to play card, you have already played _[A-z]+_ this turn. Please a target a player using \*target playerName\*\.$/, currentPlayer)], done)
+      gamebot.simulateMessage(`play ${playerCard.cards[0]}`, currentPlayer)
     })
   })
 })
