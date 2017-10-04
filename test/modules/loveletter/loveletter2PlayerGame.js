@@ -40,13 +40,13 @@ describe('Loveletter module (2 Player Game)', function () {
 
     it('should allow players to play a card on their turn', (done) => {
       const currentPlayer = module.model.currentPlayer()
-      const playerCard = module.model.playerCards.filter((pc) => pc.player === currentPlayer)[0]
-      playerCard.cards = ['prince', 'priest']
+      const playerHand = module.model.playerHands.filter((pc) => pc.player === currentPlayer)[0]
+      playerHand.cards = ['prince', 'priest']
       gamebot.respond = expectResponses([
         response(/^You have played [A-z]+ \(\d\)\. If.../, gameChannel),
         response(/^Please choose a player to target by responding with \*target _Name_\*/, currentPlayer)
       ], done)
-      gamebot.simulateMessage(`play ${playerCard.cards[0]}`, currentPlayer)
+      gamebot.simulateMessage(`play ${playerHand.cards[0]}`, currentPlayer)
     })
 
     it('should prevent players from playing a card who are not in the game', (done) => {
@@ -56,8 +56,8 @@ describe('Loveletter module (2 Player Game)', function () {
 
     it('should prevent players from playing a card when it is not their turn', (done) => {
       const currentPlayer = module.model.currentPlayer()
-      const notCurrentPlayer = module.module.players.filter((player) => player !== currentPlayer)
-      gamebot.respond = expectResponses([response(/^Unable to play card, you are not part of this game\.$/, 'u3')], done)
+      const notCurrentPlayer = module.model.players.filter((player) => player !== currentPlayer)[0]
+      gamebot.respond = expectResponses([response(/^Unable to play card, you are not the current player. Waiting for [A-z]+ to take their turn\.$/, notCurrentPlayer)], done)
       gamebot.simulateMessage('play King', notCurrentPlayer)
     })
 
@@ -69,20 +69,20 @@ describe('Loveletter module (2 Player Game)', function () {
 
     it(`should prevent players from playing a valid card they don't have`, (done) => {
       const currentPlayer = module.model.currentPlayer()
-      const playerCard = module.model.playerCards.filter((pc) => pc.player === currentPlayer)[0]
-      const notPlayerCard = ['guard', 'priest', 'baron', 'handmaid', 'prince', 'king', 'countess', 'princess'].filter((card) => !playerCard.cards.includes(card))[0]
+      const playerHand = module.model.playerHands.filter((pc) => pc.player === currentPlayer)[0]
+      const notPlayerHand = ['guard', 'priest', 'baron', 'handmaid', 'prince', 'king', 'countess', 'princess'].filter((card) => !playerHand.cards.includes(card))[0]
 
       gamebot.respond = expectResponses([response(/^Unable to play card, you do not have a _[A-z]+_ card in your hand\.$/, currentPlayer)], done)
-      gamebot.simulateMessage(`play ${notPlayerCard}`, currentPlayer)
+      gamebot.simulateMessage(`play ${notPlayerHand}`, currentPlayer)
     })
 
     it('should prevent players playing a second card on their turn', (done) => {
       const currentPlayer = module.model.currentPlayer()
-      const playerCard = module.model.playerCards.filter((pc) => pc.player === currentPlayer)[0]
+      const playerHand = module.model.playerHands.filter((pc) => pc.player === currentPlayer)[0]
 
-      gamebot.simulateMessage(`play ${playerCard.cards[0]}`, currentPlayer)
+      gamebot.simulateMessage(`play ${playerHand.cards[0]}`, currentPlayer)
       gamebot.respond = expectResponses([response(/^Unable to play card, you have already played _[A-z]+_ this turn. Please a target a player using \*target playerName\*\.$/, currentPlayer)], done)
-      gamebot.simulateMessage(`play ${playerCard.cards[0]}`, currentPlayer)
+      gamebot.simulateMessage(`play ${playerHand.cards[0]}`, currentPlayer)
     })
   })
 })
