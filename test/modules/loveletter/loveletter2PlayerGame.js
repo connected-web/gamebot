@@ -40,7 +40,7 @@ describe('Loveletter module (2 Player Game)', function () {
 
     it('should allow players to play a card on their turn', (done) => {
       const playerCard = module.model.playerCards.filter((pc) => pc.player === 'u1')[0]
-      gamebot.respond = expectResponses([response(/^You have played [A-z]+ \(\d\)\. If you.../, gameChannel)], done)
+      gamebot.respond = expectResponses([response(/^You have played [A-z]+ \(\d\)\. If.../, gameChannel)], done)
       gamebot.simulateMessage(`play ${playerCard.cards[0]}`, 'u1')
     })
 
@@ -56,9 +56,9 @@ describe('Loveletter module (2 Player Game)', function () {
 
     it(`should prevent players from playing a valid card they don't have`, (done) => {
       const playerCard = module.model.playerCards.filter((pc) => pc.player === 'u1')[0]
-      const notPlayerCard = ['guard', 'priest', 'baron', 'handmaid', 'prince', 'king', 'countess', 'princess'].filter((card) => playerCard.cards.includes(card))[0]
+      const notPlayerCard = ['guard', 'priest', 'baron', 'handmaid', 'prince', 'king', 'countess', 'princess'].filter((card) => !playerCard.cards.includes(card))[0]
 
-      gamebot.respond = expectResponses([response(/^Unable to play card, you do not have a _[A-z]+_ card in your hand.\.$/, 'u1')], done)
+      gamebot.respond = expectResponses([response(/^Unable to play card, you do not have a _[A-z]+_ card in your hand\.$/, 'u1')], done)
       gamebot.simulateMessage(`play ${notPlayerCard}`, 'u1')
     })
   })
