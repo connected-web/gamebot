@@ -41,6 +41,7 @@ describe('Loveletter module (2 Player Game)', function () {
     it('should allow players to play a card on their turn', (done) => {
       const currentPlayer = module.model.currentPlayer()
       const playerCard = module.model.playerCards.filter((pc) => pc.player === currentPlayer)[0]
+      playerCard.cards = ['prince', 'priest']
       gamebot.respond = expectResponses([
         response(/^You have played [A-z]+ \(\d\)\. If.../, gameChannel),
         response(/^Please choose a player to target by responding with \*target _Name_\*/, currentPlayer)
@@ -51,6 +52,13 @@ describe('Loveletter module (2 Player Game)', function () {
     it('should prevent players from playing a card who are not in the game', (done) => {
       gamebot.respond = expectResponses([response(/^Unable to play card, you are not part of this game\.$/, 'u3')], done)
       gamebot.simulateMessage('play King', 'u3')
+    })
+
+    it('should prevent players from playing a card when it is not their turn', (done) => {
+      const currentPlayer = module.model.currentPlayer()
+      const notCurrentPlayer = module.module.players.filter((player) => player !== currentPlayer)
+      gamebot.respond = expectResponses([response(/^Unable to play card, you are not part of this game\.$/, 'u3')], done)
+      gamebot.simulateMessage('play King', notCurrentPlayer)
     })
 
     it('should prevent players from playing an invalid card name', (done) => {
