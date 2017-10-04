@@ -1,4 +1,3 @@
-const expect = require('chai').expect
 const NL = '\n'
 
 function createResponse (message, channel) {
@@ -11,21 +10,25 @@ function createResponse (message, channel) {
 function expectResponses (expectedResponses, done) {
   const receivedMessages = []
   const timeout = setTimeout(() => {
-    const error = ['[TIMEOUT] Unmatched respones:'].concat(expectedResponses.map((r) => r.message)).concat(receivedMessages).join(NL)
+    const error = ['[TIMEOUT] Expected response not received:']
+      .concat(receivedMessages)
+      .concat('Unmatched responses: ' + expectedResponses.length)
+      .concat(expectedResponses.map((r) => r.message))
+      .join(NL)
     console.log(error)
     done(error)
   }, 1000)
-  return (target, response, params) => {
+  return (channel, message, params) => {
     const actual = {
-      message: response,
-      channel: target
+      channel: channel,
+      message: message
     }
-    receivedMessages.push(`${target}: ${response}`)
+    receivedMessages.push(JSON.stringify({channel, message}))
     const checkedResponses = []
     const startCount = expectedResponses.length
     if (startCount === 0) {
       clearTimeout(timeout)
-      return done(`Unexpected response: ${response}, ${target}`)
+      return done(`Unexpected response: ${message}, ${channel}`)
     }
     // search for a match
     while (expectedResponses.length > 0) {
@@ -41,9 +44,14 @@ function expectResponses (expectedResponses, done) {
     }
     // check for no match
     if (startCount === checkedResponses.length) {
-      console.error('[MISSING] No message match found for:', JSON.stringify(actual.message), actual.channel)
-      console.error('Unmatched responses:', checkedResponses.length, checkedResponses)
-      expect('No message match found for').to.equal(actual.message)
+      clearTimeout(timeout)
+      const error = ['[MISSING] No message match found for:']
+        .concat(JSON.stringify(actual))
+        .concat('Unmatched responses: ' + checkedResponses.length)
+        .concat(checkedResponses.map((r) => r.message))
+        .join(NL)
+      console.error(error)
+      done(error)
     }
     // check for completion
     if (startCount === 1 && checkedResponses.length === 0) {
