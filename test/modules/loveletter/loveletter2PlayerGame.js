@@ -85,4 +85,22 @@ describe('Loveletter module (2 Player Game)', function () {
       gamebot.simulateMessage(`play ${playerHand.cards[0]}`, currentPlayer)
     })
   })
+
+  describe('Targetting a player', () => {
+    it('should be possible to target a player, when playing a guard', (done) => {
+      done()
+    })
+
+    it('should be possible to target a player, when playing a priest', (done) => {
+      done()
+    })
+
+    it('should not be possible to target a player if they are protected by a handmaid', (done) => {
+      done()
+    })
+
+    it('should not be possible for a player to target themselves when playing a baron', (done) => {
+      done()
+    })
+  })
 })
