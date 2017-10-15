@@ -44,7 +44,7 @@ describe('Loveletter module (2 Player Game)', function () {
       playerHand.cards = ['prince', 'priest']
       gamebot.respond = expectResponses([
         response(/^You have played [A-z]+ \(\d\)\. If.../, gameChannel),
-        response(/^Please choose a player to target by responding with \*target _Name_\*/, currentPlayer)
+        response(/^Please choose a player to target by responding with \*target Henrietta\*, or \*target John\*/, currentPlayer)
       ], done)
       gamebot.simulateMessage(`play ${playerHand.cards[0]}`, currentPlayer)
     })
