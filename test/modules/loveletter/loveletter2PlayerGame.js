@@ -9,6 +9,12 @@ describe('Loveletter module (2 Player Game)', function () {
     gamebot
   const gameChannel = 'loveletter'
 
+  function validTargetName () {
+    const model = module.model
+    const validTargets = model.getValidTargets().map(target => gamebot.getUserName(target.player))
+    return validTargets[0]
+  }
+
   beforeEach((done) => {
     gamebot = mockGamebot()
     codenames(gamebot, false).then((m) => {
@@ -69,7 +75,7 @@ describe('Loveletter module (2 Player Game)', function () {
 
     it(`should prevent players from playing a valid card they don't have`, (done) => {
       const currentPlayer = module.model.currentPlayer()
-      const playerHand = module.model.playerHands.filter((pc) => pc.player === currentPlayer)[0]
+      const playerHand = module.model.getPlayerHandFor(currentPlayer)
       const notPlayerHand = ['guard', 'priest', 'baron', 'handmaid', 'prince', 'king', 'countess', 'princess'].filter((card) => !playerHand.cards.includes(card))[0]
 
       gamebot.respond = expectResponses([response(/^Unable to play card, you do not have a _[A-z]+_ card in your hand\.$/, currentPlayer)], done)
@@ -78,7 +84,7 @@ describe('Loveletter module (2 Player Game)', function () {
 
     it('should prevent players playing a second card on their turn', (done) => {
       const currentPlayer = module.model.currentPlayer()
-      const playerHand = module.model.playerHands.filter((pc) => pc.player === currentPlayer)[0]
+      const playerHand = module.model.getPlayerHandFor(currentPlayer)
 
       gamebot.simulateMessage(`play ${playerHand.cards[0]}`, currentPlayer)
       gamebot.respond = expectResponses([response(/^Unable to play card, you have already played _[A-z]+_ this turn. Please a target a player using \*target playerName\*\.$/, currentPlayer)], done)
@@ -87,8 +93,24 @@ describe('Loveletter module (2 Player Game)', function () {
   })
 
   describe('Targetting a player', () => {
+    beforeEach(() => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.simulateMessage('join game', 'u2')
+      gamebot.simulateMessage('start game', 'u2')
+    })
+
     it('should be possible to target a player, when playing a guard', (done) => {
-      done()
+      const currentPlayer = module.model.currentPlayer()
+      const playerHand = module.model.getPlayerHandFor(currentPlayer)
+      playerHand.cards = ['guard', 'priest']
+
+      gamebot.simulateMessage(`play guard`, currentPlayer)
+
+      gamebot.respond = expectResponses([
+        response(/^Stuff/, gameChannel),
+        response(/^Other stuff/, currentPlayer)
+      ], done)
+      gamebot.simulateMessage(`target ${validTargetName()}, princess`, currentPlayer)
     })
 
     it('should be possible to target a player, when playing a priest', (done) => {
