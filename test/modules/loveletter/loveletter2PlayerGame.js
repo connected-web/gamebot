@@ -118,7 +118,20 @@ describe('Loveletter module (2 Player Game)', function () {
     })
 
     it('should be possible to target a player, when playing a priest', (done) => {
-      done()
+      const currentPlayer = module.model.currentPlayer()
+      const playerHand = module.model.getPlayerHandFor(currentPlayer)
+      playerHand.cards = ['handmaid', 'priest']
+
+      gamebot.simulateMessage(`play priest`, currentPlayer)
+
+      gamebot.respond = expectResponses([
+        response(/^Your card \*_[A-z]+ \(\d\)_\* has been revealed to [A-z]+\./),
+        response(/You have used your \*_[A-z]+ \(\d\)_\* to see that [A-z]+ has a \*_[A-z]+ \(\d\)_\*\./, currentPlayer),
+        response(/[A-z]+ has been targetted by [A-z]+; [A-z]+'s role has been revealed to [A-z]+./, gameChannel),
+        response(/It is now [A-z]+'s turn./, gameChannel),
+        response(/You have drawn a \*_[A-z]+ \(\d\)_\* to go with your \*_[A-z]+ \(\d\)_\*. Please take your turn by responding with \*play [A-z]+\* or \*play [A-z]+\*./)
+      ], done)
+      gamebot.simulateMessage(`target ${validTargetName()}`, currentPlayer)
     })
 
     it('should not be possible to target a player if they are protected by a handmaid', (done) => {
