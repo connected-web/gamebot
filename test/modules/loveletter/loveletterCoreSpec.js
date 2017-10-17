@@ -78,7 +78,7 @@ describe('Loveletter module (Core)', function () {
     resetCommands.forEach((command) => {
       it(`${command} should clear the game state but keep all players`, (done) => {
         gamebot.respond = expectResponses([
-          response(/^Claus has reset the game\. Current players: John, Claus/, gameChannel)
+          response(/^Claus has reset the game, keeping scores and players\. Current players: John, Claus/, gameChannel)
         ], done)
         expect(module.model.players).to.deep.equal(['u1', 'u3'])
         gamebot.simulateMessage(command, 'u3')
