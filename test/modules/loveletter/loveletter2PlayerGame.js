@@ -85,6 +85,7 @@ describe('Loveletter module (2 Player Game)', function () {
     it('should prevent players playing a second card on their turn', (done) => {
       const currentPlayer = module.model.currentPlayer()
       const playerHand = module.model.getPlayerHandFor(currentPlayer)
+      playerHand.cards = ['guard', 'priest']
 
       gamebot.simulateMessage(`play ${playerHand.cards[0]}`, currentPlayer)
       gamebot.respond = expectResponses([response(/^Unable to play card, you have already played _[A-z]+_ this turn. Please a target a player using \*target playerName\*\.$/, currentPlayer)], done)
@@ -107,8 +108,11 @@ describe('Loveletter module (2 Player Game)', function () {
       gamebot.simulateMessage(`play guard`, currentPlayer)
 
       gamebot.respond = expectResponses([
-        response(/^Stuff/, gameChannel),
-        response(/^Other stuff/, currentPlayer)
+        response(/^You were targetted by [A-z]+, but they incorrectly guessed that you have a \*_Princess \(8\)_\*\./),
+        response(/You targetted [A-z]+, but you incorrectly guessed that they had a \*_Princess \(8\)_\*./, currentPlayer),
+        response(/<@u\d> has been targetted by [A-z]+, but they do not have a \*_Princess \(8\)_\*\./, gameChannel),
+        response(/It is now [A-z]+'s turn./, gameChannel),
+        response(/You have drawn a \*_[A-z]+ \(\d\)_\* to go with your \*_[A-z]+ \(\d\)_\*. Please take your turn by responding with \*play [A-z]+\* or \*play [A-z]+\*./)
       ], done)
       gamebot.simulateMessage(`target ${validTargetName()}, princess`, currentPlayer)
     })
