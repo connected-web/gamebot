@@ -45,7 +45,7 @@ describe('Loveletter module (2 Player Game)', function () {
     })
 
     it('should allow players to play a card on their turn', (done) => {
-      const currentPlayer = module.model.currentPlayer()
+      const currentPlayer = module.model.currentPlayer
       const playerHand = module.model.playerHands.filter((pc) => pc.player === currentPlayer)[0]
       playerHand.cards = ['prince', 'priest']
       gamebot.respond = expectResponses([
@@ -61,20 +61,20 @@ describe('Loveletter module (2 Player Game)', function () {
     })
 
     it('should prevent players from playing a card when it is not their turn', (done) => {
-      const currentPlayer = module.model.currentPlayer()
+      const currentPlayer = module.model.currentPlayer
       const notCurrentPlayer = module.model.players.filter((player) => player !== currentPlayer)[0]
       gamebot.respond = expectResponses([response(/^Unable to play card, you are not the current player. Waiting for [A-z]+ to take their turn\.$/, notCurrentPlayer)], done)
       gamebot.simulateMessage('play King', notCurrentPlayer)
     })
 
     it('should prevent players from playing an invalid card name', (done) => {
-      const currentPlayer = module.model.currentPlayer()
+      const currentPlayer = module.model.currentPlayer
       gamebot.respond = expectResponses([response(/^Unable to play card, _[A-z]+_ is not a valid card\.$/, currentPlayer)], done)
       gamebot.simulateMessage('play Kingy', currentPlayer)
     })
 
     it(`should prevent players from playing a valid card they don't have`, (done) => {
-      const currentPlayer = module.model.currentPlayer()
+      const currentPlayer = module.model.currentPlayer
       const playerHand = module.model.getPlayerHandFor(currentPlayer)
       const notPlayerHand = ['guard', 'priest', 'baron', 'handmaid', 'prince', 'king', 'countess', 'princess'].filter((card) => !playerHand.cards.includes(card))[0]
 
@@ -83,7 +83,7 @@ describe('Loveletter module (2 Player Game)', function () {
     })
 
     it('should prevent players playing a second card on their turn', (done) => {
-      const currentPlayer = module.model.currentPlayer()
+      const currentPlayer = module.model.currentPlayer
       const playerHand = module.model.getPlayerHandFor(currentPlayer)
       playerHand.cards = ['guard', 'priest']
 
@@ -101,7 +101,7 @@ describe('Loveletter module (2 Player Game)', function () {
     })
 
     it('should be possible to target a player, when playing a guard', (done) => {
-      const currentPlayer = module.model.currentPlayer()
+      const currentPlayer = module.model.currentPlayer
       const playerHand = module.model.getPlayerHandFor(currentPlayer)
       playerHand.cards = ['guard', 'priest']
 
@@ -118,7 +118,7 @@ describe('Loveletter module (2 Player Game)', function () {
     })
 
     it('should be possible to target a player, when playing a priest', (done) => {
-      const currentPlayer = module.model.currentPlayer()
+      const currentPlayer = module.model.currentPlayer
       const playerHand = module.model.getPlayerHandFor(currentPlayer)
       playerHand.cards = ['handmaid', 'priest']
 
