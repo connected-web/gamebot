@@ -9,7 +9,7 @@
     "restart": "pm2 restart 'Gamebot'",
     "status": "pm2 status",
     "build": "./scripts/build.sh",
-    "deploy": "npm run build && ./scripts/deploy.sh",
+    "deploy": "npm test && npm run build && ./scripts/deploy.sh",
     "gamebot": "pm2 start index.js --name 'Gamebot'",
     "test": "standard --fix && mocha --recursive",
     "index-emojis": "node emojis/create-index.js"
