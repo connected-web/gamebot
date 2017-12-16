@@ -14,6 +14,9 @@
     "test": "standard --fix && mocha --recursive",
     "index-emojis": "node emojis/create-index.js"
   },
+  "pre-commit": [
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:connected-web/gamebot.git"
@@ -36,6 +39,7 @@
     "chai": "^3.5.0",
     "chai-spies": "^0.7.1",
     "mocha": "^2.5.3",
+    "pre-commit": "^1.2.2",
     "product-monitor": "^2.2.4",
     "promise-path": "^1.2.4",
     "sinon": "^4.0.0",
