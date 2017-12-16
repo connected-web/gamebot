@@ -28,7 +28,7 @@ describe('Codenames module (4 Player Game)', function () {
 
     it('should allow an active player to start a four player game', (done) => {
       gamebot.respond = expectResponses([
-        response(/^Codenames has begun, teams are:\n>:blue: Blue Team: [A-z]+, and [A-z]+\n>:red: Red Team: [A-z]+, and [A-z]+\nChoose a spy master for your team by saying "make me spy master"$/, gameChannel)
+        response(/^Codenames has begun, teams are:\n>:(red|blue): (Red|Blue) Team: [A-z]+, and [A-z]+\n>:(red|blue): (Red|Blue) Team: [A-z]+, and [A-z]+\nChoose a spy master for your team by saying "make me spy master"$/, gameChannel)
       ], done)
       gamebot.simulateMessage('start game', 'u7')
     })

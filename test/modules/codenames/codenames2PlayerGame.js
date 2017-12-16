@@ -104,7 +104,7 @@ describe('Codenames module (2 Player Game)', function () {
       gamebot.simulateMessage('make me spy master', 'u7')
 
       gamebot.respond = expectResponses([
-        response(/^Current list of locations:(\n>:(unclaimed|red|blue|neutral|assassin):\s[A-z\s]+){25}\nTeams assigned: \n:blue: [A-z]+, :blue: [A-z]+, and :blue: [A-z]+$/, 'u1')
+        response(/^Current list of locations:(\n>:(unclaimed|red|blue|neutral|assassin):\s[A-z\s]+){25}\n:(blue|red): (Blue|Red) Team \(Angelica, Hannah, and John\) have found 0 \/ 9 words\n:red: Red Team \(Double Agents\) have found 0 \/ 8 words$/, 'u1')
       ], done)
 
       gamebot.simulateMessage('list words', 'u1')
