@@ -102,8 +102,12 @@ describe('Loveletter module (2 Player Game)', function () {
 
     it('should be possible to target a player, when playing a guard', (done) => {
       const currentPlayer = module.model.currentPlayer
+      const otherPlayer = module.model.players.filter(p => p !== currentPlayer)[0]
       const playerHand = module.model.getPlayerHandFor(currentPlayer)
+      const opponentHand = module.model.getPlayerHandFor(otherPlayer)
+
       playerHand.cards = ['guard', 'priest']
+      opponentHand.cards = ['prince']
 
       gamebot.simulateMessage(`play guard`, currentPlayer)
 
