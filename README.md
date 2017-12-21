@@ -8,7 +8,10 @@ A slackbot for board games and games channels. Responds to gameplay related chat
 - Modular structure for adding new responses
 - Accusation module for making baseless accusations
 - Howl module for occasional howling
-- Resistance module for playing group games of resistance
+
+- Resistance module for playing group games of Resistance
+- Codenames module for playing group games of Codenames
+- Loveletter module for playing group games of Loveletter
 
 ## Development
 
@@ -22,26 +25,21 @@ A slackbot for board games and games channels. Responds to gameplay related chat
 - Run it
   - `npm start`
 
-You will also need to:
-- Import custom icons slack for `:good_guy:`, `:bad_guy:` etc.
+You will also need to import custom emojis, please follow this guide: [emojis/README.md](./emojis/README.md)
 
 ## Hosting
 
-Gamebot is currently hosted on a private openstack instance, login to the machine requires the correct private key creating at `ssh/cloud.key`, at which point you can use `ssh/login.sh` to gain access.
+Gamebot is currently hosted on a private Raspberry Pi.
 
-On the machine you will need to create `tokens.json` based on `tokens.template.json` and feed it with the a slackbot token in order to connect.
+On the machine you will need to create `tokens.json` based on `tokens.template.json` and feed it with the correct slackbot tokens in order to connect.
 
 ## Release
 
-A cron tab has been setup on the machine to check for updated from the remote every minute. If a change is detected, then the update script will run `npm install` followed by `pm2 restart all`.
-
-See [update.sh](./update.sh) and `crontab -e`. Use `crontab -l` to check the existing settings.
-
-Recommended value for Ubuntu server: `* * * * * /home/ubuntu/tap-slack-bot/update.sh > /dev/pts/0`
+Releases should be performed using the `npm run deploy` script, connected on the same network as the Raspberry Pi. You will need to provide your SSH key, to be added to the list of authorized SSH keys on the device.
 
 ## Website
 
-Gamebot has its own website monitoring system as well.
+Gamebot has its own website monitoring system as well, although this is only accessible from the local network.
 
 To start the website for development, run:
 - `npm run website`
