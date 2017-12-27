@@ -1,111 +1,84 @@
-abrams
-awakens
 awaken
 galaxy
-george
-lucas
-review
-reviews
-skywalker
 force
-star
-war
 its a trap
-yoda
-kylo ren
-luke skywalker
-han solo
-chewbacca
-chewie
-bb8
-r2d2
-c3po
+Yoda
+Kylo Ren
+Luke Skywalker
+Han Solo
+Chewbacca
+BB8
+R2D2
+C3PO
 lightsaber
-mace windu
+Mace Windu
 sith
-the force
-jar jar binks
-anakin skywalker
-darth vader
-knights of ken
-bail antilles
-antilles
-poe dameron
+The Force
+Jar Jar Binks
+Anakin Skywalker
+Darth Vader
+Poe Dameron
 general hux
-finn
-leia
+Finn
+General Leia Organa
 x-wing
-millennium falcon
-palpatine
-galactic empire
-first order
+Millennium Falcon
+Emperor Palpatine
+Galactic Empire
+First Order
 tie fighter
-death star
-star killer
-the force awakens
-skywalker
-executor
+Death Star
+Star Killer
+The Force Awakens
 jedi
-alderaan
-episode vii
-a new hope
-return of the jedi
-empire strikes back
-the phantom menace
-tatooine
-amidala
-attack of the clones
-revenge of the sith
-george lucas
-kathleen kennedy
-anakin skywalker
-dantoine
-dagobah
-the clone wars
-battle of jakku
-jakku
-aunt beru
+Alderaan
+A New Hope
+Return of the Jedi
+Empire Strikes Back
+The Phantom Menace
+Tatooine
+Princess Amidala
+Attack of the Clones
+Revenge of the Sith
+Dagobah
+The Clone Wars
+Jakku
+Aunt Beru
 stormtrooper
 sarlak
-bobba fett
-ig88
-lando calrissian
-clone wars
+Bobba Fett
+Lando Calrissian
+Clone Wars
 cloud city
 jedi temple
-count dooku
-darth tyrannous
-coruscant
-darth plagueis
-darth sidious
+Count Dooku
+Darth Tyranus
+Coruscant
+Darth Plagueis
+Darth Sidious
 midichlorians
-obi wan kenobi
-qui gon jinn
-grand moff tarkin
-adirmal ackbar
-alderaan
-at-at
+Obi-Wan Kenobi
+Qui-Gon Jinn
+Grand Moff Tarkin
+Adrimal Ackbar
+Alderaan
+AT-AT
 droid
-at-st
-slave one
-aurra sing
+AT-ST
+Slave One
 bantha
 y-wing
 b-wing
 a-wing
-captain phasma
-supreme leader snook
-death star
+x-wing
+Captain Phasma
+Supreme Leader Snoke
 cantina band
-jabba the hutt
-hoth
+Jabba the Hutt
+Hoth
 star destroyer
-mandalorian
-mon mothma
-mon calamari
-naboo
-rancor
-padme amidala
+Naboo
+Padme Amidala
 sand trooper
 snow speeder
 blaster
