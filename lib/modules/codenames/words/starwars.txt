@@ -94,3 +94,22 @@ insignia
 admiral
 captain
 commander
+plasma disruptor
+barrel roll
+commando
+battalion
+laser cannon
+speeder
+dusty
+Endor
+forest
+air scrubber
+military
+starfighter
+palace
+battle
+Bantha
+comlink
+asteroid
+hunk of junk
+senator
