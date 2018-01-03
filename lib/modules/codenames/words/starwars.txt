@@ -60,7 +60,7 @@ midichlorians
 Obi-Wan Kenobi
 Qui-Gon Jinn
 Grand Moff Tarkin
-Adrimal Ackbar
+Admiral Ackbar
 Alderaan
 AT-AT
 droid
@@ -83,3 +83,14 @@ sand trooper
 snow speeder
 blaster
 wampa
+desert
+snow
+city
+underwater
+army
+rebels
+imperial
+insignia
+admiral
+captain
+commander
