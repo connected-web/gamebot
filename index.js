@@ -1,5 +1,5 @@
 const api = require('./lib/api/api')
-const tokens = require('./tokens.json')
+const tokens = require('./tokens')
 const restarter = require('./lib/restarter')
 
 const bots = tokens.map(makeBot)
