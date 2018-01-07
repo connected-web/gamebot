@@ -33,15 +33,15 @@
     "fs-extra": "^4.0.1",
     "glob": "^7.0.5",
     "grammarlist": "^1.0.0",
-    "slackbots": "^0.5.1"
+    "slackbots": "^0.5.1",
+    "product-monitor": "^2.3.2",
+    "promise-path": "^1.2.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-spies": "^0.7.1",
     "mocha": "^2.5.3",
     "pre-commit": "^1.2.2",
-    "product-monitor": "^2.3.2",
-    "promise-path": "^1.2.4",
     "sinon": "^4.0.0",
     "standard": "^10.0.2"
   }
