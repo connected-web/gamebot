@@ -9,3 +9,4 @@ tokens.json
 records/resistance/*.json
 cron.log
 gamebot.zip
+.elasticbeanstalk/
