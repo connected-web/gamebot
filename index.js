@@ -39,7 +39,7 @@ Promise.all(bots.map(startBot))
 function startWebsite (bots) {
   var monitor = require('product-monitor')
   monitor({
-    'serverPort': 9000,
+    'serverPort': process.env.PORT || 9000,
     'productInformation': {
       'title': 'Gamebot Monitor'
     },
