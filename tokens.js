@@ -8,7 +8,8 @@ module.exports = [{
     'resistance',
     'channels',
     'messages',
-    'users'
+    'users',
+    'version'
   ]
 }, {
   'id': 'spymaster',
