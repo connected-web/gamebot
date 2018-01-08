@@ -12,7 +12,9 @@
     "deploy": "npm test && npm run build && ./scripts/deploy.sh",
     "gamebot": "pm2 start index.js --name 'Gamebot'",
     "test": "standard --fix && mocha --recursive",
-    "index-emojis": "node emojis/create-index.js"
+    "index-emojis": "node emojis/create-index.js",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags"
   },
   "pre-commit": [
     "test"
