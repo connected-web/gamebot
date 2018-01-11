@@ -25,7 +25,7 @@ module.exports = [{
 }, {
   'id': 'princessbot',
   'token': process.env.PRINCESSBOT_TOKEN,
-  'name': 'Princess Loveletter',
+  'name': 'Princess Loveletter :heart:',
   'avatar': 'https://ca.slack-edge.com/T3KJBUDUH-U6X8VUEG0-622d93cd3235-1024',
   'modules': [
     'loveletter',
