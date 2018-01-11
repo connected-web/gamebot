@@ -30,25 +30,10 @@ function startBot (bot) {
 }
 
 Promise.all(bots.map(startBot))
-  .then(startWebsite)
   .then(startRestarter)
   .catch((ex) => {
     console.error('Catch All', ex, ex.stack)
   })
-
-function startWebsite (bots) {
-  var monitor = require('product-monitor')
-  monitor({
-    'serverPort': process.env.PORT || 9000,
-    'productInformation': {
-      'title': 'Gamebot Monitor'
-    },
-    'userContentPath': 'website',
-    'gamebot': bots[0],
-    'bots': bots
-  })
-  return bots
-}
 
 function startRestarter (bots) {
   const gamebot = bots[0]

@@ -35,7 +35,6 @@
     "fs-extra": "^4.0.1",
     "glob": "^7.0.5",
     "grammarlist": "^1.0.0",
-    "product-monitor": "^2.3.2",
     "promise-path": "^1.2.4",
     "redis": "^2.8.0",
     "slackbots": "^0.5.1"
