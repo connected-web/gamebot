@@ -9,6 +9,7 @@
     "index-emojis": "node emojis/create-index.js",
     "preversion": "npm test",
     "postversion": "git push && git push --tags && npm run release:dev",
+    "release:prod": "git push origin origin/gamebot-dev:gamebot-prod",
     "release:dev": "git push origin master:gamebot-dev"
   },
   "pre-commit": [
