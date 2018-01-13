@@ -34,14 +34,14 @@ module.exports = [{
     'users'
   ]
 }, {
-  "id": "wolfbot",
-  "token": process.env.WOLFBOT_TOKEN,
-  "name": "Mr Wolf",
-  "avatar": "https://s3-us-west-2.amazonaws.com/slack-files2/avatar-temp/2017-05-30/189595889379_fcf19175428ae24e0b17.jpg",
-  "modules": [
-    "howl",
-    "channels",
-    "messages",
-    "users"
+  'id': 'wolfbot',
+  'token': process.env.WOLFBOT_TOKEN,
+  'name': 'Mr Wolf',
+  'avatar': 'https://s3-us-west-2.amazonaws.com/slack-files2/avatar-temp/2017-05-30/189595889379_fcf19175428ae24e0b17.jpg',
+  'modules': [
+    'howl',
+    'channels',
+    'messages',
+    'users'
   ]
 }]
