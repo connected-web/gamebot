@@ -27,6 +27,7 @@
   "author": "John Beech",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.16.2",
     "fs-extra": "^4.0.1",
     "glob": "^7.0.5",
     "grammarlist": "^1.0.0",

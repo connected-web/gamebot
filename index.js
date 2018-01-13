@@ -1,6 +1,8 @@
+const express = require('express')
 const api = require('./lib/api/api')
 const tokens = require('./tokens')
 const restarter = require('./lib/restarter')
+const routeFactory = require('./src/routes/factory')
 
 const bots = tokens.map(makeBot)
 
@@ -31,6 +33,7 @@ function startBot (bot) {
 
 Promise.all(bots.map(startBot))
   .then(startRestarter)
+  .then(startWebserver)
   .catch((ex) => {
     console.error('Catch All', ex, ex.stack)
   })
@@ -38,4 +41,15 @@ Promise.all(bots.map(startBot))
 function startRestarter (bots) {
   const gamebot = bots[0]
   restarter.start(gamebot)
+  return bots
+}
+
+function startWebserver (bots) {
+  const app = express()
+  const routes = routeFactory(bots)
+  const port = process.env.PORT || 9000
+  const environment = process.env.ENVIRONMENT || 'developer'
+  app.get('/', (req, res) => res.send(`[Gamebot] Webserver environment: ${environment}`))
+  app.use('/gamebot', routes)
+  app.listen(port, () => console.log(`[Gamebot Index] Webserver listening on port: ${port}`))
 }
