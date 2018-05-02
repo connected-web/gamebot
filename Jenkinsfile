@@ -11,13 +11,17 @@ pipeline {
             steps {
               echo "Checkout latest code"
               checkout scm
+
+              sh 'node -v'
             }
         }
 
         stage("Test") {
             steps {
                 echo "Running tests"
-                npm test
+                sh 'npm prune'
+                sh 'npm install'
+                sh 'npm test'
             }
         }
 
