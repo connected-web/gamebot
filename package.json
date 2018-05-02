@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "standard --fix && mocha --recursive",
+    "build": "echo 'Stub build step'",
     "index-emojis": "node emojis/create-index.js",
     "preversion": "npm test",
     "postversion": "git push && git push --tags && npm run release:dev",
