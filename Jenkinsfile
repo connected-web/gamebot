@@ -7,6 +7,13 @@ pipeline {
     }
 
     stages {
+
+        stage('Initialize') {
+            echo 'Initializing...'
+            def node = tool name: 'Node 8 LTS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+            env.PATH = "${node}/bin:${env.PATH}"
+        }
+
         stage("Build") {
             steps {
               echo "Checkout latest code"
