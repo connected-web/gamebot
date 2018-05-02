@@ -1,4 +1,4 @@
-node('Gamebot Testing') {
+node {
     stage('Initialize') {
         steps {
             echo 'Initializing...'
