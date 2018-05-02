@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     parameters {
-
+        string(defaultValue: "192.168.0.1", description: "The IP address of the target machine to deploy to.", name: "TARGET_IP")
     }
 
     stages {
@@ -23,7 +23,7 @@ pipeline {
 
         stage("Deploy") {
             steps {
-                echo "Stub deploy step"
+                echo "Stub deploy step to: ${params.TARGET_IP}"
             }
         }
     }
