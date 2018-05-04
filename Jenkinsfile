@@ -29,10 +29,7 @@ node {
         stage('Deploy using SSH Key') {
             TARGET_IP = params.TARGET_IP
             echo "Stub deploy step to: ${TARGET_IP}"
-            sh """
-              node -v
-              npm -v
-            """
+            sh 'ssh pi@${TARGET_IP} "node -v"' 
         }
     }
 }
