@@ -12,6 +12,12 @@ node {
         sh 'node -v'
     }
 
+    stage('Credentials') {
+        echo "Test out credentials"
+        PRIVATE_KEY = credentials('jenkins.id_rsa')
+        echo "Private key: ${PRIVATE_KEY} ?"
+    }
+
     stage('Test') {
         echo "Running tests"
         sh 'npm prune'
