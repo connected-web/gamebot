@@ -15,7 +15,7 @@ node {
     stage('Credentials') {
         echo "Test out credentials"
         SSH_KEY_FOR_TARGET = credentials('jenkins.id_rsa')
-        echo "Private key: ${PRIVATE_KEY} ?"
+        echo "SSH Credential For Target: ${SSH_KEY_FOR_TARGET} ?"
     }
 
     stage('Test') {
@@ -34,7 +34,7 @@ node {
           node -v
           npm -v
           sudo systemctl daemon-reload
-          
+
           ENDSSH
         """
     }
