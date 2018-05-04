@@ -30,7 +30,7 @@ node {
         withCredentials([sshUserPrivateKey(credentialsId: "jenkins.id_rsa")]) {
             stage('Deploy using SSH Key') {
             sh """
-              ssh -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET pi@$TARGET_IP <<'ENDSSH'
+              ssh -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET pi@${params.TARGET_IP} <<'ENDSSH'
               ls -la
               node -v
               npm -v
