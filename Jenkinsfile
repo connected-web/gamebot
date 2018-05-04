@@ -27,15 +27,18 @@ node {
 
     stage('Deploy') {
         echo "Stub deploy step to: ${params.TARGET_IP}"
+        withCredentials([sshUserPrivateKey(credentialsId: "jenkins.id_rsa")]) {
+            stage('Deploy using SSH Key') {
+            sh """
+              ssh -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET pi@$TARGET_IP <<'ENDSSH'
+              ls -la
+              node -v
+              npm -v
+              sudo systemctl daemon-reload
 
-        sh """
-          ssh -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET pi@$TARGET_IP <<'ENDSSH'
-          ls -la
-          node -v
-          npm -v
-          sudo systemctl daemon-reload
-
-          ENDSSH
-        """
+              ENDSSH
+            """
+            }
+        }
     }
 }
