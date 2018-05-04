@@ -29,7 +29,7 @@ node {
         stage('Deploy using SSH Key') {
             TARGET_IP = params.TARGET_IP
             echo "Stub deploy step to: ${TARGET_IP}"
-            sh 'ssh pi@${TARGET_IP} "node -v"' 
+            echo "Null pointer exception? Why?"
         }
     }
 }
