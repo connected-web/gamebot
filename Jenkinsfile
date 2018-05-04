@@ -30,13 +30,8 @@ node {
             TARGET_IP = params.TARGET_IP
             echo "Stub deploy step to: ${TARGET_IP}"
             sh """
-              ssh -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET pi@${TARGET_IP} <<'ENDSSH'
-              ls -la
               node -v
               npm -v
-              sudo systemctl daemon-reload
-
-              ENDSSH
             """
         }
     }
