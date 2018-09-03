@@ -1,9 +1,4 @@
 node {
-
-    parameters([
-        string(name: 'TARGET_SERVER', defaultValue: '192.168.0.15', description: 'The address of the target machine to deploy to.')
-    ])
-
     stage('Initialize') {
         echo 'Initializing...'
         def node = tool name: 'Node 8 LTS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
@@ -31,10 +26,13 @@ node {
     }
 
     withCredentials([sshUserPrivateKey(credentialsId: "jenkins.id_rsa")]) {
+        environment {
+            TARGET_SERVER = '192.168.0.15'
+        }
+
         stage('Deploy using SSH Key') {
-            TARGET_SERVER = params.TARGET_SERVER
-            echo "Stub deploy step to: ${TARGET_SERVER}, ${params.TARGET_SERVER} ${params}"
-            echo "Null pointer exception? Why?"
+            echo "Stub deploy step to: ${env.TARGET_SERVER}"
+            sh 'scp README.md pi@${env.TARGET_SERVER}:~/'
         }
     }
 }
