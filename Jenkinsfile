@@ -26,13 +26,10 @@ node {
     }
 
     withCredentials([sshUserPrivateKey(credentialsId: "jenkins.id_rsa")]) {
-        environment {
-            TARGET_SERVER = '192.168.0.15'
-        }
-
         stage('Deploy using SSH Key') {
-            echo "Stub deploy step to: ${env.TARGET_SERVER}"
-            sh 'scp README.md pi@${env.TARGET_SERVER}:~/'
+            TARGET_SERVER = '192.168.0.15'
+            echo "Stub deploy step to: ${TARGET_SERVER}"
+            sh "scp README.md pi@${TARGET_SERVER}:~/"
         }
     }
 }
