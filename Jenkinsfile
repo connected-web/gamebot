@@ -1,4 +1,9 @@
 node {
+
+    parameters {
+        string(name: 'TARGET_IP', defaultValue: '192.168.0.15', description: 'The IP address of the target machine to deploy to.')
+    }
+
     stage('Initialize') {
         echo 'Initializing...'
         def node = tool name: 'Node 8 LTS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
