@@ -22,14 +22,14 @@ node -v
 npm -v
 
 echo "Install service file to systemd:"
-rm /etc/systemd/system/gamebot.service
-mv ~/gamebot.service /etc/systemd/system/
+sudo rm /etc/systemd/system/gamebot.service
+sudo mv ~/gamebot.service /etc/systemd/system/
 
 sudo systemctl daemon-reload 
 
-systemctl enable gamebot.service
-systemctl restart gamebot.service
-systemctl status gamebot.service
+sudo systemctl enable gamebot.service
+sudo systemctl restart gamebot.service
+sudo systemctl status gamebot.service
 
 echo "Unzip files onto target machine: [TODO]"
 
