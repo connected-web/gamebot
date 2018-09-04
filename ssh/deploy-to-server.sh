@@ -8,6 +8,7 @@ echo "Source directory contents:"
 ls -la
 
 echo "Zip the files [TODO]"
+sh ./scripts/build.sh
 
 echo "SCP the service file to the remote machine"
 scp -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET "$SCRIPT_DIR/gamebot.service" "pi@$TARGET_IP:~/" 
