@@ -48,6 +48,7 @@ archive.pipe(output)
 
 // append files from a sub-directory, putting its contents at the root of archive
 archive.directory('emojis/', 'emojis/')
+archive.directory('src/', 'src/')
 archive.directory('lib/', 'lib/')
 archive.directory('node_modules/', 'node_modules/')
 archive.directory('records/', 'records/')
