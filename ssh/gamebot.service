@@ -2,7 +2,7 @@
 Description=Gamebot NodeJS Service
 
 [Service]
-ExecStart=/usr/local/bin/node /home/pi/gamebot/index.js
+ExecStart=/usr/bin/node /home/pi/gamebot/index.js
 # Required on some systems
 WorkingDirectory=/home/pi/gamebot/
 Restart=always
