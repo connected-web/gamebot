@@ -56,6 +56,7 @@ archive.directory('users/', 'users/')
 archive.directory('website/', 'website/')
 archive.file('index.js', { name: 'index.js' })
 archive.file('tokens.js', { name: 'tokens.js' })
+archive.file('gamebot.env.example', { name: 'gamebot.env.example' })
 archive.file('package.json', { name: 'package.json' })
 archive.file('README.md', { name: 'README.md' })
 

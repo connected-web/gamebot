@@ -15,6 +15,7 @@ SyslogIdentifier=nodejs-example
 #User=<alternate user>
 #Group=<alternate group>
 Environment=NODE_ENV=production PORT=9000
+EnvironmentFile=/home/pi/gamebot.env
 
 [Install]
 WantedBy=multi-user.target

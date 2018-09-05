@@ -6,6 +6,7 @@ ssh/gamebot-backup.zip
 *.log
 state/*.json
 tokens.json
+gamebot.env
 .DS_Store
 records/resistance/*.json
 cron.log
