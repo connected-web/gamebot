@@ -9,6 +9,7 @@ echo "Source directory contents:"
 ls -la
 
 echo "Zip the files [TODO]"
+npm install
 npm run create-build
 
 echo "SCP the service file to the remote machine"
