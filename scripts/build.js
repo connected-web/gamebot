@@ -7,38 +7,38 @@ const startTime = Date.now()
 const outputPath = path.join(__dirname, '../gamebot.zip')
 const output = fs.createWriteStream(outputPath)
 const archive = archiver('zip', {
-    zlib: { level: 9 }
+  zlib: { level: 9 }
 })
 
 // Listen for all archive data to be written
 // close event is fired only when a file descriptor is involved
-output.on('close', function() {
-    console.log('File size', archive.pointer(), 'total bytes archived')
-    const endTime = Date.now()
+output.on('close', function () {
+  console.log('File size', archive.pointer(), 'total bytes archived')
+  const endTime = Date.now()
 
-    console.log('Total time:', ((endTime - startTime) / 1000).toFixed(2), 's')
+  console.log('Total time:', ((endTime - startTime) / 1000).toFixed(2), 's')
 })
 
 // This event is fired when the data source is drained no matter what was the data source.
 // It is not part of this library but rather from the NodeJS Stream API.
 // @see: https://nodejs.org/api/stream.html#stream_event_end
-output.on('end', function() {
-    console.log('Data has been drained')
+output.on('end', function () {
+  console.log('Data has been drained')
 })
 
 // Catch warnings, e.g. stat failures and other non-blocking errors
-archive.on('warning', function(err) {
-    if (err.code === 'ENOENT') {
+archive.on('warning', function (err) {
+  if (err.code === 'ENOENT') {
         // log warning
-    } else {
+  } else {
         // throw error
-        throw err
-    }
+    throw err
+  }
 })
 
 // Catch and rethrow errors explicitly
-archive.on('error', function(err) {
-    throw err
+archive.on('error', function (err) {
+  throw err
 })
 
 console.log('Creating output zip:', outputPath)
