@@ -1,47 +1,49 @@
 {
-  "name": "gamebot",
-  "version": "2.1.1",
-  "description": "Gamebot for slack",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "test": "standard --fix && mocha --recursive",
-    "index-emojis": "node emojis/create-index.js",
-    "preversion": "npm test",
-    "postversion": "git push && git push --tags && npm run release:dev",
-    "release:prod": "git push origin origin/gamebot-dev:gamebot-prod",
-    "release:dev": "git push origin master:gamebot-dev"
-  },
-  "pre-commit": [
-    "test"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:connected-web/gamebot.git"
-  },
-  "keywords": [
-    "slack",
-    "bot",
-    "board",
-    "games"
-  ],
-  "author": "John Beech",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.16.2",
-    "fs-extra": "^4.0.1",
-    "glob": "^7.0.5",
-    "grammarlist": "^1.0.0",
-    "promise-path": "^1.2.4",
-    "redis": "^2.8.0",
-    "slackbots": "^0.5.1"
-  },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-spies": "^0.7.1",
-    "mocha": "^2.5.3",
-    "pre-commit": "^1.2.2",
-    "sinon": "^4.0.0",
-    "standard": "^10.0.2"
-  }
+    "name": "gamebot",
+    "version": "2.1.1",
+    "description": "Gamebot for slack",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "standard --fix && mocha --recursive",
+        "index-emojis": "node emojis/create-index.js",
+        "preversion": "npm test",
+        "postversion": "git push && git push --tags && npm run release:dev",
+        "release:prod": "git push origin origin/gamebot-dev:gamebot-prod",
+        "release:dev": "git push origin master:gamebot-dev",
+        "create-build": "node scripts/build.js"
+    },
+    "pre-commit": [
+        "test"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:connected-web/gamebot.git"
+    },
+    "keywords": [
+        "slack",
+        "bot",
+        "board",
+        "games"
+    ],
+    "author": "John Beech",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.16.2",
+        "fs-extra": "^4.0.1",
+        "glob": "^7.0.5",
+        "grammarlist": "^1.0.0",
+        "promise-path": "^1.2.4",
+        "redis": "^2.8.0",
+        "slackbots": "^0.5.1"
+    },
+    "devDependencies": {
+        "archiver": "^3.0.0",
+        "chai": "^3.5.0",
+        "chai-spies": "^0.7.1",
+        "mocha": "^2.5.3",
+        "pre-commit": "^1.2.2",
+        "sinon": "^4.0.0",
+        "standard": "^10.0.2"
+    }
 }
