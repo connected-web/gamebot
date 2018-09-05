@@ -16,7 +16,7 @@ echo "SCP the service file to the remote machine"
 scp -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET "$SCRIPT_DIR/gamebot.service" "$DESTINATION:~/"
 
 echo "SCP the files to the remote machine: [$TARGET_IP]"
-scp -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET "$SCRIPT_DIR/gamebot.zip" "$DESTINATION:~/"
+scp -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET "$SCRIPT_DIR/../gamebot.zip" "$DESTINATION:~/"
 
 echo "Logging into remote machine: [$TARGET_IP]"
 ssh -o "StrictHostKeyChecking no" -i $SSH_KEY_FOR_TARGET $DESTINATION <<'ENDSSH'
