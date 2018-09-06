@@ -9,7 +9,8 @@ module.exports = [{
     'channels',
     'messages',
     'users',
-    'version'
+    'version',
+    'status'
   ]
 }, {
   'id': 'spymaster',
