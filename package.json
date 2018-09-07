@@ -1,6 +1,6 @@
 {
     "name": "gamebot",
-    "version": "2.1.2",
+    "version": "2.1.3",
     "description": "Gamebot for slack",
     "main": "index.js",
     "scripts": {
