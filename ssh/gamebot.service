@@ -14,7 +14,7 @@ StandardError=syslog
 SyslogIdentifier=nodejs-example
 #User=<alternate user>
 #Group=<alternate group>
-Environment=NODE_ENV=production PORT=9000
+Environment=NODE_ENV=production PORT=9000 GAMEBOT_LOG_PATH=/var/log/gamebot/
 EnvironmentFile=/home/pi/gamebot/gamebot.env
 
 [Install]
