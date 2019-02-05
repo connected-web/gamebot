@@ -1,5 +1,5 @@
 module.exports = [{
-  'id': 'gamebot',
+  'id': 'resistancebot',
   'token': process.env.RESISTANCEBOT_TOKEN,
   'name': 'Resistance Bot',
   'avatar': 'https://avatars.slack-edge.com/2017-01-01/122247673123_a4dc4e9941a6cc23a234_192.png',
@@ -13,7 +13,7 @@ module.exports = [{
     'status'
   ]
 }, {
-  'id': 'spymaster',
+  'id': 'codenamesbot',
   'token': process.env.SPYMASTERBOT_TOKEN,
   'name': 'Codenames Bot',
   'avatar': 'https://ca.slack-edge.com/T3KJBUDUH-U524MQWAX-e4bd17b061a6-192',
