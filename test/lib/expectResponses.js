@@ -23,7 +23,7 @@ function expectResponses (expectedResponses, done) {
       channel: channel,
       message: message
     }
-    receivedMessages.push(JSON.stringify({channel, message}))
+    receivedMessages.push(JSON.stringify({ channel, message }))
     const checkedResponses = []
     const startCount = expectedResponses.length
     if (startCount === 0) {
