@@ -32,7 +32,7 @@ find(path.join(__dirname, '/*.png'))
   })
   .then((emojiIndex) => {
     write(path.join(__dirname, 'emojis.json'), JSON.stringify(emojiIndex, null, 2), 'utf8')
-    write(path.join(__dirname, 'README.md'), readmeTemplate({emojis: emojiIndex}), 'utf8')
+    write(path.join(__dirname, 'README.md'), readmeTemplate({ emojis: emojiIndex }), 'utf8')
   })
   .catch((ex) => {
     console.log('Ex', ex, ex.stack)

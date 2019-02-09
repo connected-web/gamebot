@@ -29,9 +29,9 @@ output.on('end', function () {
 // Catch warnings, e.g. stat failures and other non-blocking errors
 archive.on('warning', function (err) {
   if (err.code === 'ENOENT') {
-        // log warning
+    // log warning
   } else {
-        // throw error
+    // throw error
     throw err
   }
 })
