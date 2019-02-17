@@ -18,28 +18,29 @@ A slackbot for board games and games channels. Responds to gameplay related chat
 - Checkout the code
 - Install dependencies
   - `npm i`
-- Create a [slack bot to gain an access token](https://my.slack.com/services/new/bot)
-- Create an access token file using `tokens.template.json`
 - Test it
   - `npm test`
+- Create a [slack bot to gain an access token](https://my.slack.com/services/new/bot)
+- Each bot is configured in `tokens.json`, to keep your tokens private, set environment variables:
+  ```
+  export RESISTANCEBOT_TOKEN='abcd-1234-...'
+  export SPYMASTERBOT_TOKEN='abcd-1234-...'
+  export PRINCESSBOT_TOKEN='abcd-1234-...'
+  export WOLFBOT_TOKEN='abcd-1234-...'
+  ```
 - Run it
   - `npm start`
 
-You will also need to import custom emojis, please follow this guide: [emojis/README.md](./emojis/README.md)
+For best results, you should also import custom emojis, please follow this guide: [emojis/README.md](./emojis/README.md)
 
 ## Hosting
 
 Gamebot is currently hosted on a private Raspberry Pi.
 
-On the machine you will need to create `tokens.json` based on `tokens.template.json` and feed it with the correct slackbot tokens in order to connect.
+## Releasing
 
-## Release
+A jenkins job has been created to build the gamebot files into a zip, transfer them to the remote server, and then install as a `systemctl` service. For a fresh install, in order to pick up the secret tokens, you will need to manually create `gamebot.env` using `gamebot.env.example` as a template.
 
-Releases should be performed using the `npm run deploy` script, connected on the same network as the Raspberry Pi. You will need to provide your SSH key, to be added to the list of authorized SSH keys on the device.
+Changes to master will automatically be deployed to the development machine.
 
-## Website
-
-Gamebot has its own website monitoring system as well, although this is only accessible from the local network.
-
-To start the website for development, run:
-- `npm run website`
+When ready to release to live, provide either a tag name or branch identifier to release from, and target the production machine.

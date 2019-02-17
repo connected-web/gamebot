@@ -11,7 +11,7 @@
         "postversion": "git push && git push --tags && npm run release:dev",
         "release:prod": "git push origin origin/gamebot-dev:gamebot-prod",
         "release:dev": "git push origin master:gamebot-dev",
-        "create-build": "node scripts/build.js"
+        "create-build": "node ssh/build.js"
     },
     "pre-commit": [
         "test"
