@@ -27,4 +27,15 @@ describe('Status Module (Core)', function () {
       gamebot.simulateMessage('what version are you?', 'u1')
     })
   })
+
+  describe('How long have you been running?', () => {
+    it('should report the uptime in seconds from package.json back to the user', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(target).to.deep.equal(statusChannel)
+        expect(response).to.match(/Gamebot has been running for \d+ seconds./)
+        done()
+      }
+      gamebot.simulateMessage('how long have you been running?', 'u1')
+    })
+  })
 })
