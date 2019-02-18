@@ -2,6 +2,11 @@
 const expect = require('chai').expect
 const gamebot = require('../lib/api/api')
 
+function getType (fn) {
+  const obj = {}
+  return obj.toString.call(fn)
+}
+
 describe('Gamebot API', function () {
   var api
   const sampleOptions = {
@@ -30,21 +35,25 @@ describe('Gamebot API', function () {
   })
 
   it('should provide a load method for loading modules', () => {
+    expect(getType(api.load)).to.equal('[object Function]')
     expect(api.load.length).to.equal(0)
     expect(typeof api.load).to.equal('function')
   })
 
   it('should provide a connect method for connecting to slack', () => {
-    expect(api.connect.length).to.equal(0)
+    expect(getType(api.connect)).to.equal('[object Function]')
+    expect(api.load.length).to.equal(0)
     expect(typeof api.connect).to.equal('function')
   })
 
   it('should provide a respond method for responding to messages', () => {
+    expect(getType(api.respond)).to.equal('[object Function]')
     expect(api.respond.length).to.equal(3)
     expect(typeof api.respond).to.equal('function')
   })
 
   it('should provide an error handler', function () {
+    expect(getType(api.handleError)).to.equal('[object Function]')
     expect(api.handleError.length).to.equal(1)
     expect(typeof api.handleError).to.equal('function')
   })
