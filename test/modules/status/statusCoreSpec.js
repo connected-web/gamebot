@@ -21,7 +21,7 @@ describe('Status Module (Core)', function () {
     it('should report the version number from package.json back to the user', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(target).to.deep.equal(statusChannel)
-        expect(response).to.match(/Gamebot is running version: '\d+\.\d+\.\d+'/)
+        expect(response).to.match(/Gamebot is running version: \*\d+\.\d+\.\d+\*\./)
         done()
       }
       gamebot.simulateMessage('what version are you?', 'u1')
