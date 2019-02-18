@@ -4,7 +4,6 @@ const { make } = require('promise-path')
 
 const api = require('./lib/api/api')
 const tokens = require('./tokens')
-const restarter = require('./lib/restarter')
 const routeFactory = require('./src/routes/factory')
 
 const logpath = process.env.GAMEBOT_LOG_PATH || path.join(__dirname, 'logs')
@@ -50,7 +49,6 @@ async function initialise (logger) {
   try {
     await make(logpath)
     const bots = await Promise.all(tokens.map(makeBot).map(startBot))
-    await startRestarter(bots, logger)
     await startWebserver(bots, logger)
     logger.log({
       level: 'info',
@@ -64,11 +62,6 @@ async function initialise (logger) {
       message: ['Catch All', ex, ex.stack]
     })
   }
-}
-
-function startRestarter (bots) {
-  const gamebot = bots[0]
-  return restarter.start(gamebot)
 }
 
 function startWebserver (bots, logger) {

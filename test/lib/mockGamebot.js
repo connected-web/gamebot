@@ -67,6 +67,10 @@ function mockGamebot () {
 
   gamebot.respond = () => {}
 
+  gamebot.bot = {
+    on: () => false
+  }
+
   return gamebot
 }
 
