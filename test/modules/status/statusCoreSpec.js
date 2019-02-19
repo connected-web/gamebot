@@ -32,10 +32,22 @@ describe('Status Module (Core)', function () {
     it('should report the uptime in seconds from package.json back to the user', (done) => {
       gamebot.respond = (target, response, params) => {
         expect(target).to.deep.equal(statusChannel)
-        expect(response).to.match(/Gamebot has been running for \d+ seconds./)
+        expect(response).to.match(/Gamebot has just started!/)
         done()
       }
       gamebot.simulateMessage('how long have you been running?', 'u1')
+    })
+
+    it('should report the uptime in minutes from package.json back to the user', (done) => {
+      gamebot.respond = (target, response, params) => {
+        expect(target).to.deep.equal(statusChannel)
+        expect(response).to.match(/Gamebot has been running for \d+ minutes./)
+        done()
+      }
+      // modify start time relative to now
+      const startTime = module.model.startTime
+      startTime.setMinutes(startTime.getMinutes() - 20)
+      gamebot.simulateMessage('uptime', 'u1')
     })
   })
 })
