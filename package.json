@@ -8,7 +8,7 @@
         "test": "standard --fix && mocha --recursive",
         "index-emojis": "node emojis/create-index.js",
         "preversion": "npm test",
-        "patch": "npm version patch -m 'Bump version to %s for release.'",
+        "patch": "npm version patch -m \"Bump version to %s for release.\"",
         "postversion": "git push && git push --tags",
         "create-build": "node ssh/build.js"
     },
