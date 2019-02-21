@@ -159,7 +159,8 @@ describe('Codenames module (Core)', function () {
 
       it('should allow a user to start a new round at the end of a game', (done) => {
         gamebot.respond = expectResponses([
-          response(/^John has started a new game!/, gameChannel)
+          response(/^John has started a new game!/, gameChannel),
+          response(/^Codenames has begun, teams are:/, gameChannel)
         ], done)
         gamebot.simulateMessage(command, 'u1')
       })
