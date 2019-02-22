@@ -145,6 +145,28 @@ describe('Codenames module (Core)', function () {
     })
   })
 
+  describe('Starting a new round', () => {
+    ['start next round', 'start new game'].forEach((command) => {
+      beforeEach(() => {
+        gamebot.simulateMessage('join game', 'u1')
+        gamebot.simulateMessage('join game', 'u7')
+        gamebot.simulateMessage('start game', 'u7')
+        gamebot.simulateMessage('make me spy master', 'u7')
+
+        let validWord = module.model.words.filter((location) => location.team === 'assassin')[0].word
+        gamebot.simulateMessage(`pick ${validWord}`, 'u1')
+      })
+
+      it('should allow a user to start a new round at the end of a game', (done) => {
+        gamebot.respond = expectResponses([
+          response(/^John has started a new game!/, gameChannel),
+          response(/^Codenames has begun, teams are:/, gameChannel)
+        ], done)
+        gamebot.simulateMessage(command, 'u1')
+      })
+    })
+  })
+
   describe('Help', () => {
     ['codenames help', 'How do I play codenames?', 'how do I play'].forEach((command) => {
       it('should allow a user to request help on how to play codenames', (done) => {
