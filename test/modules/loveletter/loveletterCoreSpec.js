@@ -20,13 +20,15 @@ describe('Loveletter module (Core)', function () {
   })
 
   describe('Joining and Leaving', () => {
-    it('should allow a user join a game', (done) => {
-      module.model.players.push('u3', 'u2')
-      gamebot.respond = expectResponses([
-        response(/^Hey [A-z]+, you've joined love letter\./, 'u1'),
-        response(/^[A-z]+ has joined the game\. Current players: [A-z]+, [A-z]+, [A-z]+$/, gameChannel)
-      ], done)
-      gamebot.simulateMessage('join game', 'u1')
+    ['join game', 'join love letter', 'enter castle'].forEach((command) => {
+      it('should allow a user join a game', (done) => {
+        module.model.players.push('u3', 'u2')
+        gamebot.respond = expectResponses([
+          response(/^Hey [A-z]+, you've joined love letter\./, 'u1'),
+          response(/^[A-z]+ has joined the game\. Current players: [A-z]+, [A-z]+, [A-z]+$/, gameChannel)
+        ], done)
+        gamebot.simulateMessage(command, 'u1')
+      })
     })
 
     it('should allow a user to leave a game', (done) => {
