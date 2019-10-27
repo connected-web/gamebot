@@ -11,7 +11,7 @@ iron
 hospital
 saturn
 thumb
-antartica
+antarctica
 capital
 fence
 suit
