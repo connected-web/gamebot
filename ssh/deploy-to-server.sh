@@ -37,7 +37,7 @@ unzip -qo ~/gamebot.zip -d ~/gamebot
 
 echo "[DtoS Remote] Restart gamebot service with new files"
 
-sudo systemctl daemon-reload 
+sudo systemctl daemon-reload
 sudo systemctl enable gamebot.service
 sudo systemctl restart gamebot.service
 
@@ -45,4 +45,3 @@ echo "[DtoS Remote] Gamebot restarted; checking status"
 sudo systemctl status gamebot.service
 
 ENDSSH
-

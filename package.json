@@ -10,7 +10,9 @@
         "preversion": "npm test",
         "patch": "npm version patch -m \"Bump version to %s for release.\"",
         "postversion": "git push && git push --tags",
-        "create-build": "node ssh/build.js"
+        "create-build": "node ssh/build.js",
+        "release:test": "./ssh/deploy-to-test.sh",
+        "release:live": "./ssh/deploy-to-live.sh"
     },
     "pre-commit": [
         "test"
