@@ -137,9 +137,51 @@ describe('Loveletter module (2 Player Game)', function () {
       ], done)
       gamebot.simulateMessage(`target ${validTargetName()}`, currentPlayer)
     })
+  })
 
-    it('should not be possible to target a player if they are protected by a handmaid')
+  describe('Cards remaining in a deck', () => {
+    beforeEach(() => {
+      gamebot.simulateMessage('join game', 'u1')
+      gamebot.simulateMessage('join game', 'u2')
+      gamebot.simulateMessage('start game', 'u2')
+    })
 
-    it('should not be possible for a player to target themselves when playing a baron')
+    it('should notify the player how many cards are left in the deck each turn', (done) => {
+      const currentPlayer = module.model.currentPlayer
+      const otherPlayer = module.model.players.filter(p => p !== currentPlayer)[0]
+      const playerHand = module.model.getPlayerHandFor(currentPlayer)
+      const opponentHand = module.model.getPlayerHandFor(otherPlayer)
+
+      playerHand.cards = ['handmaid', 'priest']
+      opponentHand.cards = ['prince']
+
+      gamebot.respond = expectResponses([
+        response(/^(John|Henrietta) has played a \*_[A-z]+ \(\d\)_\*\./, gameChannel),
+        response(/protected/),
+        response(/It is now [A-z]+'s turn./, gameChannel),
+        response(/^(You) have played a \*_[A-z]+ \(\d\)_\*/),
+        response(/There are [\d]+ cards remaining in the deck\./)
+      ], done)
+      gamebot.simulateMessage(`play handmaid`, currentPlayer)
+    })
+
+    it('should notify the player of a single card left in the deck', (done) => {
+      const currentPlayer = module.model.currentPlayer
+      const otherPlayer = module.model.players.filter(p => p !== currentPlayer)[0]
+      const playerHand = module.model.getPlayerHandFor(currentPlayer)
+      const opponentHand = module.model.getPlayerHandFor(otherPlayer)
+
+      playerHand.cards = ['handmaid', 'priest']
+      opponentHand.cards = ['prince']
+
+      gamebot.respond = expectResponses([
+        response(/^(John|Henrietta) has played a \*_[A-z]+ \(\d\)_\*\./, gameChannel),
+        response(/protected/),
+        response(/It is now [A-z]+'s turn./, gameChannel),
+        response(/^(You) have played a \*_[A-z]+ \(\d\)_\*/),
+        response(/There are [\d]+ cards remaining in the deck\./)
+      ], done)
+      gamebot.simulateMessage(`play handmaid`, currentPlayer)
+    })
   })
 })
