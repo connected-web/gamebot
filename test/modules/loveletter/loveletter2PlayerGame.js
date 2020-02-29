@@ -170,16 +170,20 @@ describe('Loveletter module (2 Player Game)', function () {
       const otherPlayer = module.model.players.filter(p => p !== currentPlayer)[0]
       const playerHand = module.model.getPlayerHandFor(currentPlayer)
       const opponentHand = module.model.getPlayerHandFor(otherPlayer)
+      const deck = module.model.deck
 
       playerHand.cards = ['handmaid', 'priest']
       opponentHand.cards = ['prince']
+      while (deck.length > 2) {
+        deck.pop()
+      }
 
       gamebot.respond = expectResponses([
         response(/^(John|Henrietta) has played a \*_[A-z]+ \(\d\)_\*\./, gameChannel),
         response(/protected/),
         response(/It is now [A-z]+'s turn./, gameChannel),
         response(/^(You) have played a \*_[A-z]+ \(\d\)_\*/),
-        response(/There are [\d]+ cards remaining in the deck\./)
+        response(/There is 1 card remaining in the deck\./)
       ], done)
       gamebot.simulateMessage(`play handmaid`, currentPlayer)
     })
